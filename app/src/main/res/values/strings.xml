@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Cinerama</string>
+
+    <string name="menu_item_movies">Movies</string>
+    <string name="menu_item_actors">Actors</string>
+    <string name="drawer_close">Close</string>
+    <string name="drawer_open">Open</string>
+
+    <string name="tab_title_info">INFO</string>
+    <string name="tab_title_cast">CAST</string>
+    <string name="tab_title_scenes">SCENES</string>
+    <string name="tab_title_posters">POSTERS</string>
+    <string name="tab_title_videos">VIDEOS</string>
+
+</resources>
