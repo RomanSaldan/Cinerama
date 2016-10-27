@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -26,9 +27,11 @@ import java.util.ArrayList;
 
 public class MoviesTabAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> tabFragments;
+    private Context mCtx;
 
-    public MoviesTabAdapter(FragmentManager fm, ResponseMovieInfo movieInfo) {
+    public MoviesTabAdapter(Context context, FragmentManager fm, ResponseMovieInfo movieInfo) {
         super(fm);
+        mCtx = context;
         tabFragments    = getTabFragments(movieInfo);
     }
 
@@ -44,18 +47,17 @@ public class MoviesTabAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        //TODO here issue! put title inside fragment and then cast it and retrieve title
         Fragment current = tabFragments.get(position);
         if (current instanceof MovieInfoFragment)
-            return "INFO";
+            return mCtx.getString(R.string.tab_title_info);
         else if (current instanceof MovieCastFragment)
-            return "CAST";
+            return mCtx.getString(R.string.tab_title_cast);
         else if(current instanceof MovieScenesFragment)
-            return "SCENES";
+            return mCtx.getString(R.string.tab_title_scenes);
         else if(current instanceof MoviePostersFragment)
-            return "POSTERS";
+            return mCtx.getString(R.string.tab_title_posters);
         else if (current instanceof MovieVideosFragment)
-            return "VIDEOS";
+            return mCtx.getString(R.string.tab_title_videos);
         else
             return "";
     }
@@ -63,23 +65,23 @@ public class MoviesTabAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> getTabFragments(ResponseMovieInfo data) {
         ArrayList<Fragment> result = new ArrayList<>();
 
-        MovieInfoFragment movieInfoFragment = MovieInfoFragment_.builder().build();
+        MovieInfoFragment movieInfoFragment = MovieInfoFragment_.builder().responseMovieInfo(data).build();
         result.add(movieInfoFragment);
 
         if(data.credits.cast.size() > 0 || data.credits.crew.size() > 0) {
-            MovieCastFragment movieCastFragment = MovieCastFragment_.builder().build();
+            MovieCastFragment movieCastFragment = MovieCastFragment_.builder().responseMovieInfo(data).build();
             result.add(movieCastFragment);
         }
         if(data.images.backdrops.size() > 0) {
-            MovieScenesFragment movieScreensFragment = MovieScenesFragment_.builder().build();
+            MovieScenesFragment movieScreensFragment = MovieScenesFragment_.builder().responseMovieInfo(data).build();
             result.add(movieScreensFragment);
         }
         if(data.images.posters.size() > 0) {
-            MoviePostersFragment moviePostersFragment = MoviePostersFragment_.builder().build();
+            MoviePostersFragment moviePostersFragment = MoviePostersFragment_.builder().responseMovieInfo(data).build();
             result.add(moviePostersFragment);
         }
         if(data.videos.results.size() > 0) {
-            MovieVideosFragment movieVideosFragment = MovieVideosFragment_.builder().build();
+            MovieVideosFragment movieVideosFragment = MovieVideosFragment_.builder().responseMovieInfo(data).build();
             result.add(movieVideosFragment);
         }
 

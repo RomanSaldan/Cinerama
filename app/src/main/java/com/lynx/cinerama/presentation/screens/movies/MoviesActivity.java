@@ -1,9 +1,16 @@
 package com.lynx.cinerama.presentation.screens.movies;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -20,6 +27,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringRes;
 
@@ -68,16 +76,18 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     @StringRes(R.string.tab_title_videos)
     protected String tabTitleVideos;
 
+    @OptionsMenuItem(R.id.action_menu_search)
+    protected MenuItem menuItemSearch;
+
     @AfterInject
     protected void initPresenter() {
-
         new MoviesPresenter(this, movieRepository, Constants.TEST_MOVIE_ID);
     }
 
     @AfterViews
     protected void initUI() {
         navigationView.setCheckedItem(R.id.menuItemMovies);
-
+        setupToolbar();
         presenter.subscribe();
     }
 
@@ -87,29 +97,33 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     }
 
     @Override
-    public void setupToolbar(String title) {
+    public void setupToolbar() {
         setSupportActionBar(toolbar_AM);
         getSupportActionBar().setTitle("");
-
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
-                this,  fullView, toolbar_AM,
+                this, fullView, toolbar_AM,
                 R.string.drawer_open, R.string.drawer_close);
         fullView.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
 
     @Override
+    public void setTitle(String title) {
+        toolbar_AM.setTitle(title);
+    }
+
+    @Override
     public void setupBottomBar() {
-        HashMap<String,Integer> tabsMap = new HashMap<>();
+        HashMap<String, Integer> tabsMap = new HashMap<>();
         tabsMap.put(tabTitleInfo, R.drawable.selector_tab_info);
         tabsMap.put(tabTitleCast, R.drawable.selector_tab_cast);
         tabsMap.put(tabTitleScenes, R.drawable.selector_tab_scenes);
         tabsMap.put(tabTitlePosters, R.drawable.selector_tab_posters);
         tabsMap.put(tabTitleVideos, R.drawable.selector_tab_trailers);
 
-        for(int i = 0; i < tabLayout_AM.getTabCount(); i++) {
+        for (int i = 0; i < tabLayout_AM.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout_AM.getTabAt(i);
-            if(tabsMap.keySet().contains(tab.getText().toString())) {
+            if (tabsMap.keySet().contains(tab.getText().toString())) {
                 tab.setIcon(tabsMap.get(tab.getText().toString()));
                 tab.setText("");
             }
@@ -125,7 +139,7 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @Override
     public void setupMovieInfo(ResponseMovieInfo responseMovieInfo) {
-        MoviesTabAdapter tabAdapter = new MoviesTabAdapter(getSupportFragmentManager(), responseMovieInfo);
+        MoviesTabAdapter tabAdapter = new MoviesTabAdapter(this, getSupportFragmentManager(), responseMovieInfo);
         viewpager_AM.setAdapter(tabAdapter);
         tabLayout_AM.setupWithViewPager(viewpager_AM);
     }
@@ -133,6 +147,12 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(presenter != null) presenter.unsubscribe();
+        if (presenter != null) presenter.unsubscribe();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        svMovies_AM.setMenuItem(menuItemSearch);
+        return super.onCreateOptionsMenu(menu);
     }
 }

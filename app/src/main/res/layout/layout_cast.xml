@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:rv_centered="false"
+    app:rv_color="@color/rippleColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightGrey"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/flCircleCast_LCC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:padding="8dp"
+                android:text="@string/tab_title_cast"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:padding="8dp"
+                android:text="@string/more"
+                android:textColor="@color/colorAccent"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:focusable="false"
+            android:clickable="false">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civDirectorOne_LCC"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@color/colorPrimaryDark"
+                android:visibility="gone"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="3dp"
+                tools:visibility="visible" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civDirectorTwo_LCC"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="-15dp"
+                android:src="@color/colorPrimaryDark"
+                android:visibility="gone"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="3dp"
+                tools:visibility="visible"
+                android:layout_marginLeft="-15dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civActorOne_LCC"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="35dp"
+                android:src="@color/colorPrimaryDark"
+                android:visibility="gone"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="3dp"
+                tools:visibility="visible"
+                android:layout_marginLeft="35dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civActorTwo_LCC"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="-15dp"
+                android:src="@color/colorPrimaryDark"
+                android:visibility="gone"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="3dp"
+                tools:visibility="visible"
+                android:layout_marginLeft="-15dp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civActorThree_LCC"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="-15dp"
+                android:src="@color/colorPrimaryDark"
+                android:visibility="gone"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="3dp"
+                tools:visibility="visible"
+                android:layout_marginLeft="-15dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.andexert.library.RippleView>

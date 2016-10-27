@@ -14,10 +14,12 @@ public class Constants {
     public static final String GET_MOVIE_BY_ID              = "movie/{id}";
     public static final String APPEND_TO_MOVIE_RESPONSE     = "&append_to_response=similar,reviews,images,credits,videos";
 
-    public static final int TEST_MOVIE_ID                   = 13;
+    public static final int TEST_MOVIE_ID                   = 18;
     public static final String LANGUAGE_FILTER              = "en";
     public static final String GALLERY_TYPE_SCREENS         = "Screens";
     public static final String GALLERY_TYPE_POSTERS         = "Posters";
+
+    public static final String KEY_DIRECTOR                 = "Director";
 
     public static final int DELAY_CLICK                     = 600;
 

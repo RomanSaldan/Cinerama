@@ -11,5 +11,9 @@
     <string name="tab_title_scenes">SCENES</string>
     <string name="tab_title_posters">POSTERS</string>
     <string name="tab_title_videos">VIDEOS</string>
+    <string name="more">MORE</string>
+    <string name="placeholder_no_info">No information</string>
+    <string name="more_reviews">MORE REVIEWS</string>
+    <string name="similar">Similar</string>
 
 </resources>

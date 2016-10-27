@@ -71,8 +71,7 @@
             android:id="@+id/svMovies_AM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            app:layout_collapseMode="pin" />
+            android:layout_gravity="top"/>
 
     </FrameLayout>
 

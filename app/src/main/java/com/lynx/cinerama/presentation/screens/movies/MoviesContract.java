@@ -13,7 +13,8 @@ public interface MoviesContract {
         void displayProgress(boolean isShown);
         void displayError(String msg);
 
-        void setupToolbar(String title);
+        void setupToolbar();
+        void setTitle(String title);
         void setupBottomBar();
         void setBackdropImage(String backdropPath);
         void setupMovieInfo(ResponseMovieInfo responseMovieInfo);
