@@ -18,6 +18,8 @@ public interface MoviesContract {
         void setupBottomBar();
         void setBackdropImage(String backdropPath);
         void setupMovieInfo(ResponseMovieInfo responseMovieInfo);
+
+        void refreshMovieInfo(int movieID);
     }
     interface MoviesPresenter extends BasePresenter {
 

@@ -18,8 +18,10 @@ import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.presentation.adapters.SimilarAdapter;
+import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.custom.cast_view.CastLayout;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
+import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
 import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.AfterInject;
@@ -38,7 +40,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @EFragment(R.layout.fragment_movie_info)
-public class MovieInfoFragment extends Fragment implements MovieInfoContract.MovieInfoView {
+public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements MovieInfoContract.MovieInfoView {
 
     private MovieInfoContract.MovieInfoPresenter presenter;
 
@@ -301,6 +303,11 @@ public class MovieInfoFragment extends Fragment implements MovieInfoContract.Mov
     @Override
     public void clickReviewsMore() {
         presenter.startReviewsMore();
+    }
+
+    @Override
+    public void refreshMovieInfo(int movieID) {
+        mActivity.refreshMovieInfo(movieID);
     }
 
     @Override

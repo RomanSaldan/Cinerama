@@ -50,6 +50,8 @@ public interface MovieInfoContract {
         void clickSimilarItem(int similarMovieId);
         void clickSimilarMore();
         void clickReviewsMore();
+
+        void refreshMovieInfo(int movieID);
     }
     interface MovieInfoPresenter extends BasePresenter {
         void displayMovieInfo();

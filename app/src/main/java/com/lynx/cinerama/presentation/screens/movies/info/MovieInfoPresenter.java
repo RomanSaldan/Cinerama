@@ -58,6 +58,7 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     @Override
     public void startSimilarMovieScreen(int movieId) {
         Log.d("myLogs", "Start similar movie info. ID = " + movieId);
+        view.refreshMovieInfo(movieId);
     }
 
     @Override

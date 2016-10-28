@@ -1,16 +1,12 @@
 package com.lynx.cinerama.presentation.screens.movies;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +22,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
@@ -42,6 +39,9 @@ import java.util.HashMap;
 public class MoviesActivity extends NavigationActivity implements MoviesContract.MoviesView {
 
     private MoviesContract.MoviesPresenter presenter;
+
+    @Extra
+    public int movieID;
 
     @Bean
     protected MovieRepository movieRepository;
@@ -60,6 +60,9 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @ViewById
     protected ViewPager viewpager_AM;
+
+    @ViewById
+    protected CollapsingToolbarLayout collapsingToolbar_AM;
 
     @StringRes(R.string.tab_title_info)
     protected String tabTitleInfo;
@@ -81,7 +84,7 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @AfterInject
     protected void initPresenter() {
-        new MoviesPresenter(this, movieRepository, Constants.TEST_MOVIE_ID);
+        new MoviesPresenter(this, movieRepository, movieID == 0 ? Constants.TEST_MOVIE_ID : movieID);
     }
 
     @AfterViews
@@ -99,7 +102,6 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     @Override
     public void setupToolbar() {
         setSupportActionBar(toolbar_AM);
-        getSupportActionBar().setTitle("");
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this, fullView, toolbar_AM,
                 R.string.drawer_open, R.string.drawer_close);
@@ -109,7 +111,7 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @Override
     public void setTitle(String title) {
-        toolbar_AM.setTitle(title);
+        collapsingToolbar_AM.setTitle(title);
     }
 
     @Override
@@ -142,6 +144,13 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
         MoviesTabAdapter tabAdapter = new MoviesTabAdapter(this, getSupportFragmentManager(), responseMovieInfo);
         viewpager_AM.setAdapter(tabAdapter);
         tabLayout_AM.setupWithViewPager(viewpager_AM);
+    }
+
+    @Override
+    public void refreshMovieInfo(int movieID) {
+        this.movieID = movieID;
+        initPresenter();
+        presenter.subscribe();
     }
 
     @Override
