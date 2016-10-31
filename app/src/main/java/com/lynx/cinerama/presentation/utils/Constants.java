@@ -12,6 +12,7 @@ public class Constants {
     public static final String API_KEY_YOUTUBE              = "AIzaSyAlzibiO43wGa4XQFuIvr3aBwS1VC-d4bs";
 
     public static final String GET_MOVIE_BY_ID              = "movie/{id}";
+    public static final String GET_SIMILAR_MOVIES           = "movie/{movie_id}/similar";
     public static final String APPEND_TO_MOVIE_RESPONSE     = "&append_to_response=similar,reviews,images,credits,videos";
 
     public static final int TEST_MOVIE_ID                   = 18;

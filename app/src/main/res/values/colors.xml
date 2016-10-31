@@ -6,4 +6,7 @@
 
     <color name="colorLightGrey">#e7ecec</color>
     <color name="rippleColor">#77000000</color>
+
+    <color name="transparent_more">#b5000000</color>
+    <color name="transparent_less">#d8000000</color>
 </resources>

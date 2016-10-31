@@ -1,6 +1,9 @@
 package com.lynx.cinerama.presentation.screens.movies.info;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,17 +14,24 @@ import android.widget.TextView;
 
 import com.andexert.library.RippleView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
-import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
+import com.lynx.cinerama.presentation.adapters.ReviewsAdapter;
 import com.lynx.cinerama.presentation.adapters.SimilarAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.custom.cast_view.CastLayout;
+import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
+import com.lynx.cinerama.presentation.screens.movies.info.fullscreen_poster.FullscreenPosterActivity_;
+import com.lynx.cinerama.presentation.screens.movies.info.review_details.ReviewDetailsActivity_;
+import com.lynx.cinerama.presentation.screens.movies.info.similar_details.SimilarDetailsActivity_;
 import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.AfterInject;
@@ -49,6 +59,12 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
 
     @Bean
     protected SimilarAdapter similarAdapter;
+
+    @Bean
+    protected ReviewsAdapter reviewsAdapter;
+
+    @StringRes(R.string.key_fullscreen_poster)
+    protected String keyFullscreenPoster;
 
     //region view injections
     @ViewById
@@ -127,7 +143,6 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     protected void initUI() {
         cclCast_MFI     .setItemListener(this::clickCastItem);
         cclCast_MFI     .setMoreListener(this::clickCastMore);
-//        similarAdapter  .setSimilarListener(this::clickSimilarItem);
 
         RxView.clicks(btnImdb_FMI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
@@ -141,7 +156,7 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
         RxView.clicks(flSimilar_FMI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> clickSimilarMore());
-        RxView.clicks(rippleReviews_FMI)
+        RxView.clicks(llReviews_FMI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> clickReviewsMore());
 
@@ -152,8 +167,15 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     public void displayPosterImage(String url) {
         Glide.with(this)
                 .load(Constants.BASE_IMAGE_URL + url)
-                .centerCrop()
-                .into(ivPoster_FMI);
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        presenter.setPosterBitmap(resource);
+                        ivPoster_FMI.setImageBitmap(resource);
+                        ivPoster_FMI.setDrawingCacheEnabled(true);
+                    }
+                });
     }
 
     @Override
@@ -236,13 +258,18 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvSimilar_FMI.setLayoutManager(llm);
         similarAdapter.setListDH(similarDHs);
-        similarAdapter.setOnCardClickListener(position -> clickSimilarItem(similarAdapter.getItem(position).movieSimilar.id));
+        similarAdapter.setOnCardClickListener(position -> {
+            clickSimilarItem(similarAdapter.getItem(position).movieSimilar.id);
+        });
         rvSimilar_FMI.setAdapter(similarAdapter);
     }
 
     @Override
-    public void setupMovieReviews(MovieReviews movieReviews) {
-
+    public void setupMovieReviews(ArrayList<ReviewDH> reviewDHs) {
+        LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        rvReviews_FMI.setLayoutManager(llm);
+        reviewsAdapter.setListDH(reviewDHs);
+        rvReviews_FMI.setAdapter(reviewsAdapter);
     }
 
     @Override
@@ -257,7 +284,7 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
 
     @Override
     public void setReviewVisibility(boolean isVisible) {
-        rvReviews_FMI.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        llReviews_FMI.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -267,7 +294,7 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
 
     @Override
     public void clickPoster() {
-        presenter.openFullscreenPoster(getContext());
+        presenter.openFullscreenPoster();
     }
 
     @Override
@@ -282,12 +309,12 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
 
     @Override
     public void clickImdbButton() {
-        presenter.startImdbScreen(getContext());
+        presenter.startImdbScreen();
     }
 
     @Override
     public void clickWebButton() {
-        presenter.startWebScreen(getContext());
+        presenter.startWebScreen();
     }
 
     @Override
@@ -303,6 +330,50 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     @Override
     public void clickReviewsMore() {
         presenter.startReviewsMore();
+    }
+
+    @Override
+    public void startMoreReviewActivity(String title, MovieReviews movieReviews) {
+        ReviewDetailsActivity_.intent(this)
+                .movieTitle(title)
+                .movieReviews(movieReviews)
+                .start();
+    }
+
+    @Override
+    public void startImmdbIntent(String imdbID) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("http://www.imdb.com/title/%s", imdbID)));
+        startActivity(intent);
+    }
+
+    @Override
+    public void startWebIntent(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
+    }
+
+    @Override
+    public void startMoreCast() {
+        mActivity.openCast();
+    }
+
+    @Override
+    public void startMoreSimilars(int movieID, String title) {
+        SimilarDetailsActivity_.intent(this)
+                .movieID(movieID)
+                .movieTitle(title)
+                .start();
+    }
+
+    @Override
+    public void startFullscreenPoster(Bitmap posterBitmap) {
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), ivPoster_FMI, keyFullscreenPoster);
+
+        FullscreenPosterActivity_.intent(getActivity())
+                .imageBitmap(posterBitmap)
+                .withOptions(options.toBundle())
+                .start();
     }
 
     @Override

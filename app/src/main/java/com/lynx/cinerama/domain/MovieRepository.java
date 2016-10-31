@@ -2,6 +2,7 @@ package com.lynx.cinerama.domain;
 
 import com.lynx.cinerama.data.api.Rest;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
+import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.data.services.MovieService;
 
 import org.androidannotations.annotations.EBean;
@@ -30,5 +31,9 @@ public class MovieRepository {
 
     public Observable<ResponseMovieInfo> getMovieInfo(int id) {
         return getObservable(movieService.getMovieInfo(id));
+    }
+
+    public Observable<MovieSimilar> getMovieSimilar(int movieID, int page) {
+        return getObservable(movieService.getMovieSimilar(movieID, page));
     }
 }

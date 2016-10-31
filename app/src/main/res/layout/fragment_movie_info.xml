@@ -24,7 +24,8 @@
                 android:layout_gravity="left"
                 android:layout_marginBottom="15dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/placeholder_movie" />
+                android:background="@drawable/placeholder_movie"
+                android:transitionName="@string/key_fullscreen_poster"/>
 
             <RelativeLayout
                 android:id="@+id/rlContainer_FMI"
@@ -121,7 +122,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
-                    android:src="@drawable/ic_star_black_24dp" />
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:id="@+id/imageView" />
 
                 <TextView
                     android:id="@+id/tvMovieRating_FMI"
@@ -327,7 +329,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/ic_imdb2" />
+                android:src="@drawable/ic_imdb" />
 
             <ImageView
                 android:id="@+id/btnWeb_FMI"
@@ -337,7 +339,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/ic_ie2" />
+                android:src="@drawable/ic_web" />
 
         </LinearLayout>
 
@@ -401,6 +403,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:rv_centered="false"
+            android:clickable="false"
             app:rv_color="@color/rippleColor">
 
             <LinearLayout
@@ -415,6 +418,7 @@
                     android:id="@+id/rvReviews_FMI"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     android:overScrollMode="never" />
 
                 <TextView
@@ -423,7 +427,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="MORE REVIEWS"
+                    android:text="@string/more_reviews"
                     android:textColor="@color/colorAccent"
                     android:textSize="15sp"
                     android:textStyle="bold" />

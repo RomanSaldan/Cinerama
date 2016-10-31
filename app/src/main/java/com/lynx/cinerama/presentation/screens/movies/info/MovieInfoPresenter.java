@@ -1,6 +1,6 @@
 package com.lynx.cinerama.presentation.screens.movies.info;
 
-import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,9 +9,11 @@ import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.info.MovieGenre;
 import com.lynx.cinerama.data.model.movies.info.MovieProductionCountry;
+import com.lynx.cinerama.data.model.movies.reviews.MovieReview;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.data.model.movies.similar.ShortMovieInfo;
+import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 
 import java.text.DecimalFormat;
@@ -28,6 +30,8 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
 
     private MovieInfoContract.MovieInfoView view;
     private ResponseMovieInfo movieInfo;
+
+    private Bitmap poster;
 
     public MovieInfoPresenter(MovieInfoContract.MovieInfoView view, ResponseMovieInfo movieInfo) {
         this.view = view;
@@ -46,49 +50,54 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     }
 
     @Override
-    public void startImdbScreen(Context context) {
-
+    public void startImdbScreen() {
+        view.startImmdbIntent(movieInfo.imdb_id);
     }
 
     @Override
-    public void startWebScreen(Context context) {
-
+    public void startWebScreen() {
+        view.startWebIntent(movieInfo.homepage);
     }
 
     @Override
     public void startSimilarMovieScreen(int movieId) {
-        Log.d("myLogs", "Start similar movie info. ID = " + movieId);
         view.refreshMovieInfo(movieId);
     }
 
     @Override
     public void startMoreSimilarMovies() {
-
-    }
-
-    @Override
-    public void startMoreReviewsScreen() {
-
+        view.startMoreSimilars(movieInfo.id, movieInfo.title);
     }
 
     @Override
     public void startMoreCast() {
-
+        view.startMoreCast();
     }
 
     @Override
     public void startCastItem(int personId) {
-
+        Log.d("myLogs", "Clicked cast item || id = " + personId);
     }
 
     @Override
-    public void openFullscreenPoster(Context context) {
-
+    public void openFullscreenPoster() {
+        if(poster != null)
+        view.startFullscreenPoster(poster);
     }
 
     @Override
     public void startReviewsMore() {
+        view.startMoreReviewActivity(movieInfo.title, movieInfo.reviews);
+    }
 
+    @Override
+    public Bitmap getPosterBitmap() {
+        return poster;
+    }
+
+    @Override
+    public void setPosterBitmap(Bitmap posterBitmap) {
+        poster = posterBitmap;
     }
 
     @Override
@@ -102,61 +111,64 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     }
 
     private void initBasicMovieInfo(ResponseMovieInfo movieInfo) {
-        if(!TextUtils.isEmpty(movieInfo.poster_path))
+        if (!TextUtils.isEmpty(movieInfo.poster_path))
             view.displayPosterImage(movieInfo.poster_path);
         else
             view.setPosterClickable(false);
-        if(!TextUtils.isEmpty(movieInfo.title))
+        if (!TextUtils.isEmpty(movieInfo.title))
             view.displayTitle(movieInfo.title);
-        if(!TextUtils.isEmpty(movieInfo.tagline))
+        if (!TextUtils.isEmpty(movieInfo.tagline))
             view.displayTagline(movieInfo.tagline);
-        if(movieInfo.genres != null && movieInfo.genres.size() > 0)
+        if (movieInfo.genres != null && movieInfo.genres.size() > 0)
             view.displayGenres(buildMovieGenresString(movieInfo.genres));
-        if(movieInfo.production_countries != null && movieInfo.production_countries.size() > 0)
+        if (movieInfo.production_countries != null && movieInfo.production_countries.size() > 0)
             view.displayMovieCountries(buildMovieCountriesString(movieInfo.production_countries));
-        if(movieInfo.production_companies != null && movieInfo.production_companies.size() > 0)
+        if (movieInfo.production_companies != null && movieInfo.production_companies.size() > 0)
             view.displayMovieCompanies(movieInfo.production_companies.get(0).name);
     }
 
     private void initMovieAdditionalInfo(ResponseMovieInfo movieInfo) {
-        if(movieInfo.vote_count > 0 && movieInfo.vote_average > 0)
+        if (movieInfo.vote_count > 0 && movieInfo.vote_average > 0)
             view.displayRating(getPrettyRating(movieInfo.vote_average, movieInfo.vote_count));
-        if(movieInfo.runtime > 0)
+        if (movieInfo.runtime > 0)
             view.displayDuration(getPrettyDuration(movieInfo.runtime));
-        if(!TextUtils.isEmpty(movieInfo.status))
+        if (!TextUtils.isEmpty(movieInfo.status))
             view.displayReleaseStatus(movieInfo.status);
-        if(!TextUtils.isEmpty(movieInfo.release_date))
+        if (!TextUtils.isEmpty(movieInfo.release_date))
             view.displayReleaseDate(getPrettyDate(movieInfo.release_date));
-        if(movieInfo.budget > 0)
+        if (movieInfo.budget > 0)
             view.displayBudget(getPrettyAmount(movieInfo.budget));
-        if(movieInfo.revenue > 0)
+        if (movieInfo.revenue > 0)
             view.displayRevenue(getPrettyAmount(movieInfo.revenue));
-        if(!TextUtils.isEmpty(movieInfo.overview))
+        if (!TextUtils.isEmpty(movieInfo.overview))
             view.displayMovieOverview(movieInfo.overview);
         view.enableImdbButton(!TextUtils.isEmpty(movieInfo.imdb_id));
         view.enableWebButton(!TextUtils.isEmpty(movieInfo.homepage));
     }
 
     private void initSimilars(MovieSimilar movieSimilar) {
-        if(movieSimilar.results != null && movieSimilar.results.size() > 0) {
+        if (movieSimilar.results != null && movieSimilar.results.size() > 0) {
             ArrayList<SimilarDH> listDHs = new ArrayList<>();
-            for(ShortMovieInfo smi : movieSimilar.results)
+            for (ShortMovieInfo smi : movieSimilar.results)
                 listDHs.add(new SimilarDH(smi));
             view.setupMovieSimilar(listDHs);
-        }
-        else
+        } else
             view.setSimilarVisibility(false);
     }
 
     private void initReviews(MovieReviews movieReviews) {
-        if(movieReviews != null && movieReviews.total_results > 0) {
-            view.setupMovieReviews(movieReviews);
+        if (movieReviews != null && movieReviews.total_results > 0) {
+            ArrayList<ReviewDH> listDHs = new ArrayList<>();
+            for (MovieReview mr : movieReviews.results)
+                listDHs.add(new ReviewDH(mr));
+
+            view.setupMovieReviews(listDHs);
         } else
             view.setReviewVisibility(false);
     }
 
     private void initMovieCircleCast(MovieCredits data) {
-        if(data != null) {
+        if (data != null) {
             if (data.crew != null && data.crew.size() > 0
                     || data.cast != null && data.cast.size() > 0)
                 view.setupCircleCastView(data);
@@ -192,7 +204,7 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     @Nullable
     private String buildMovieGenresString(ArrayList<MovieGenre> genres) {
         String result = "";
-        if(!genres.isEmpty()) {
+        if (!genres.isEmpty()) {
             for (MovieGenre mg : genres) result += mg.name + ", ";
             return result.substring(0, result.length() - 2).toLowerCase();
         }
@@ -202,7 +214,7 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     @Nullable
     private String buildMovieCountriesString(ArrayList<MovieProductionCountry> countries) {
         String result = "";
-        if(!countries.isEmpty()) {
+        if (!countries.isEmpty()) {
             for (MovieProductionCountry mpc : countries) result += mpc.name + ", ";
             return result.substring(0, result.length() - 2);
         }

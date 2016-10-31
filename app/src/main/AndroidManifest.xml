@@ -20,6 +20,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.screens.ActorsActivity_"/>
+        <activity android:name=".presentation.screens.movies.info.review_details.ReviewDetailsActivity_"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".presentation.screens.movies.info.similar_details.SimilarDetailsActivity_"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".presentation.screens.movies.info.fullscreen_poster.FullscreenPosterActivity_"
+            android:theme="@style/MyFullscreenAppCompatActivity"
+            android:configChanges="orientation|screenSize"/>
     </application>
 
 </manifest>

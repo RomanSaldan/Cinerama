@@ -154,6 +154,11 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     }
 
     @Override
+    public void openCast() {
+        viewpager_AM.setCurrentItem(1, true);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (presenter != null) presenter.unsubscribe();

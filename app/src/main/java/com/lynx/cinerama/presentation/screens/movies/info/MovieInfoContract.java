@@ -1,12 +1,14 @@
 package com.lynx.cinerama.presentation.screens.movies.info;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
+import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public interface MovieInfoContract {
         void setupCircleCastView(MovieCredits data);
         void displayMovieOverview(String overview);
         void setupMovieSimilar(ArrayList<SimilarDH> similarDHs);
-        void setupMovieReviews(MovieReviews movieReviews);
+        void setupMovieReviews(ArrayList<ReviewDH> reviewDHs);
 
         void setCastVisibility(boolean isVisible);
         void setSimilarVisibility(boolean isVisible);
@@ -51,18 +53,27 @@ public interface MovieInfoContract {
         void clickSimilarMore();
         void clickReviewsMore();
 
+        void startMoreReviewActivity(String title, MovieReviews movieReviews);
+        void startImmdbIntent(String imdbID);
+        void startWebIntent(String url);
+        void startMoreCast();
+        void startMoreSimilars(int movieID, String movieTitle);
+        void startFullscreenPoster(Bitmap posterBitmap);
+
         void refreshMovieInfo(int movieID);
     }
     interface MovieInfoPresenter extends BasePresenter {
         void displayMovieInfo();
-        void startImdbScreen(Context context);
-        void startWebScreen(Context context);
+        void startImdbScreen();
+        void startWebScreen();
         void startSimilarMovieScreen(int movieId);
         void startMoreSimilarMovies();
-        void startMoreReviewsScreen();
         void startMoreCast();
         void startCastItem(int personId);
-        void openFullscreenPoster(Context context);
+        void openFullscreenPoster();
         void startReviewsMore();
+
+        Bitmap getPosterBitmap();
+        void setPosterBitmap(Bitmap posterBitmap);
     }
 }

@@ -20,6 +20,7 @@ public interface MoviesContract {
         void setupMovieInfo(ResponseMovieInfo responseMovieInfo);
 
         void refreshMovieInfo(int movieID);
+        void openCast();
     }
     interface MoviesPresenter extends BasePresenter {
 
