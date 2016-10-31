@@ -47,6 +47,11 @@ public class SimilarDetailsPresenter implements SimilarDetailsContract.SimilarDe
     }
 
     @Override
+    public void startMovieInfoScreen(int movieID) {
+        view.displayMovieInfoScreen(movieID);
+    }
+
+    @Override
     public void subscribe() {
         view.setupToolbar(movieTitle);
         loadMoreSimilars(currentPage);

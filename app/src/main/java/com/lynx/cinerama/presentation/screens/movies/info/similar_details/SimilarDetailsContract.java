@@ -14,8 +14,12 @@ public interface SimilarDetailsContract {
     interface SimilarDetailsView extends BaseView<SimilarDetailsPresenter> {
         void setupToolbar(String moveiTitle);
         void displayMoreSimilars(ArrayList<SimilarDH> similarDHs);
+        void onMovieClicked(int movieID);
+
+        void displayMovieInfoScreen(int movieID);
     }
     interface SimilarDetailsPresenter extends BasePresenter {
         void loadMoreSimilars(int page);
+        void startMovieInfoScreen(int movieID);
     }
 }

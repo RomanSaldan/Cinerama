@@ -13,6 +13,7 @@ import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.SimilarAdapter;
 import com.lynx.cinerama.presentation.base.recycler.EndlessRecyclerViewScrollListener;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
+import com.lynx.cinerama.presentation.screens.movies.MoviesActivity_;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -66,9 +67,11 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
         rvSimilar_ASD.addOnScrollListener(new EndlessRecyclerViewScrollListener(glm) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.d("myLogs", "onLoadMore page " + page);
                 presenter.loadMoreSimilars(page);
             }
+        });
+        similarAdapter.setOnCardClickListener(position -> {
+            onMovieClicked(similarAdapter.getItem(position).movieSimilar.id);
         });
 
         presenter.subscribe();
@@ -86,6 +89,19 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
     @Override
     public void displayMoreSimilars(ArrayList<SimilarDH> similarDHs) {
         similarAdapter.addMoreDHs(similarDHs);
+    }
+
+    @Override
+    public void onMovieClicked(int movieID) {
+        presenter.startMovieInfoScreen(movieID);
+    }
+
+    @Override
+    public void displayMovieInfoScreen(int movieID) {
+        finish();
+        MoviesActivity_.intent(this)
+                .movieID(movieID)
+                .start();
     }
 
     @Override
