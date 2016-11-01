@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.holders.view;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,23 +8,24 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.base.recycler.BaseVH;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 import com.lynx.cinerama.presentation.utils.Constants;
+import com.michenko.simpleadapter.OnCardClickListener;
+import com.michenko.simpleadapter.RecyclerVH;
 
 /**
  * Created by Lynx on 10/27/2016.
  */
 
-public class SimilarVH extends BaseVH<SimilarDH> {
+public class SimilarVH extends RecyclerVH<SimilarDH> {
 
-    public ImageView ivPoster_LIS;
-    public TextView tvSimilarTitle_LIS;
-    public TextView tvRatingSimilar_LIS;
-    public TextView tvSimilarYear_LIS;
+    private ImageView ivPoster_LIS;
+    private TextView tvSimilarTitle_LIS;
+    private TextView tvRatingSimilar_LIS;
+    private TextView tvSimilarYear_LIS;
 
-    public SimilarVH(View itemView) {
-        super(itemView);
+    public SimilarVH(View itemView, @Nullable OnCardClickListener listener, int viewType) {
+        super(itemView, listener, viewType);
 
         ivPoster_LIS = findView(R.id.ivPoster_LIS);
         tvSimilarTitle_LIS = findView(R.id.tvSimilarTitle_LIS);
@@ -33,7 +35,7 @@ public class SimilarVH extends BaseVH<SimilarDH> {
 
     @Override
     public void bindData(SimilarDH data) {
-        Glide.with(parentView.getContext())
+        Glide.with(tvRatingSimilar_LIS.getContext())
                 .load(Constants.BASE_IMAGE_URL + data.movieSimilar.poster_path)
                 .centerCrop()
                 .into(ivPoster_LIS);

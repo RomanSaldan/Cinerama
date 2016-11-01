@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
-import com.lynx.cinerama.presentation.managers.ContextManager;
 import com.lynx.cinerama.presentation.screens.movies.cast.MovieCastFragment;
 import com.lynx.cinerama.presentation.screens.movies.cast.MovieCastFragment_;
 import com.lynx.cinerama.presentation.screens.movies.info.MovieInfoFragment;

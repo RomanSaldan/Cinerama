@@ -70,9 +70,7 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
                 presenter.loadMoreSimilars(page);
             }
         });
-        similarAdapter.setOnCardClickListener(position -> {
-            onMovieClicked(similarAdapter.getItem(position).movieSimilar.id);
-        });
+        similarAdapter.setOnCardClickListener((view, position, viewType) -> {presenter.startMovieInfoScreen(similarAdapter.getItem(position).movieSimilar.id);});
 
         presenter.subscribe();
     }
@@ -88,7 +86,7 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
 
     @Override
     public void displayMoreSimilars(ArrayList<SimilarDH> similarDHs) {
-        similarAdapter.addMoreDHs(similarDHs);
+        similarAdapter.addListDH(similarDHs);
     }
 
     @Override

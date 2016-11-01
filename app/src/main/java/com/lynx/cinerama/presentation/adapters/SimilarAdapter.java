@@ -6,6 +6,7 @@ import com.lynx.cinerama.R;
 import com.lynx.cinerama.presentation.base.recycler.BaseRecyclerAdapter;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 import com.lynx.cinerama.presentation.holders.view.SimilarVH;
+import com.michenko.simpleadapter.SimpleRecyclerAdapter;
 
 import org.androidannotations.annotations.EBean;
 
@@ -14,15 +15,11 @@ import org.androidannotations.annotations.EBean;
  */
 
 @EBean
-public class SimilarAdapter extends BaseRecyclerAdapter<SimilarDH, SimilarVH>{
+public class SimilarAdapter extends SimpleRecyclerAdapter<SimilarDH, SimilarVH> {
 
     @Override
     protected int getItemLayout() {
         return R.layout.list_item_similar;
     }
 
-    @Override
-    protected SimilarVH getViewHolder(View view) {
-        return new SimilarVH(view);
-    }
 }

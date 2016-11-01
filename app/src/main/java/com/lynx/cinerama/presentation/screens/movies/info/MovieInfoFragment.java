@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -258,9 +259,7 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
         LinearLayoutManager llm = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvSimilar_FMI.setLayoutManager(llm);
         similarAdapter.setListDH(similarDHs);
-        similarAdapter.setOnCardClickListener(position -> {
-            clickSimilarItem(similarAdapter.getItem(position).movieSimilar.id);
-        });
+        similarAdapter.setOnCardClickListener((view, position, viewType) -> clickSimilarItem(similarAdapter.getItem(position).movieSimilar.id));
         rvSimilar_FMI.setAdapter(similarAdapter);
     }
 

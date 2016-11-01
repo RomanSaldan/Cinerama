@@ -39,7 +39,7 @@ public class MoviesPresenter implements MoviesContract.MoviesPresenter {
 
                             view.setTitle(responseMovieInfo.title);
                             view.setBackdropImage(responseMovieInfo.backdrop_path);
-                            view.setupMovieInfo(responseMovieInfo);
+                            view.setupMovieInfo(responseMovieInfo); //here
                             view.setupBottomBar();
                         }, t -> {
                             view.displayProgress(false);

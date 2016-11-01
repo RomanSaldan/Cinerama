@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -141,7 +142,9 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @Override
     public void setupMovieInfo(ResponseMovieInfo responseMovieInfo) {
+        Log.d("myLogs", "setupMovieInfo");
         MoviesTabAdapter tabAdapter = new MoviesTabAdapter(this, getSupportFragmentManager(), responseMovieInfo);
+        Log.d("myLogs", "after const adapter vp == null ? " + (viewpager_AM == null));
         viewpager_AM.setAdapter(tabAdapter);
         tabLayout_AM.setupWithViewPager(viewpager_AM);
     }

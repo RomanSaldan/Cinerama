@@ -56,7 +56,10 @@ public class ReviewDetailsActivity extends AppCompatActivity implements ReviewDe
         LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvReviewDetails_ARD.setLayoutManager(llm);
         rvReviewDetails_ARD.setAdapter(reviewDetailsAdapter);
-        reviewDetailsAdapter.setOnReviewDetailsListener(this::clickReviewLink);
+        reviewDetailsAdapter.setOnCardClickListener((view, position, viewType) -> {
+            if(view.getId() == R.id.ivLink_LIR)
+            clickReviewLink(reviewDetailsAdapter.getItem(position).movieReview.url);
+        });
 
         presenter.subscribe();
     }

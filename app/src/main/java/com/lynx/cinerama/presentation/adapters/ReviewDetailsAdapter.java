@@ -7,6 +7,7 @@ import com.lynx.cinerama.presentation.listeners.OnReviewDetailsListener;
 import com.lynx.cinerama.presentation.base.recycler.BaseRecyclerAdapter;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.view.ReviewDetailsVH;
+import com.michenko.simpleadapter.SimpleRecyclerAdapter;
 
 import org.androidannotations.annotations.EBean;
 
@@ -15,21 +16,11 @@ import org.androidannotations.annotations.EBean;
  */
 
 @EBean
-public class ReviewDetailsAdapter extends BaseRecyclerAdapter<ReviewDH, ReviewDetailsVH> {
-
-    private OnReviewDetailsListener onReviewDetailsListener;
-
-    public void setOnReviewDetailsListener(OnReviewDetailsListener onReviewDetailsListener) {
-        this.onReviewDetailsListener = onReviewDetailsListener;
-    }
+public class ReviewDetailsAdapter extends SimpleRecyclerAdapter<ReviewDH, ReviewDetailsVH> {
 
     @Override
     protected int getItemLayout() {
         return R.layout.list_item_review;
     }
 
-    @Override
-    protected ReviewDetailsVH getViewHolder(View view) {
-        return new ReviewDetailsVH(view, onReviewDetailsListener);
-    }
 }
