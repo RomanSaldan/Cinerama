@@ -142,9 +142,7 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @Override
     public void setupMovieInfo(ResponseMovieInfo responseMovieInfo) {
-        Log.d("myLogs", "setupMovieInfo");
         MoviesTabAdapter tabAdapter = new MoviesTabAdapter(this, getSupportFragmentManager(), responseMovieInfo);
-        Log.d("myLogs", "after const adapter vp == null ? " + (viewpager_AM == null));
         viewpager_AM.setAdapter(tabAdapter);
         tabLayout_AM.setupWithViewPager(viewpager_AM);
     }
