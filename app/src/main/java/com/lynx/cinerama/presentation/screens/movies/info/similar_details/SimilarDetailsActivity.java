@@ -6,12 +6,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.SimilarAdapter;
-import com.lynx.cinerama.presentation.base.recycler.EndlessRecyclerViewScrollListener;
+import com.lynx.cinerama.presentation.listeners.EndlessRecyclerViewScrollListener;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity_;
 

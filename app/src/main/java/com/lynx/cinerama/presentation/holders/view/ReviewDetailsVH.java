@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.listeners.OnReviewDetailsListener;
-import com.lynx.cinerama.presentation.base.recycler.BaseVH;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.utils.Constants;
 import com.michenko.simpleadapter.OnCardClickListener;

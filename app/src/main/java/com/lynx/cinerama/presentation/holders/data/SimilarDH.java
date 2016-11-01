@@ -1,8 +1,6 @@
 package com.lynx.cinerama.presentation.holders.data;
 
-import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.data.model.movies.similar.ShortMovieInfo;
-import com.lynx.cinerama.presentation.base.recycler.BaseDH;
 import com.michenko.simpleadapter.RecyclerDH;
 
 /**

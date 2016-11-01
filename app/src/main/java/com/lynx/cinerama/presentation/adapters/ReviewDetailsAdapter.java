@@ -1,10 +1,6 @@
 package com.lynx.cinerama.presentation.adapters;
 
-import android.view.View;
-
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.listeners.OnReviewDetailsListener;
-import com.lynx.cinerama.presentation.base.recycler.BaseRecyclerAdapter;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.view.ReviewDetailsVH;
 import com.michenko.simpleadapter.SimpleRecyclerAdapter;

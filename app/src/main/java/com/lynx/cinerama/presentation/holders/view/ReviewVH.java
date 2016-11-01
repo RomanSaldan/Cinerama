@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.base.recycler.BaseVH;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.michenko.simpleadapter.OnCardClickListener;
 import com.michenko.simpleadapter.RecyclerVH;

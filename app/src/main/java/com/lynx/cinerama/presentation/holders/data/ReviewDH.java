@@ -1,7 +1,6 @@
 package com.lynx.cinerama.presentation.holders.data;
 
 import com.lynx.cinerama.data.model.movies.reviews.MovieReview;
-import com.lynx.cinerama.presentation.base.recycler.BaseDH;
 import com.michenko.simpleadapter.RecyclerDH;
 
 /**
