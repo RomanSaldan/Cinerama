@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvTitle_LICH"
@@ -15,6 +15,7 @@
         android:textAllCaps="true"
         android:paddingLeft="20dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"/>
 
 </FrameLayout>

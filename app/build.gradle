@@ -88,7 +88,4 @@ dependencies {
         exclude module: 'recyclerview-v7'
         exclude module: 'support-compat'
     }
-
-
-
 }
