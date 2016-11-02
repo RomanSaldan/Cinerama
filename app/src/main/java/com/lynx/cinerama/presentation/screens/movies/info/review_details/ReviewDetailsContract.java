@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.movies.info.review_details;
 
+import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
@@ -18,6 +19,8 @@ public interface ReviewDetailsContract {
         void displayReviewLink(String url);
     }
     interface ReviewDetailsPresenter extends BasePresenter {
+        void loadMoreReviews(int page);
+        void setupMovieReviews(MovieReviews movieReviews);
         void openReviewLink(String url);
     }
 }

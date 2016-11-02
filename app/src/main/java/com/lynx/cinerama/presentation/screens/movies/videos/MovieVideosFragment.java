@@ -19,6 +19,6 @@ import org.androidannotations.annotations.res.StringRes;
 public class MovieVideosFragment extends BaseFragment<MoviesActivity> {
 
     @FragmentArg
-    protected ResponseMovieInfo responseMovieInfo;
+    protected int movieID;
 
 }

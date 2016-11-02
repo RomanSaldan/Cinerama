@@ -3,6 +3,7 @@ package com.lynx.cinerama.presentation.screens.movies.info;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
@@ -53,17 +54,17 @@ public interface MovieInfoContract {
         void clickSimilarMore();
         void clickReviewsMore();
 
-        void startMoreReviewActivity(String title, MovieReviews movieReviews);
+        void startMoreReviewActivity(int movieID);
         void startImmdbIntent(String imdbID);
         void startWebIntent(String url);
         void startMoreCast();
-        void startMoreSimilars(int movieID, String movieTitle);
+        void startMoreSimilars(int movieID);
         void startFullscreenPoster(Bitmap posterBitmap);
 
         void refreshMovieInfo(int movieID);
     }
     interface MovieInfoPresenter extends BasePresenter {
-        void displayMovieInfo();
+        void displayMovieInfo(ResponseMovieInfo responseMovieInfo);
         void startImdbScreen();
         void startWebScreen();
         void startSimilarMovieScreen(int movieId);

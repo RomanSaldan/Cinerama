@@ -1,9 +1,14 @@
 package com.lynx.cinerama.data.api;
 
+import android.util.Log;
+
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.lynx.cinerama.data.services.MovieService;
+import com.lynx.cinerama.presentation.utils.Constants;
 
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -24,6 +29,14 @@ public class Rest {
     private Rest() {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new StethoInterceptor())
+                .addInterceptor(chain -> {
+                    HttpUrl original = chain.request().url();
+                    HttpUrl url = original.newBuilder()
+                            .addQueryParameter("api_key", Constants.API_KEY_TMDB)
+                            .build();
+                    Request request = chain.request().newBuilder().url(url).build();
+                    return chain.proceed(request);
+                })
                 .build();
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

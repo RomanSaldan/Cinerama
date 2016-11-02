@@ -19,16 +19,14 @@ public class SimilarDetailsPresenter implements SimilarDetailsContract.SimilarDe
 
     private SimilarDetailsContract.SimilarDetailsView view;
     private int movieID;
-    private String movieTitle;
     private MovieRepository movieRepository;
     private CompositeSubscription compositeSubscription;
 
     private int currentPage = 1;
 
-    public SimilarDetailsPresenter(SimilarDetailsContract.SimilarDetailsView view, int movieID, String movieTitle, MovieRepository movieRepository) {
+    public SimilarDetailsPresenter(SimilarDetailsContract.SimilarDetailsView view, int movieID, MovieRepository movieRepository) {
         this.view = view;
         this.movieID = movieID;
-        this.movieTitle = movieTitle;
         this.movieRepository = movieRepository;
         compositeSubscription = new CompositeSubscription();
 
@@ -53,7 +51,10 @@ public class SimilarDetailsPresenter implements SimilarDetailsContract.SimilarDe
 
     @Override
     public void subscribe() {
-        view.setupToolbar(movieTitle);
+        compositeSubscription.add(
+                movieRepository.getMovieInfo(movieID)
+                    .subscribe(responseMovieInfo -> view.setupToolbar(responseMovieInfo.title))
+        );
         loadMoreSimilars(currentPage);
     }
 

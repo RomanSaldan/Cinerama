@@ -35,7 +35,6 @@ public class MoviesPresenter implements MoviesContract.MoviesPresenter {
                 movieRepository.getMovieInfo(movieID)
                         .subscribe(responseMovieInfo -> {
                             view.displayProgress(false);
-                            Log.d("myLogs", "Success");
 
                             view.setTitle(responseMovieInfo.title);
                             view.setBackdropImage(responseMovieInfo.backdrop_path);

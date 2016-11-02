@@ -38,9 +38,6 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
     @Extra
     protected int movieID;
 
-    @Extra
-    protected String movieTitle;
-
     @Bean
     protected MovieRepository movieRepository;
 
@@ -54,7 +51,7 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
 
     @AfterInject
     protected void initPresenter() {
-        new SimilarDetailsPresenter(this, movieID, movieTitle, movieRepository);
+        new SimilarDetailsPresenter(this, movieID, movieRepository);
     }
 
     @AfterViews

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.PostersAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.holders.data.PosterDH;
@@ -33,17 +34,20 @@ public class MoviePostersFragment extends BaseFragment<MoviesActivity> implement
     private GridLayoutManager glm;
 
     @FragmentArg
-    protected ResponseMovieInfo responseMovieInfo;
+    protected int movieID;
 
     @ViewById
     protected RecyclerView rvPosters_FMP;
+
+    @Bean
+    protected MovieRepository movieRepository;
 
     @Bean
     protected PostersAdapter postersAdapter;
 
     @AfterInject
     protected void initPresenter() {
-        new MoviePostersPresenter(this, responseMovieInfo);
+        new MoviePostersPresenter(this, movieID, movieRepository);
     }
 
     @AfterViews

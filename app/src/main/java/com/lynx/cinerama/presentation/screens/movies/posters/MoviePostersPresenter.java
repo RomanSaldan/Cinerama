@@ -2,9 +2,13 @@ package com.lynx.cinerama.presentation.screens.movies.posters;
 
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.holders.data.PosterDH;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -13,20 +17,24 @@ import java.util.ArrayList;
 public class MoviePostersPresenter implements MoviePostersContract.MoviePosterPresenter {
 
     private MoviePostersContract.MoviePosterView view;
-    private ResponseMovieInfo responseMovieInfo;
+    private int movieID;
+    private MovieRepository movieRepository;
+    private CompositeSubscription compositeSubscription;
 
-    public MoviePostersPresenter(MoviePostersContract.MoviePosterView view, ResponseMovieInfo responseMovieInfo) {
+    public MoviePostersPresenter(MoviePostersContract.MoviePosterView view, int movieID, MovieRepository movieRepository) {
         this.view = view;
-        this.responseMovieInfo = responseMovieInfo;
+        this.movieID = movieID;
+        this.movieRepository = movieRepository;
+        compositeSubscription = new CompositeSubscription();
 
         view.setPresenter(this);
     }
 
     @Override
-    public void setupPosters() {
+    public void setupPosters(List<ImageModel> posters) {
         ArrayList<PosterDH> posterDHs = new ArrayList<>();
-        if(responseMovieInfo.images.posters != null && responseMovieInfo.images.posters.size() > 0)
-            for(ImageModel imageModel : responseMovieInfo.images.posters)
+        if(posters != null && posters.size() > 0)
+            for(ImageModel imageModel : posters)
                 posterDHs.add(new PosterDH(imageModel));
         view.displayPosters(posterDHs);
     }
@@ -38,11 +46,15 @@ public class MoviePostersPresenter implements MoviePostersContract.MoviePosterPr
 
     @Override
     public void subscribe() {
-        setupPosters();
+        compositeSubscription.add(
+                movieRepository.getMoviePosters(movieID)
+                    .subscribe(this::setupPosters)
+        );
     }
 
     @Override
     public void unsubscribe() {
-
+        if(compositeSubscription.hasSubscriptions())
+            compositeSubscription.clear();
     }
 }

@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.movies.cast;
 
+import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
 import com.lynx.cinerama.presentation.holders.data.CreditsDH;
@@ -18,7 +19,7 @@ public interface MovieCastContract {
         void openPersonInfoScreen(int personID);
     }
     interface MovieCastPresenter extends BasePresenter {
-        void setupCredits();
+        void setupCredits(MovieCredits movieCredits);
 
         void setupPersonInfoScreen(int personID);
     }

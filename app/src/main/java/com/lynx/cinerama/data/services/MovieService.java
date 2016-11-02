@@ -1,6 +1,7 @@
 package com.lynx.cinerama.data.services;
 
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
+import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.presentation.utils.Constants;
 
@@ -14,9 +15,12 @@ import rx.Observable;
  */
 
 public interface MovieService {
-    @GET(Constants.GET_MOVIE_BY_ID + Constants.API_KEY_URL + Constants.APPEND_TO_MOVIE_RESPONSE)
+    @GET(Constants.GET_MOVIE_BY_ID + Constants.APPEND_TO_MOVIE_RESPONSE)
     Observable<ResponseMovieInfo> getMovieInfo(@Path("id") int id);
 
-    @GET(Constants.GET_SIMILAR_MOVIES + Constants.API_KEY_URL)
+    @GET(Constants.GET_SIMILAR_MOVIES)
     Observable<MovieSimilar> getMovieSimilar(@Path("movie_id") int movieID, @Query("page") int page);
+
+    @GET(Constants.GET_MOVIE_REVIEWS)
+    Observable<MovieReviews> getMovieReviews(@Path("movie_id") int movieID, @Query("page") int page);
 }

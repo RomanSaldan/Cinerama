@@ -23,6 +23,7 @@ import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.ReviewsAdapter;
 import com.lynx.cinerama.presentation.adapters.SimilarAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
@@ -56,7 +57,10 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     private MovieInfoContract.MovieInfoPresenter presenter;
 
     @FragmentArg
-    protected ResponseMovieInfo responseMovieInfo;
+    protected int movieID;
+
+    @Bean
+    protected MovieRepository movieRepository;
 
     @Bean
     protected SimilarAdapter similarAdapter;
@@ -137,7 +141,7 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
 
     @AfterInject
     protected void initPresenter() {
-        new MovieInfoPresenter(this, responseMovieInfo);
+        new MovieInfoPresenter(this, movieID, movieRepository);
     }
 
     @AfterViews
@@ -332,10 +336,9 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     }
 
     @Override
-    public void startMoreReviewActivity(String title, MovieReviews movieReviews) {
+    public void startMoreReviewActivity(int movieID) {
         ReviewDetailsActivity_.intent(this)
-                .movieTitle(title)
-                .movieReviews(movieReviews)
+                .movieID(movieID)
                 .start();
     }
 
@@ -357,10 +360,9 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     }
 
     @Override
-    public void startMoreSimilars(int movieID, String title) {
+    public void startMoreSimilars(int movieID) {
         SimilarDetailsActivity_.intent(this)
                 .movieID(movieID)
-                .movieTitle(title)
                 .start();
     }
 
@@ -383,5 +385,12 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     @Override
     public void setPresenter(MovieInfoContract.MovieInfoPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(presenter != null)
+            presenter.unsubscribe();
     }
 }

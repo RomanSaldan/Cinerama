@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.CreditsAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.holders.data.CreditsDH;
@@ -33,17 +34,20 @@ public class MovieCastFragment extends BaseFragment<MoviesActivity> implements M
     private GridLayoutManager glm;
 
     @FragmentArg
-    protected ResponseMovieInfo responseMovieInfo;
+    protected int movieID;
 
     @Bean
     protected CreditsAdapter creditsAdapter;
+
+    @Bean
+    protected MovieRepository movieRepository;
 
     @ViewById
     protected RecyclerView rvCredits_FMC;
 
     @AfterInject
     protected void initPresenter() {
-        new MovieCastPresenter(this, responseMovieInfo);
+        new MovieCastPresenter(this, movieID, movieRepository);
     }
 
     @AfterViews
@@ -94,5 +98,12 @@ public class MovieCastFragment extends BaseFragment<MoviesActivity> implements M
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         glm.setSpanCount(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(presenter != null)
+            presenter.unsubscribe();
     }
 }

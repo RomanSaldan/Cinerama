@@ -1,5 +1,7 @@
 package com.lynx.cinerama.data.model.movies.gallery;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 /**
@@ -23,4 +25,8 @@ public class ImageModel implements Serializable {
     public String iso_639_1;
     public float vote_average;
     public int vote_count;
+
+    public boolean getIso_639_1Valid() {
+        return TextUtils.isEmpty(iso_639_1) || iso_639_1.equalsIgnoreCase("en");
+    }
 }

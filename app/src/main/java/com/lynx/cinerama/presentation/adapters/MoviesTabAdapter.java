@@ -64,23 +64,23 @@ public class MoviesTabAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> getTabFragments(ResponseMovieInfo data) {
         ArrayList<Fragment> result = new ArrayList<>();
 
-        MovieInfoFragment movieInfoFragment = MovieInfoFragment_.builder().responseMovieInfo(data).build();
+        MovieInfoFragment movieInfoFragment = MovieInfoFragment_.builder().movieID(data.id).build();
         result.add(movieInfoFragment);
 
         if(data.credits.cast.size() > 0 || data.credits.crew.size() > 0) {
-            MovieCastFragment movieCastFragment = MovieCastFragment_.builder().responseMovieInfo(data).build();
+            MovieCastFragment movieCastFragment = MovieCastFragment_.builder().movieID(data.id).build();
             result.add(movieCastFragment);
         }
         if(data.images.backdrops.size() > 0) {
-            MovieScenesFragment movieScreensFragment = MovieScenesFragment_.builder().responseMovieInfo(data).build();
+            MovieScenesFragment movieScreensFragment = MovieScenesFragment_.builder().movieID(data.id).build();
             result.add(movieScreensFragment);
         }
         if(data.images.posters.size() > 0) {
-            MoviePostersFragment moviePostersFragment = MoviePostersFragment_.builder().responseMovieInfo(data).build();
+            MoviePostersFragment moviePostersFragment = MoviePostersFragment_.builder().movieID(data.id).build();
             result.add(moviePostersFragment);
         }
         if(data.videos.results.size() > 0) {
-            MovieVideosFragment movieVideosFragment = MovieVideosFragment_.builder().responseMovieInfo(data).build();
+            MovieVideosFragment movieVideosFragment = MovieVideosFragment_.builder().movieID(data.id).build();
             result.add(movieVideosFragment);
         }
 

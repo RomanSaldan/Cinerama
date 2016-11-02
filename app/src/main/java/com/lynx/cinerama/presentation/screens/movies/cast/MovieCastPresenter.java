@@ -1,11 +1,14 @@
 package com.lynx.cinerama.presentation.screens.movies.cast;
 
-import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
+import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.credits.PersonCast;
 import com.lynx.cinerama.data.model.movies.credits.PersonCrew;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.holders.data.CreditsDH;
 
 import java.util.ArrayList;
+
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -14,26 +17,31 @@ import java.util.ArrayList;
 public class MovieCastPresenter implements MovieCastContract.MovieCastPresenter {
 
     private MovieCastContract.MovieCastView view;
-    private ResponseMovieInfo responseMovieInfo;
+    private int movieID;
+    private MovieRepository movieRepository;
+    private CompositeSubscription compositeSubscription;
 
-    public MovieCastPresenter(MovieCastContract.MovieCastView view, ResponseMovieInfo responseMovieInfo) {
+    public MovieCastPresenter(MovieCastContract.MovieCastView view, int movieID, MovieRepository movieRepository) {
         this.view = view;
-        this.responseMovieInfo = responseMovieInfo;
+        this.movieID = movieID;
+        this.movieRepository = movieRepository;
+        compositeSubscription = new CompositeSubscription();
 
         view.setPresenter(this);
     }
 
     @Override
-    public void setupCredits() {
+    public void setupCredits(MovieCredits movieCredits) {
         ArrayList<CreditsDH> creditsDHs = new ArrayList<>();
-        if(responseMovieInfo.credits.cast != null && responseMovieInfo.credits.cast.size() > 0) {
+
+        if(movieCredits.cast != null && movieCredits.cast.size() > 0) {
             creditsDHs.add(new CreditsDH("CAST"));
-            for(PersonCast personCast : responseMovieInfo.credits.cast)
+            for(PersonCast personCast : movieCredits.cast)
                 creditsDHs.add(new CreditsDH(personCast));
         }
-        if(responseMovieInfo.credits.crew != null && responseMovieInfo.credits.crew.size() > 0) {
+        if(movieCredits.crew != null && movieCredits.crew.size() > 0) {
             creditsDHs.add(new CreditsDH("CREW"));
-            for(PersonCrew personCrew : responseMovieInfo.credits.crew)
+            for(PersonCrew personCrew : movieCredits.crew)
                 creditsDHs.add(new CreditsDH(personCrew));
         }
         view.displayCredits(creditsDHs);
@@ -46,11 +54,16 @@ public class MovieCastPresenter implements MovieCastContract.MovieCastPresenter 
 
     @Override
     public void subscribe() {
-        setupCredits();
+        compositeSubscription.add(
+                movieRepository.getMovieCredits(movieID)
+                    .subscribe(this::setupCredits)
+        );
+
     }
 
     @Override
     public void unsubscribe() {
-
+        if(compositeSubscription.hasSubscriptions())
+            compositeSubscription.clear();
     }
 }

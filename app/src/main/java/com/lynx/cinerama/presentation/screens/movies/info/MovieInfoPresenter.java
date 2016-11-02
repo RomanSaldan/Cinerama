@@ -13,6 +13,7 @@ import com.lynx.cinerama.data.model.movies.reviews.MovieReview;
 import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.data.model.movies.similar.ShortMovieInfo;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
 
@@ -22,6 +23,8 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import rx.subscriptions.CompositeSubscription;
+
 /**
  * Created by Lynx on 10/26/2016.
  */
@@ -29,34 +32,48 @@ import java.util.Locale;
 public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter {
 
     private MovieInfoContract.MovieInfoView view;
-    private ResponseMovieInfo movieInfo;
+    private int movieID;
+    private MovieRepository movieRepository;
+    private CompositeSubscription compositeSubscription;
 
     private Bitmap poster;
 
-    public MovieInfoPresenter(MovieInfoContract.MovieInfoView view, ResponseMovieInfo movieInfo) {
+    public MovieInfoPresenter(MovieInfoContract.MovieInfoView view, int movieID, MovieRepository movieRepository) {
         this.view = view;
-        this.movieInfo = movieInfo;
+        this.movieID = movieID;
+        this.movieRepository = movieRepository;
+        compositeSubscription = new CompositeSubscription();
 
         view.setPresenter(this);
     }
 
     @Override
-    public void displayMovieInfo() {
-        initBasicMovieInfo(movieInfo);
-        initMovieAdditionalInfo(movieInfo);
-        initMovieCircleCast(movieInfo.credits);
-        initSimilars(movieInfo.similar);
-        initReviews(movieInfo.reviews);
+    public void displayMovieInfo(ResponseMovieInfo responseMovieInfo) {
+        initBasicMovieInfo(responseMovieInfo);
+        initMovieAdditionalInfo(responseMovieInfo);
+        initMovieCircleCast(responseMovieInfo.credits);
+        initSimilars(responseMovieInfo.similar);
+        initReviews(responseMovieInfo.reviews);
     }
 
     @Override
     public void startImdbScreen() {
-        view.startImmdbIntent(movieInfo.imdb_id);
+        compositeSubscription.add(
+                movieRepository.getMovieInfo(movieID)
+                .subscribe(responseMovieInfo -> {
+                    view.startImmdbIntent(responseMovieInfo.imdb_id);
+                })
+        );
     }
 
     @Override
     public void startWebScreen() {
-        view.startWebIntent(movieInfo.homepage);
+        compositeSubscription.add(
+                movieRepository.getMovieInfo(movieID)
+                        .subscribe(responseMovieInfo -> {
+                            view.startWebIntent(responseMovieInfo.homepage);
+                        })
+        );
     }
 
     @Override
@@ -66,7 +83,12 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
 
     @Override
     public void startMoreSimilarMovies() {
-        view.startMoreSimilars(movieInfo.id, movieInfo.title);
+        compositeSubscription.add(
+                movieRepository.getMovieInfo(movieID)
+                        .subscribe(responseMovieInfo -> {
+                            view.startMoreSimilars(responseMovieInfo.id);
+                        })
+        );
     }
 
     @Override
@@ -87,7 +109,12 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
 
     @Override
     public void startReviewsMore() {
-        view.startMoreReviewActivity(movieInfo.title, movieInfo.reviews);
+        compositeSubscription.add(
+                movieRepository.getMovieInfo(movieID)
+                        .subscribe(responseMovieInfo -> {
+                            view.startMoreReviewActivity(responseMovieInfo.id);
+                        })
+        );
     }
 
     @Override
@@ -102,12 +129,16 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
 
     @Override
     public void subscribe() {
-        displayMovieInfo();
+        compositeSubscription.add(
+                movieRepository.getMovieInfo(movieID)
+                .subscribe(this::displayMovieInfo)
+        );
     }
 
     @Override
     public void unsubscribe() {
-
+        if(compositeSubscription.hasSubscriptions())
+            compositeSubscription.clear();
     }
 
     private void initBasicMovieInfo(ResponseMovieInfo movieInfo) {

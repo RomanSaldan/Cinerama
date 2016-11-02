@@ -8,9 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
+import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.ReviewDetailsAdapter;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
+import com.lynx.cinerama.presentation.listeners.EndlessRecyclerViewScrollListener;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -32,10 +33,10 @@ public class ReviewDetailsActivity extends AppCompatActivity implements ReviewDe
     private ReviewDetailsContract.ReviewDetailsPresenter presenter;
 
     @Extra
-    protected String movieTitle;
+    protected int movieID;
 
-    @Extra
-    protected MovieReviews movieReviews;
+    @Bean
+    protected MovieRepository movieRepository;
 
     @Bean
     protected ReviewDetailsAdapter reviewDetailsAdapter;
@@ -48,7 +49,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements ReviewDe
 
     @AfterInject
     protected void initPresenter() {
-        new ReviewDetailsPresenter(this, movieTitle, movieReviews);
+        new ReviewDetailsPresenter(this, movieID, movieRepository);
     }
 
     @AfterViews
@@ -56,6 +57,12 @@ public class ReviewDetailsActivity extends AppCompatActivity implements ReviewDe
         LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvReviewDetails_ARD.setLayoutManager(llm);
         rvReviewDetails_ARD.setAdapter(reviewDetailsAdapter);
+        rvReviewDetails_ARD.addOnScrollListener(new EndlessRecyclerViewScrollListener(llm) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                presenter.loadMoreReviews(page);
+            }
+        });
         reviewDetailsAdapter.setOnCardClickListener((view, position, viewType) -> {
             if(view.getId() == R.id.ivLink_LIR)
             clickReviewLink(reviewDetailsAdapter.getItem(position).movieReview.url);
@@ -75,7 +82,7 @@ public class ReviewDetailsActivity extends AppCompatActivity implements ReviewDe
 
     @Override
     public void displayReviews(ArrayList<ReviewDH> reviewDHs) {
-        reviewDetailsAdapter.setListDH(reviewDHs);
+        reviewDetailsAdapter.addListDH(reviewDHs);
     }
 
     @Override
@@ -97,5 +104,12 @@ public class ReviewDetailsActivity extends AppCompatActivity implements ReviewDe
     @OptionsItem(android.R.id.home)
     protected void homeSelected() {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(presenter != null)
+            presenter.unsubscribe();
     }
 }
