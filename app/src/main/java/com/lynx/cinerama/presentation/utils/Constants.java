@@ -7,6 +7,7 @@ package com.lynx.cinerama.presentation.utils;
 public class Constants {
     public static final String BASE_URL                     = "http://api.themoviedb.org/3/";
     public static final String BASE_IMAGE_URL               = "http://image.tmdb.org/t/p/w300";
+    public static final String BASE_LARGE_IMAGE_URL         = "http://image.tmdb.org/t/p/w600";
     public static final String API_KEY_TMDB                 = "c7b8800fb43dc8a7ae72d65d93a4767b";
 
     public static final String API_KEY_YOUTUBE              = "AIzaSyAlzibiO43wGa4XQFuIvr3aBwS1VC-d4bs";

@@ -41,7 +41,7 @@ public class MoviePostersPresenter implements MoviePostersContract.MoviePosterPr
 
     @Override
     public void startPosterGallery(int pos) {
-        view.startPosterGalleryScreen(pos);
+        view.startPosterGalleryScreen(pos, movieID);
     }
 
     @Override

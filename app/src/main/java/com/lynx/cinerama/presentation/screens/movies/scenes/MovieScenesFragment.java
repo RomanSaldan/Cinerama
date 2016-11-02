@@ -13,7 +13,9 @@ import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.ScenesAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.holders.data.SceneDH;
+import com.lynx.cinerama.presentation.screens.gallery.FullscreenImageActivity_;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
+import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -74,8 +76,12 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
     }
 
     @Override
-    public void displaySceneGallary(int pos) {
-        Log.d("myLogs", "displaySceneGallary .. pos = " + pos);
+    public void displaySceneGallery(int pos, int movieID) {
+        FullscreenImageActivity_.intent(this)
+                .movieID(movieID)
+                .currentPosition(pos)
+                .galleryType(Constants.GALLERY_TYPE_SCREENS)
+                .start();
     }
 
     @Override

@@ -12,7 +12,9 @@ import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.PostersAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.holders.data.PosterDH;
+import com.lynx.cinerama.presentation.screens.gallery.FullscreenImageActivity_;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
+import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -72,8 +74,12 @@ public class MoviePostersFragment extends BaseFragment<MoviesActivity> implement
     }
 
     @Override
-    public void startPosterGalleryScreen(int pos) {
-        Log.d("myLogs", "startPosterGalleryScreen || pos = " + pos);
+    public void startPosterGalleryScreen(int pos, int movieID) {
+        FullscreenImageActivity_.intent(this)
+                .movieID(movieID)
+                .currentPosition(pos)
+                .galleryType(Constants.GALLERY_TYPE_POSTERS)
+                .start();
     }
 
     @Override

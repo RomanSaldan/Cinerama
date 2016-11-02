@@ -39,7 +39,7 @@ public class MovieScenesPresenter implements MovieScenesContract.MovieScenesPres
 
     @Override
     public void startSceneGallery(int pos) {
-        view.clickScene(pos);
+        view.displaySceneGallery(pos, movieID);
     }
 
     @Override

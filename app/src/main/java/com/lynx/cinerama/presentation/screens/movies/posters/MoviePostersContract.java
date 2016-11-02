@@ -17,7 +17,7 @@ public interface MoviePostersContract {
         void displayPosters(ArrayList<PosterDH> posterDHs);
         void clickPoster(int position);
 
-        void startPosterGalleryScreen(int pos);
+        void startPosterGalleryScreen(int pos, int movieID);
     }
     interface MoviePosterPresenter extends BasePresenter {
         void setupPosters(List<ImageModel> posters);

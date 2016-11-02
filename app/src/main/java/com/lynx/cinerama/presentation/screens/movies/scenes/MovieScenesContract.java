@@ -17,7 +17,7 @@ public interface MovieScenesContract {
         void displayScenes(ArrayList<SceneDH> sceneDHs);
         void clickScene(int pos);
 
-        void displaySceneGallary(int pos);
+        void displaySceneGallery(int pos, int movieID);
     }
     interface MovieScenesPresenter extends BasePresenter {
         void setupMovieScenes(List<ImageModel> scenes);
