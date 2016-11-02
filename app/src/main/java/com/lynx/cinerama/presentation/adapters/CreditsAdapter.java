@@ -21,7 +21,7 @@ public class CreditsAdapter extends TypedRecyclerAdapter<CreditsDH> {
     public static final int TYPE_PERSON = 1;
 
     @Override
-    protected void initTypes() {
+    protected void initViewTypes() {
         addType(TYPE_HEADER, R.layout.list_item_cast_header, CreditHeaderVH.class);
         addType(TYPE_PERSON, R.layout.list_item_cast, CreditPersonVH.class);
     }

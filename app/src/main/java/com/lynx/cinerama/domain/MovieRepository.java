@@ -27,31 +27,39 @@ public class MovieRepository {
     private MovieService movieService;
 
     private int movieID = -1;
-    private Observable<ResponseMovieInfo> movieInfoObservable;
+
+    private ResponseMovieInfo cachedMovieInfo;
 
     public MovieRepository() {
         movieService = Rest.getInstance().getMovieService();
     }
 
-    private <T> Observable<T> getObservable(Observable<T> observable) {
+    private <T> Observable<T> getNetworkObservable(Observable<T> observable) {
         return observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread());
     }
 
     public Observable<ResponseMovieInfo> getMovieInfo(int id) {
-        if(movieInfoObservable == null || id != movieID) {
+        Observable<ResponseMovieInfo> movieInfoObservable;
+        if(cachedMovieInfo == null || id != movieID) {
+            movieInfoObservable = getNetworkObservable(movieService.getMovieInfo(id))
+                    .flatMap(responseMovieInfo -> {
+                        cachedMovieInfo = responseMovieInfo;
+                        return Observable.just(responseMovieInfo);
+                    });
             movieID = id;
-            movieInfoObservable = getObservable(movieService.getMovieInfo(id));
+        } else {
+            movieInfoObservable = Observable.just(cachedMovieInfo);
         }
         return movieInfoObservable;
     }
 
     public Observable<MovieSimilar> getMovieSimilar(int movieID, int page) {
-        return getObservable(movieService.getMovieSimilar(movieID, page));
+        return getNetworkObservable(movieService.getMovieSimilar(movieID, page));
     }
 
     public Observable<MovieReviews> getMovieReviews(int movieID, int page) {
-        return getObservable(movieService.getMovieReviews(movieID, page));
+        return getNetworkObservable(movieService.getMovieReviews(movieID, page));
     }
 
     public Observable<List<ImageModel>> getMovieScenes(int movieId) {
