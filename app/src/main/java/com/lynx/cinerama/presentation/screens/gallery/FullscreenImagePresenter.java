@@ -1,7 +1,5 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
-import android.support.v4.view.ViewPager;
-
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.utils.Constants;
 
@@ -45,6 +43,11 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
                 );
                 break;
         }
+    }
+
+    @Override
+    public void back() {
+        view.close();
     }
 
     @Override

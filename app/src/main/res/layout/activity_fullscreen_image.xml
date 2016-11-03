@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:tools="http://schemas.android.com/tools">
 
     <com.lynx.cinerama.presentation.custom.FixedZoomViewPager
         android:id="@+id/vpFullscreenImage_AFI"
@@ -23,16 +24,25 @@
     <LinearLayout
         android:id="@+id/llContainerTitle_AFI"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/transparent_more"
-        android:visibility="invisible">
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/ivBack_AFI"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_back_white_24dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"/>
 
         <TextView
             android:id="@+id/tvTitle_AFI"
-            android:textColor="@android:color/white"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            tools:text="Some movie title"
+            android:textColor="@android:color/white"
+            android:gravity="center"
             android:textSize="17sp"/>
 
     </LinearLayout>

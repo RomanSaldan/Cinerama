@@ -1,13 +1,14 @@
 package com.lynx.cinerama.presentation.adapters;
 
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -33,9 +34,17 @@ public class GalleryPagerAdapter extends PagerAdapter {
     private ArrayList<ImageModel> data = new ArrayList<>();
     private PhotoViewAttacher photoViewAttacher;
 
+    private AppCompatActivity compatActivity;
+    private int pos;
+
     public void updateData(List<ImageModel> imageModels) {
         data.addAll(imageModels);
         notifyDataSetChanged();
+    }
+
+    public void setTransitionrequisites(AppCompatActivity activity, int startPosition) {
+        compatActivity = activity;
+        pos = startPosition;
     }
 
     @Override
@@ -45,8 +54,29 @@ public class GalleryPagerAdapter extends PagerAdapter {
         ProgressBar pbImageDownload_LGI = (ProgressBar) view.findViewById(R.id.pbImageDownload_LGI);
         ImageView ivFullscreenImage_LGI = (ImageView) view.findViewById(R.id.ivFullscreenImage_LGI);
         pbImageDownload_LGI.setVisibility(View.VISIBLE);
+
+        DrawableRequestBuilder<String> thumbnailRequest = Glide
+                .with(container.getContext())
+                .load(Constants.BASE_IMAGE_URL + data.get(position).file_path)
+                .dontAnimate()
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        pbImageDownload_LGI.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        pbImageDownload_LGI.setVisibility(View.GONE);
+                        return false;
+                    }
+                });
+
         Glide.with(container.getContext())
                 .load(Constants.BASE_LARGE_IMAGE_URL + data.get(position).file_path)
+                .thumbnail(thumbnailRequest)
+                .dontAnimate()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
@@ -64,6 +94,7 @@ public class GalleryPagerAdapter extends PagerAdapter {
                 .into(ivFullscreenImage_LGI);
 
         container.addView(view);
+
         return view;
     }
 

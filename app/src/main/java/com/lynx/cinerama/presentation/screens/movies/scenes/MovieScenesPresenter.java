@@ -1,5 +1,7 @@
 package com.lynx.cinerama.presentation.screens.movies.scenes;
 
+import android.view.View;
+
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.holders.data.SceneDH;
@@ -38,8 +40,8 @@ public class MovieScenesPresenter implements MovieScenesContract.MovieScenesPres
     }
 
     @Override
-    public void startSceneGallery(int pos) {
-        view.displaySceneGallery(pos, movieID);
+    public void startSceneGallery(View v, int pos) {
+        view.displaySceneGallery(v, pos, movieID);
     }
 
     @Override

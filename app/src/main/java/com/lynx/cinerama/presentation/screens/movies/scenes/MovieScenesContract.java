@@ -1,5 +1,7 @@
 package com.lynx.cinerama.presentation.screens.movies.scenes;
 
+import android.view.View;
+
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
@@ -15,12 +17,12 @@ import java.util.List;
 public interface MovieScenesContract {
     interface MovieScencesView extends BaseView<MovieScenesPresenter> {
         void displayScenes(ArrayList<SceneDH> sceneDHs);
-        void clickScene(int pos);
+        void clickScene(View v, int pos);
 
-        void displaySceneGallery(int pos, int movieID);
+        void displaySceneGallery(View v, int pos, int movieID);
     }
     interface MovieScenesPresenter extends BasePresenter {
         void setupMovieScenes(List<ImageModel> scenes);
-        void startSceneGallery(int pos);
+        void startSceneGallery(View v, int pos);
     }
 }

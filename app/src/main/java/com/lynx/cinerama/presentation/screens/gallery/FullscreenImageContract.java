@@ -4,7 +4,6 @@ import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +15,12 @@ public interface FullscreenImageContract {
         void displayGallery(List<ImageModel> imageModels);
         void displayIndicator(int current, int total);
         void displayTitle(String title);
+
+        void clickBack(Void v);
+        void close();
     }
     interface FullscreenImagePresenter extends BasePresenter {
         void setupGalleryItems();
+        void back();
     }
 }

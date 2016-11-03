@@ -1,15 +1,19 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.GalleryPagerAdapter;
 import com.lynx.cinerama.presentation.custom.FixedZoomViewPager;
+import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
@@ -19,6 +23,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Lynx on 11/2/2016.
@@ -48,6 +53,9 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     protected TextView tvPageIndicator_AFI;
 
     @ViewById
+    protected ImageView ivBack_AFI;
+
+    @ViewById
     protected LinearLayout llContainerTitle_AFI;
 
     @ViewById
@@ -65,8 +73,19 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     protected void initUI() {
         vpFullscreenImage_AFI.setAdapter(galleryPagerAdapter);
         vpFullscreenImage_AFI.addOnPageChangeListener(pageChangeListener);
+        galleryPagerAdapter.setTransitionrequisites(this, currentPosition);
+        RxView.clicks(ivBack_AFI)
+                .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
+                .subscribe(this::clickBack);
 
         presenter.subscribe();
+        supportPostponeEnterTransition();
+    }
+
+    @Override
+    public void onActivityReenter(int resultCode, Intent data) {
+        super.onActivityReenter(resultCode, data);
+        supportPostponeEnterTransition();
     }
 
     @Override
@@ -84,6 +103,16 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     @Override
     public void displayTitle(String title) {
         tvTitle_AFI.setText(title);
+    }
+
+    @Override
+    public void clickBack(Void v) {
+        presenter.back();
+    }
+
+    @Override
+    public void close() {
+        finish();
     }
 
     @Override

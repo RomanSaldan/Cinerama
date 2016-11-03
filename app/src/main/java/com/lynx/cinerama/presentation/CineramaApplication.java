@@ -19,7 +19,7 @@ public class CineramaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         if(!BuildConfig.PRODUCTION) {
-            LeakCanary.install(this);
+//            LeakCanary.install(this);
             Stetho.initializeWithDefaults(this);
         }
     }

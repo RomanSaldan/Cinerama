@@ -1,11 +1,14 @@
 package com.lynx.cinerama.presentation.screens.movies.scenes;
 
 import android.content.res.Configuration;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
@@ -25,7 +28,9 @@ import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringRes;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -60,7 +65,9 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
         glm = new GridLayoutManager(getActivity(), spanCount, LinearLayoutManager.VERTICAL, false);
         rvScences_FMS.setLayoutManager(glm);
         rvScences_FMS.setAdapter(scenesAdapter);
-        scenesAdapter.setOnCardClickListener((view, position, viewType) -> clickScene(position));
+        scenesAdapter.setOnCardClickListener((view, position, viewType) -> {
+            clickScene(view, position);
+        });
 
         presenter.subscribe();
     }
@@ -71,16 +78,20 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
     }
 
     @Override
-    public void clickScene(int pos) {
-        presenter.startSceneGallery(pos);
+    public void clickScene(View v, int pos) {
+        presenter.startSceneGallery(v, pos);
     }
 
     @Override
-    public void displaySceneGallery(int pos, int movieID) {
-        FullscreenImageActivity_.intent(this)
+    public void displaySceneGallery(View v, int pos, int movieID) {
+//        ActivityOptionsCompat options = ActivityOptionsCompat.
+//                makeSceneTransitionAnimation(getActivity(), v, "gallery" + pos);
+
+        FullscreenImageActivity_.intent(getActivity())
                 .movieID(movieID)
                 .currentPosition(pos)
                 .galleryType(Constants.GALLERY_TYPE_SCREENS)
+//                .withOptions(options.toBundle())
                 .start();
     }
 
