@@ -1,5 +1,7 @@
 package com.lynx.cinerama.presentation.screens.movies.posters;
 
+import android.view.View;
+
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.domain.MovieRepository;
@@ -40,8 +42,8 @@ public class MoviePostersPresenter implements MoviePostersContract.MoviePosterPr
     }
 
     @Override
-    public void startPosterGallery(int pos) {
-        view.startPosterGalleryScreen(pos, movieID);
+    public void startPosterGallery(View v, int pos) {
+        view.startPosterGalleryScreen(v, pos, movieID);
     }
 
     @Override

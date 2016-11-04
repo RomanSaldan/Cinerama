@@ -53,7 +53,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.layout_gallery_item, container, false);
         ProgressBar pbImageDownload_LGI = (ProgressBar) view.findViewById(R.id.pbImageDownload_LGI);
         ImageView ivFullscreenImage_LGI = (ImageView) view.findViewById(R.id.ivFullscreenImage_LGI);
-        pbImageDownload_LGI.setVisibility(View.VISIBLE);
+
+        if(pos == position) ivFullscreenImage_LGI.setTransitionName("gallery" + pos);
 
         DrawableRequestBuilder<String> thumbnailRequest = Glide
                 .with(container.getContext())
@@ -76,11 +77,13 @@ public class GalleryPagerAdapter extends PagerAdapter {
         Glide.with(container.getContext())
                 .load(Constants.BASE_LARGE_IMAGE_URL + data.get(position).file_path)
                 .thumbnail(thumbnailRequest)
+//                .bitmapTransform(new CropTransformation(container.getContext()))
                 .dontAnimate()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
+                        if(position == pos) compatActivity.startPostponedEnterTransition();
                         return false;
                     }
 
@@ -88,7 +91,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
                         photoViewAttacher = new PhotoViewAttacher(ivFullscreenImage_LGI, true);
-                        return false;
+                        if(position == pos) compatActivity.startPostponedEnterTransition();
+                        return true;
                     }
                 })
                 .into(ivFullscreenImage_LGI);

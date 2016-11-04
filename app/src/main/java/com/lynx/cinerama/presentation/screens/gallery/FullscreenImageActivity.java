@@ -1,8 +1,14 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.transition.Transition;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,6 +72,7 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
 
     @AfterInject
     protected void initPresenter() {
+        postponeEnterTransition();
         new FullscreenImagePresenter(this, movieID, galleryType, movieRepository);
     }
 
@@ -79,13 +86,6 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
                 .subscribe(this::clickBack);
 
         presenter.subscribe();
-        supportPostponeEnterTransition();
-    }
-
-    @Override
-    public void onActivityReenter(int resultCode, Intent data) {
-        super.onActivityReenter(resultCode, data);
-        supportPostponeEnterTransition();
     }
 
     @Override
@@ -112,7 +112,7 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
 
     @Override
     public void close() {
-        finish();
+        onBackPressed();
     }
 
     @Override
@@ -133,7 +133,6 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
         }
     };
 
@@ -143,4 +142,5 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
         if(presenter != null)
             presenter.unsubscribe();
     }
+
 }

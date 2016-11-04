@@ -1,5 +1,7 @@
 package com.lynx.cinerama.presentation.screens.movies.posters;
 
+import android.view.View;
+
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
@@ -15,12 +17,12 @@ import java.util.List;
 public interface MoviePostersContract {
     interface MoviePosterView extends BaseView<MoviePosterPresenter> {
         void displayPosters(ArrayList<PosterDH> posterDHs);
-        void clickPoster(int position);
+        void clickPoster(View v, int position);
 
-        void startPosterGalleryScreen(int pos, int movieID);
+        void startPosterGalleryScreen(View v, int pos, int movieID);
     }
     interface MoviePosterPresenter extends BasePresenter {
         void setupPosters(List<ImageModel> posters);
-        void startPosterGallery(int pos);
+        void startPosterGallery(View v, int pos);
     }
 }

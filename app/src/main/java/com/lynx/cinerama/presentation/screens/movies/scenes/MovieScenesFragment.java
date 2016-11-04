@@ -1,9 +1,9 @@
 package com.lynx.cinerama.presentation.screens.movies.scenes;
 
 import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.ScenesAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
@@ -26,11 +25,8 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.StringRes;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -84,16 +80,22 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
 
     @Override
     public void displaySceneGallery(View v, int pos, int movieID) {
-//        ActivityOptionsCompat options = ActivityOptionsCompat.
-//                makeSceneTransitionAnimation(getActivity(), v, "gallery" + pos);
+        View vv = glm.findContainingItemView(v).findViewById(R.id.ivMovieScene_LIS);
+
+        vv.setTransitionName("gallery" + pos);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), vv, "gallery" + pos);
 
         FullscreenImageActivity_.intent(getActivity())
                 .movieID(movieID)
                 .currentPosition(pos)
                 .galleryType(Constants.GALLERY_TYPE_SCREENS)
-//                .withOptions(options.toBundle())
+                .withOptions(options.toBundle())
                 .start();
+
+
     }
+
 
     @Override
     public void setPresenter(MovieScenesContract.MovieScenesPresenter presenter) {

@@ -1,10 +1,12 @@
 package com.lynx.cinerama.presentation.screens.movies.posters;
 
 import android.content.res.Configuration;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
@@ -58,7 +60,7 @@ public class MoviePostersFragment extends BaseFragment<MoviesActivity> implement
         glm = new GridLayoutManager(getActivity(), spanCount, LinearLayoutManager.VERTICAL, false);
         rvPosters_FMP.setLayoutManager(glm);
         rvPosters_FMP.setAdapter(postersAdapter);
-        postersAdapter.setOnCardClickListener((view, position, viewType) -> clickPoster(position));
+        postersAdapter.setOnCardClickListener((view, position, viewType) -> clickPoster(view, position));
 
         presenter.subscribe();
     }
@@ -69,17 +71,25 @@ public class MoviePostersFragment extends BaseFragment<MoviesActivity> implement
     }
 
     @Override
-    public void clickPoster(int position) {
-        presenter.startPosterGallery(position);
+    public void clickPoster(View v, int position) {
+        presenter.startPosterGallery(v, position);
     }
 
     @Override
-    public void startPosterGalleryScreen(int pos, int movieID) {
-        FullscreenImageActivity_.intent(this)
+    public void startPosterGalleryScreen(View v, int pos, int movieID) {
+        View vv = glm.findContainingItemView(v).findViewById(R.id.ivPoster_LIP);
+
+        vv.setTransitionName("gallery" + pos);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), vv, "gallery" + pos);
+
+        FullscreenImageActivity_.intent(getActivity())
                 .movieID(movieID)
                 .currentPosition(pos)
                 .galleryType(Constants.GALLERY_TYPE_POSTERS)
+                .withOptions(options.toBundle())
                 .start();
+
     }
 
     @Override

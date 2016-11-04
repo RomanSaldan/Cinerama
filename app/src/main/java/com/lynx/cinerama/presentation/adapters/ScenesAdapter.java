@@ -2,7 +2,7 @@ package com.lynx.cinerama.presentation.adapters;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.presentation.holders.data.SceneDH;
-import com.lynx.cinerama.presentation.holders.view.ScenceVH;
+import com.lynx.cinerama.presentation.holders.view.SceneVH;
 import com.michenko.simpleadapter.SimpleRecyclerAdapter;
 
 import org.androidannotations.annotations.EBean;
@@ -12,7 +12,7 @@ import org.androidannotations.annotations.EBean;
  */
 
 @EBean
-public class ScenesAdapter extends SimpleRecyclerAdapter<SceneDH, ScenceVH> {
+public class ScenesAdapter extends SimpleRecyclerAdapter<SceneDH, SceneVH> {
     @Override
     protected int getItemLayout() {
         return R.layout.list_item_scene;
