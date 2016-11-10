@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -141,9 +142,32 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
         } else {
             toolbarAnimator.setFloatValues(1, 0);
             indicatorAnimator.setFloatValues(1, 0);
-            llContainerTitle_AFI.setVisibility(View.GONE);
-            tvPageIndicator_AFI.setVisibility(View.GONE);
         }
+        if(!isShown)
+            animatorSet.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    llContainerTitle_AFI.setVisibility(View.GONE);
+                    tvPageIndicator_AFI.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+        else
+            animatorSet.removeAllListeners();
         animatorSet.start();
     }
 

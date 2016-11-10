@@ -34,13 +34,27 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
-//        vectorDrawables.useSupportLibrary = true
+    }
+
+    /*Create keystorePass.properties file that contains KEYSTORE_PASSWORD with release password */
+    def prop = new Properties();
+    prop.load(new FileInputStream("C:\\Dev\\Projects\\My\\Cinerama\\app\\keystorePass.properties"))
+
+    signingConfigs {
+        my {
+            storeFile file("keystore_cinerama.jks")
+            keyAlias "keystore_cinerama"
+            storePassword prop.getProperty("KEYSTORE_PASSWORD")
+            keyPassword prop.getProperty("KEYSTORE_PASSWORD")
+        }
+
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "PRODUCTION", "true"
+            signingConfig signingConfigs.my
         }
         debug {
             debuggable true
@@ -57,6 +71,7 @@ android {
 
 dependencies {
     compile 'com.android.support:design:25.0.0'
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
 
     //Rx
     compile 'io.reactivex:rxjava:1.1.3'
