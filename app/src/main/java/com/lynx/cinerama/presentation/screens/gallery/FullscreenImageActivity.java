@@ -1,5 +1,7 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
@@ -7,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.transition.Transition;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,6 +43,10 @@ import java.util.concurrent.TimeUnit;
 public class FullscreenImageActivity extends AppCompatActivity implements FullscreenImageContract.FullscreenImageView {
 
     private FullscreenImageContract.FullscreenImagePresenter presenter;
+
+    private ObjectAnimator toolbarAnimator;
+    private ObjectAnimator indicatorAnimator;
+    private AnimatorSet animatorSet;
 
     @Extra
     protected int currentPosition;
@@ -81,9 +89,17 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
         vpFullscreenImage_AFI.setAdapter(galleryPagerAdapter);
         vpFullscreenImage_AFI.addOnPageChangeListener(pageChangeListener);
         galleryPagerAdapter.setTransitionrequisites(this, currentPosition);
+
         RxView.clicks(ivBack_AFI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
                 .subscribe(this::clickBack);
+
+        animatorSet = new AnimatorSet();
+        toolbarAnimator = ObjectAnimator.ofFloat(llContainerTitle_AFI, View.ALPHA, 0, 1);
+        indicatorAnimator = ObjectAnimator.ofFloat(tvPageIndicator_AFI, View.ALPHA, 0, 1);
+        animatorSet.playTogether(toolbarAnimator, indicatorAnimator);
+
+        galleryPagerAdapter.setOnViewTapListener((view, x, y) -> onScreenClicked(null));
 
         presenter.subscribe();
     }
@@ -108,6 +124,27 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     @Override
     public void clickBack(Void v) {
         presenter.back();
+    }
+
+    @Override
+    public void onScreenClicked(Void v) {
+        presenter.screenClicked();
+    }
+
+    @Override
+    public void showSupportViews(boolean isShown) {
+        if(isShown) {
+            toolbarAnimator.setFloatValues(0, 1);
+            indicatorAnimator.setFloatValues(0, 1);
+            llContainerTitle_AFI.setVisibility(View.VISIBLE);
+            tvPageIndicator_AFI.setVisibility(View.VISIBLE);
+        } else {
+            toolbarAnimator.setFloatValues(1, 0);
+            indicatorAnimator.setFloatValues(1, 0);
+            llContainerTitle_AFI.setVisibility(View.GONE);
+            tvPageIndicator_AFI.setVisibility(View.GONE);
+        }
+        animatorSet.start();
     }
 
     @Override

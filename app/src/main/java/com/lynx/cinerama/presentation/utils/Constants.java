@@ -25,6 +25,7 @@ public class Constants {
     public static final String KEY_DIRECTOR                 = "Director";
 
     public static final int DELAY_CLICK                     = 600;
+    public static final int DELAY_CLICK_ANIMATION           = 1500;
 
     public static final boolean ENABLE_LEAK_CANARY          = true;
 }

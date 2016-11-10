@@ -29,7 +29,7 @@ public class SceneVH extends RecyclerVH<SceneDH> {
         ivMovieScene_LIS = findView(R.id.ivMovieScene_LIS);
         if(listener != null) {
             RxView.clicks(ivMovieScene_LIS)
-                    .throttleFirst(3000, TimeUnit.MILLISECONDS)
+                    .throttleFirst(Constants.DELAY_CLICK_ANIMATION, TimeUnit.MILLISECONDS)
                     .subscribe(aVoid -> listener.onClick(ivMovieScene_LIS, getAdapterPosition(), viewType));
         }
     }

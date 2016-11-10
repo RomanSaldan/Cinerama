@@ -17,6 +17,8 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
     private MovieRepository movieRepository;
     private CompositeSubscription compositeSubscription;
 
+    private boolean isSupportViewsVisible = true;
+
     public FullscreenImagePresenter(FullscreenImageContract.FullscreenImageView view, int movieID, String galleryType, MovieRepository movieRepository) {
         this.view = view;
         this.movieID = movieID;
@@ -48,6 +50,12 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
     @Override
     public void back() {
         view.close();
+    }
+
+    @Override
+    public void screenClicked() {
+        isSupportViewsVisible = !isSupportViewsVisible;
+        view.showSupportViews(isSupportViewsVisible);
     }
 
     @Override

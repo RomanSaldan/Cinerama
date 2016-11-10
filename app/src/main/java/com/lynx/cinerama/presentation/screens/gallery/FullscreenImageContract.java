@@ -17,10 +17,13 @@ public interface FullscreenImageContract {
         void displayTitle(String title);
 
         void clickBack(Void v);
+        void onScreenClicked(Void v);
+        void showSupportViews(boolean isShown);
         void close();
     }
     interface FullscreenImagePresenter extends BasePresenter {
         void setupGalleryItems();
         void back();
+        void screenClicked();
     }
 }

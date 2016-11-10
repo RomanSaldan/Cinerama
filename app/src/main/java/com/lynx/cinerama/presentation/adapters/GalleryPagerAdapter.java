@@ -2,6 +2,7 @@ package com.lynx.cinerama.presentation.adapters;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
+import com.lynx.cinerama.presentation.screens.gallery.FullscreenImageActivity;
 import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.EBean;
@@ -33,6 +35,7 @@ public class GalleryPagerAdapter extends PagerAdapter {
 
     private ArrayList<ImageModel> data = new ArrayList<>();
     private PhotoViewAttacher photoViewAttacher;
+    private PhotoViewAttacher.OnViewTapListener onViewTapListener;
 
     private AppCompatActivity compatActivity;
     private int pos;
@@ -55,6 +58,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
         ImageView ivFullscreenImage_LGI = (ImageView) view.findViewById(R.id.ivFullscreenImage_LGI);
 
         if(pos == position) ivFullscreenImage_LGI.setTransitionName("gallery" + pos);
+        pbImageDownload_LGI.setVisibility(View.VISIBLE);
+
 
         DrawableRequestBuilder<String> thumbnailRequest = Glide
                 .with(container.getContext())
@@ -91,8 +96,9 @@ public class GalleryPagerAdapter extends PagerAdapter {
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
                         photoViewAttacher = new PhotoViewAttacher(ivFullscreenImage_LGI, true);
+                        photoViewAttacher.setOnViewTapListener(onViewTapListener);
                         if(position == pos) compatActivity.startPostponedEnterTransition();
-                        return true;
+                        return false;
                     }
                 })
                 .into(ivFullscreenImage_LGI);
@@ -115,5 +121,9 @@ public class GalleryPagerAdapter extends PagerAdapter {
     @Override
     public boolean isViewFromObject(View view, Object object) {
         return view == object;
+    }
+
+    public void setOnViewTapListener(PhotoViewAttacher.OnViewTapListener onViewTapListener) {
+        this.onViewTapListener = onViewTapListener;
     }
 }
