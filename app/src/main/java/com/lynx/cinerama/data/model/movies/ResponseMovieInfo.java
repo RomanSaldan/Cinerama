@@ -14,14 +14,13 @@ import com.lynx.cinerama.data.model.movies.reviews.MovieReviews;
 import com.lynx.cinerama.data.model.movies.similar.MovieSimilar;
 import com.lynx.cinerama.data.model.movies.videos.MovieVideos;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Lynx on 10/26/2016.
  */
 
-public class ResponseMovieInfo implements Serializable {
+public class ResponseMovieInfo implements Parcelable {
     /**
      * {
      "adult": false,
@@ -114,4 +113,129 @@ public class ResponseMovieInfo implements Serializable {
     public MovieGallery images;
     public MovieCredits credits;
     public MovieVideos videos;
+
+    protected ResponseMovieInfo(Parcel in) {
+        adult = in.readByte() != 0x00;
+        backdrop_path = in.readString();
+        belongs_to_collection = (MovieBelongsToCollection) in.readValue(MovieBelongsToCollection.class.getClassLoader());
+        budget = in.readLong();
+        if (in.readByte() == 0x01) {
+            genres = new ArrayList<MovieGenre>();
+            in.readList(genres, MovieGenre.class.getClassLoader());
+        } else {
+            genres = null;
+        }
+        homepage = in.readString();
+        id = in.readInt();
+        imdb_id = in.readString();
+        original_language = in.readString();
+        original_title = in.readString();
+        overview = in.readString();
+        popularity = in.readFloat();
+        poster_path = in.readString();
+        if (in.readByte() == 0x01) {
+            production_companies = new ArrayList<MovieProductionCompany>();
+            in.readList(production_companies, MovieProductionCompany.class.getClassLoader());
+        } else {
+            production_companies = null;
+        }
+        if (in.readByte() == 0x01) {
+            production_countries = new ArrayList<MovieProductionCountry>();
+            in.readList(production_countries, MovieProductionCountry.class.getClassLoader());
+        } else {
+            production_countries = null;
+        }
+        release_date = in.readString();
+        revenue = in.readLong();
+        runtime = in.readInt();
+        if (in.readByte() == 0x01) {
+            spoken_languages = new ArrayList<MovieSpokenLanguage>();
+            in.readList(spoken_languages, MovieSpokenLanguage.class.getClassLoader());
+        } else {
+            spoken_languages = null;
+        }
+        status = in.readString();
+        tagline = in.readString();
+        title = in.readString();
+        video = in.readByte() != 0x00;
+        vote_average = in.readDouble();
+        vote_count = in.readInt();
+        similar = (MovieSimilar) in.readValue(MovieSimilar.class.getClassLoader());
+        reviews = (MovieReviews) in.readValue(MovieReviews.class.getClassLoader());
+        images = (MovieGallery) in.readValue(MovieGallery.class.getClassLoader());
+        credits = (MovieCredits) in.readValue(MovieCredits.class.getClassLoader());
+        videos = (MovieVideos) in.readValue(MovieVideos.class.getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (adult ? 0x01 : 0x00));
+        dest.writeString(backdrop_path);
+        dest.writeValue(belongs_to_collection);
+        dest.writeLong(budget);
+        if (genres == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(genres);
+        }
+        dest.writeString(homepage);
+        dest.writeInt(id);
+        dest.writeString(imdb_id);
+        dest.writeString(original_language);
+        dest.writeString(original_title);
+        dest.writeString(overview);
+        dest.writeFloat(popularity);
+        dest.writeString(poster_path);
+        if (production_companies == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(production_companies);
+        }
+        if (production_countries == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(production_countries);
+        }
+        dest.writeString(release_date);
+        dest.writeLong(revenue);
+        dest.writeInt(runtime);
+        if (spoken_languages == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(spoken_languages);
+        }
+        dest.writeString(status);
+        dest.writeString(tagline);
+        dest.writeString(title);
+        dest.writeByte((byte) (video ? 0x01 : 0x00));
+        dest.writeDouble(vote_average);
+        dest.writeInt(vote_count);
+        dest.writeValue(similar);
+        dest.writeValue(reviews);
+        dest.writeValue(images);
+        dest.writeValue(credits);
+        dest.writeValue(videos);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<ResponseMovieInfo> CREATOR = new Parcelable.Creator<ResponseMovieInfo>() {
+        @Override
+        public ResponseMovieInfo createFromParcel(Parcel in) {
+            return new ResponseMovieInfo(in);
+        }
+
+        @Override
+        public ResponseMovieInfo[] newArray(int size) {
+            return new ResponseMovieInfo[size];
+        }
+    };
 }

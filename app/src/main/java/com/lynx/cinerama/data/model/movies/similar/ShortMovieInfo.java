@@ -1,13 +1,15 @@
 package com.lynx.cinerama.data.model.movies.similar;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by Lynx on 10/26/2016.
  */
 
-public class ShortMovieInfo implements Serializable {
+public class ShortMovieInfo implements Parcelable {
     /**
      * adult: false,
      backdrop_path: "/uLLcFSd7fpea7wtSppUClq6cmpe.jpg",
@@ -41,4 +43,67 @@ public class ShortMovieInfo implements Serializable {
     public boolean video;
     public double vote_average;
     public int vote_count;
+
+    protected ShortMovieInfo(Parcel in) {
+        adult = in.readByte() != 0x00;
+        backdrop_path = in.readString();
+        if (in.readByte() == 0x01) {
+            genre_ids = new ArrayList<Integer>();
+            in.readList(genre_ids, Integer.class.getClassLoader());
+        } else {
+            genre_ids = null;
+        }
+        id = in.readInt();
+        original_language = in.readString();
+        original_title = in.readString();
+        overview = in.readString();
+        release_date = in.readString();
+        poster_path = in.readString();
+        popularity = in.readFloat();
+        title = in.readString();
+        video = in.readByte() != 0x00;
+        vote_average = in.readDouble();
+        vote_count = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (adult ? 0x01 : 0x00));
+        dest.writeString(backdrop_path);
+        if (genre_ids == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(genre_ids);
+        }
+        dest.writeInt(id);
+        dest.writeString(original_language);
+        dest.writeString(original_title);
+        dest.writeString(overview);
+        dest.writeString(release_date);
+        dest.writeString(poster_path);
+        dest.writeFloat(popularity);
+        dest.writeString(title);
+        dest.writeByte((byte) (video ? 0x01 : 0x00));
+        dest.writeDouble(vote_average);
+        dest.writeInt(vote_count);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<ShortMovieInfo> CREATOR = new Parcelable.Creator<ShortMovieInfo>() {
+        @Override
+        public ShortMovieInfo createFromParcel(Parcel in) {
+            return new ShortMovieInfo(in);
+        }
+
+        @Override
+        public ShortMovieInfo[] newArray(int size) {
+            return new ShortMovieInfo[size];
+        }
+    };
 }
