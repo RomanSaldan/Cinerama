@@ -82,7 +82,6 @@ public class GalleryPagerAdapter extends PagerAdapter {
         Glide.with(container.getContext())
                 .load(Constants.BASE_LARGE_IMAGE_URL + data.get(position).file_path)
                 .thumbnail(thumbnailRequest)
-//                .bitmapTransform(new CropTransformation(container.getContext()))
                 .dontAnimate()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override

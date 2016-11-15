@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:drawable="@drawable/ic_youtube_play"
+        android:gravity="center"
+        android:top="60dp"
+        android:bottom="60dp"
+        android:right="145dp"
+        android:left="145dp"/>
+
+</layer-list>

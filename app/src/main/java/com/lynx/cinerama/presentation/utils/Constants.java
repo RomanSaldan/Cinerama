@@ -10,7 +10,8 @@ public class Constants {
     public static final String BASE_LARGE_IMAGE_URL         = "http://image.tmdb.org/t/p/w600";
     public static final String API_KEY_TMDB                 = "c7b8800fb43dc8a7ae72d65d93a4767b";
 
-    public static final String API_KEY_YOUTUBE              = "AIzaSyAlzibiO43wGa4XQFuIvr3aBwS1VC-d4bs";
+    public static final String API_KEY_YOUTUBE              = "AIzaSyCDD54DU7D-20fdAJ-wratkV8m6QZtXM3Y";
+    public static final String URL_THUMBNAIL_PATTERN        = "https://img.youtube.com/vi/%s/mqdefault.jpg";
 
     public static final String GET_MOVIE_BY_ID              = "movie/{id}";
     public static final String GET_SIMILAR_MOVIES           = "movie/{movie_id}/similar";

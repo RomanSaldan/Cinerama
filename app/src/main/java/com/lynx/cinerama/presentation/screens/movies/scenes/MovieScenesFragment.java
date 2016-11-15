@@ -1,13 +1,10 @@
 package com.lynx.cinerama.presentation.screens.movies.scenes;
 
 import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.lynx.cinerama.R;
@@ -48,7 +45,7 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
     protected ScenesAdapter scenesAdapter;
 
     @ViewById
-    protected RecyclerView rvScences_FMS;
+    protected RecyclerView rvScenes_FMS;
 
     @AfterInject
     protected void initPresenter() {
@@ -59,8 +56,8 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
     protected void initUI() {
         int spanCount = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 3 : 2;
         glm = new GridLayoutManager(getActivity(), spanCount, LinearLayoutManager.VERTICAL, false);
-        rvScences_FMS.setLayoutManager(glm);
-        rvScences_FMS.setAdapter(scenesAdapter);
+        rvScenes_FMS.setLayoutManager(glm);
+        rvScenes_FMS.setAdapter(scenesAdapter);
         scenesAdapter.setOnCardClickListener((view, position, viewType) -> {
             clickScene(view, position);
         });
@@ -92,8 +89,6 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
                 .galleryType(Constants.GALLERY_TYPE_SCREENS)
                 .withOptions(options.toBundle())
                 .start();
-
-
     }
 
 
