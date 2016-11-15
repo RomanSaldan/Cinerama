@@ -20,7 +20,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     protected DrawerLayout fullView;
     protected NavigationView navigationView;
-    protected ProgressBar pbProgress_AN;
+    protected FrameLayout flProgress_AN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class NavigationActivity extends AppCompatActivity {
         fullView                        = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_navigation, null);
         FrameLayout activityContainer   = (FrameLayout) fullView.findViewById(R.id.activity_content);
         navigationView                  = (NavigationView) fullView.findViewById(R.id.navigation_view);
-        pbProgress_AN                   = (ProgressBar) fullView.findViewById(R.id.pbProgress_AN);
+        flProgress_AN                   = (FrameLayout) fullView.findViewById(R.id.flProgress_AN);
         getLayoutInflater().inflate(layoutResID, activityContainer, true);
         super.setContentView(fullView);
 
@@ -64,7 +64,7 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     public void displayProgress(boolean isShown) {
-        pbProgress_AN.setVisibility(isShown ? View.VISIBLE : View.GONE);
+        flProgress_AN.setVisibility(isShown ? View.VISIBLE : View.GONE);
     }
 
     public void displayError(String msg) {

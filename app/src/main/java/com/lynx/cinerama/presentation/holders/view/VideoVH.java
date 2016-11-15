@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,6 +37,8 @@ public class VideoVH extends RecyclerVH<VideoDH> {
     private ImageView ivThumbnail_LIV;
     private TextView tvVideoTitle_LIV;
 
+    private CardView card_LIV;
+
     public VideoVH(View itemView, @Nullable OnCardClickListener listener, int viewType) {
         super(itemView, listener, viewType);
         if(listener != null)
@@ -45,6 +48,8 @@ public class VideoVH extends RecyclerVH<VideoDH> {
 
         ivThumbnail_LIV = findView(R.id.ivThumbnail_LIV);
         tvVideoTitle_LIV = findView(R.id.tvVideoTitle_LIV);
+
+        card_LIV = findView(R.id.card_LIV);
     }
 
     @Override
@@ -65,6 +70,7 @@ public class VideoVH extends RecyclerVH<VideoDH> {
                         layers[1] = foregroundDrawable;
                         LayerDrawable layerDrawable = new LayerDrawable(layers);
                         ivThumbnail_LIV.setImageDrawable(layerDrawable);
+                        card_LIV.setVisibility(View.VISIBLE);
                         return true;
                     }
                 })

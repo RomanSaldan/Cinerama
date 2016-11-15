@@ -40,7 +40,6 @@ public class CreditPersonVH extends RecyclerVH<CreditsDH> {
         if (data.getPersonCast() != null) {
             Glide.with(itemView.getContext())
                     .load(Constants.BASE_IMAGE_URL + data.getPersonCast().profile_path)
-                    .centerCrop()
                     .placeholder(R.drawable.placeholder_portrait)
                     .error(R.drawable.placeholder_portrait)
                     .into(ivPortrait_LICH);
@@ -49,7 +48,6 @@ public class CreditPersonVH extends RecyclerVH<CreditsDH> {
         } else {
             Glide.with(itemView.getContext())
                     .load(Constants.BASE_IMAGE_URL + data.getPersonCrew().profile_path)
-                    .centerCrop()
                     .placeholder(R.drawable.placeholder_portrait)
                     .error(R.drawable.placeholder_portrait)
                     .into(ivPortrait_LICH);

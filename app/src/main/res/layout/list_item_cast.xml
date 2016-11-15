@@ -31,6 +31,7 @@
                     android:id="@+id/ivPortrait_LICH"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
                     tools:background="@color/colorAccent" />
 
                 <LinearLayout
