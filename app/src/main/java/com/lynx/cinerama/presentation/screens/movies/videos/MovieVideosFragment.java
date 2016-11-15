@@ -81,6 +81,7 @@ public class MovieVideosFragment extends BaseFragment<MoviesActivity> implements
     @WorkerThread
     @Override
     public void startFullscreenVideo(String videoID) {
+        mActivity.displayProgress(true);
         Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), Constants.API_KEY_YOUTUBE, videoID);
         getActivity().startActivity(intent);
 
@@ -96,6 +97,12 @@ public class MovieVideosFragment extends BaseFragment<MoviesActivity> implements
         super.onDestroyView();
         if(presenter != null)
             presenter.unsubscribe();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mActivity.displayProgress(false);
     }
 
     @Override

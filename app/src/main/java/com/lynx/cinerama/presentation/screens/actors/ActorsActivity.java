@@ -1,6 +1,7 @@
-package com.lynx.cinerama.presentation.screens;
+package com.lynx.cinerama.presentation.screens.actors;
 
 import com.lynx.cinerama.R;
+import com.lynx.cinerama.presentation.screens.NavigationActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;

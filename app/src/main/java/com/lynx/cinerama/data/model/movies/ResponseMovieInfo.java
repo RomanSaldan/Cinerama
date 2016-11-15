@@ -1,5 +1,8 @@
 package com.lynx.cinerama.data.model.movies;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.gallery.MovieGallery;
 import com.lynx.cinerama.data.model.movies.info.MovieBelongsToCollection;
