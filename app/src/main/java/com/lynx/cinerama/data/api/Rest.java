@@ -3,6 +3,7 @@ package com.lynx.cinerama.data.api;
 import android.util.Log;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.lynx.cinerama.data.services.ActorService;
 import com.lynx.cinerama.data.services.MovieService;
 import com.lynx.cinerama.presentation.utils.Constants;
 
@@ -25,6 +26,7 @@ public class Rest {
     private Retrofit retrofit;
 
     private MovieService movieService;
+    private ActorService actorService;
 
     private Rest() {
         OkHttpClient client = new OkHttpClient.Builder()
@@ -52,5 +54,9 @@ public class Rest {
 
     public MovieService getMovieService() {
         return movieService == null ? retrofit.create(MovieService.class) : movieService;
+    }
+
+    public ActorService getActorService() {
+        return actorService == null ? retrofit.create(ActorService.class) : actorService;
     }
 }

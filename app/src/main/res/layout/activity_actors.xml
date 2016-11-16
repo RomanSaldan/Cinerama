@@ -6,7 +6,7 @@
               android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_FPD"
+        android:id="@+id/toolbar_AA"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -14,7 +14,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivCirclePerson_FPD"
+            android:id="@+id/ivCirclePerson_AA"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:civ_border_width="2dp"
@@ -24,7 +24,7 @@
 
         <TextView
             android:layout_marginLeft="10dp"
-            android:id="@+id/tvPersonTitle_FPD"
+            android:id="@+id/tvPersonTitle_AA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
@@ -38,14 +38,14 @@
         android:layout_weight="1">
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager_AA"
+            android:id="@+id/vpActor_AA"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/svMovies_AA"
+            android:id="@+id/svActors_AA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"/>

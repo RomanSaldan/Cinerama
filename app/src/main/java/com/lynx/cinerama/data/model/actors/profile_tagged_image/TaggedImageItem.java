@@ -2,6 +2,7 @@ package com.lynx.cinerama.data.model.actors.profile_tagged_image;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * Created by Lynx on 11/15/2016.
@@ -56,6 +57,14 @@ public class TaggedImageItem implements Parcelable {
     public String image_type;
     public TaggedImageMediaData media;
     public String media_type;
+
+    public boolean getIso_639_1Valid() {
+        return TextUtils.isEmpty(iso_639_1) || iso_639_1.equalsIgnoreCase("en");
+    }
+
+    public boolean isMediaTypeMovie() {
+        return TextUtils.isEmpty(iso_639_1) || iso_639_1.equalsIgnoreCase("movie");
+    }
 
     protected TaggedImageItem(Parcel in) {
         aspect_ratio = in.readFloat();

@@ -2,6 +2,7 @@ package com.lynx.cinerama.data.model.actors.profile_image;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 /**
  * Created by Lynx on 11/15/2016.
@@ -27,6 +28,10 @@ public class ProfileImage implements Parcelable {
     public float vote_average;
     public int vote_count;
     public int width;
+
+    public boolean getIso_639_1Valid() {
+        return TextUtils.isEmpty(iso_639_1) || iso_639_1.equalsIgnoreCase("en");
+    }
 
     protected ProfileImage(Parcel in) {
         aspect_ratio = in.readFloat();

@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.actors;
 
+import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
 
@@ -8,8 +9,14 @@ import com.lynx.cinerama.presentation.base.BaseView;
  */
 
 public interface ActorsContract {
-    interface ActorsView<ActorsPresenter> extends BaseView {
+    interface ActorsView extends BaseView<ActorsPresenter> {
+        void setupToolbar();
+        void setActorName(String actorName);
+        void setActorImage(String path);
+        void setupBottomBar();
+        void setupActorInfo(ResponseActorInfo responseActorInfo);
 
+        void refreshActorInfo(int actorID);
     }
     interface ActorsPresenter extends BasePresenter {
 
