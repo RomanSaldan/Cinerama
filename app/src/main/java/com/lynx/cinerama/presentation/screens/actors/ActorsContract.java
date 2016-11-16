@@ -10,9 +10,12 @@ import com.lynx.cinerama.presentation.base.BaseView;
 
 public interface ActorsContract {
     interface ActorsView extends BaseView<ActorsPresenter> {
+        void displayProgress(boolean isShown);
+        void displayError(String msg);
+
         void setupToolbar();
-        void setActorName(String actorName);
-        void setActorImage(String path);
+        void displayActorName(String actorName);
+        void displayActorImage(String path);
         void setupBottomBar();
         void setupActorInfo(ResponseActorInfo responseActorInfo);
 

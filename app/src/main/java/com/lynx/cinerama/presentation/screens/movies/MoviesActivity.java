@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -118,11 +117,11 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     @Override
     public void setupBottomBar() {
         HashMap<String, Integer> tabsMap = new HashMap<>();
-        tabsMap.put(tabTitleInfo, R.drawable.selector_tab_info);
-        tabsMap.put(tabTitleCast, R.drawable.selector_tab_cast);
-        tabsMap.put(tabTitleScenes, R.drawable.selector_tab_scenes);
-        tabsMap.put(tabTitlePosters, R.drawable.selector_tab_posters);
-        tabsMap.put(tabTitleVideos, R.drawable.selector_tab_trailers);
+        tabsMap.put(tabTitleInfo, R.drawable.selector_tab_movie_info);
+        tabsMap.put(tabTitleCast, R.drawable.selector_tab_movie_cast);
+        tabsMap.put(tabTitleScenes, R.drawable.selector_tab_movie_scenes);
+        tabsMap.put(tabTitlePosters, R.drawable.selector_tab_movie_posters);
+        tabsMap.put(tabTitleVideos, R.drawable.selector_tab_movie_trailers);
 
         for (int i = 0; i < tabLayout_AM.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout_AM.getTabAt(i);

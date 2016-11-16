@@ -26,7 +26,20 @@ public class ActorsPresenter implements ActorsContract.ActorsPresenter {
 
     @Override
     public void subscribe() {
-
+        view.displayProgress(true);
+        compositeSubscription.add(
+                actorRepository.getActorInfo(actorID)
+                .subscribe(responseActorInfo -> {
+                    view.displayProgress(false);
+                    view.displayActorName(responseActorInfo.name);
+                    view.displayActorImage(responseActorInfo.profile_path);
+                    view.setupActorInfo(responseActorInfo);
+                    view.setupBottomBar();
+                }, t -> {
+                    view.displayProgress(false);
+                    view.displayError(t.getMessage());
+                })
+        );
     }
 
     @Override

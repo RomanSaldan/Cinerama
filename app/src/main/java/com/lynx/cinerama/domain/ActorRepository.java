@@ -1,8 +1,8 @@
 package com.lynx.cinerama.domain;
 
+import com.lynx.cinerama.data.api.Rest;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.data.model.actors.credits.ActorCredits;
-import com.lynx.cinerama.data.model.actors.profile_image.ActorProfiles;
 import com.lynx.cinerama.data.model.actors.profile_image.ProfileImage;
 import com.lynx.cinerama.data.model.actors.profile_tagged_image.ActorTaggedImages;
 import com.lynx.cinerama.data.services.ActorService;
@@ -28,6 +28,10 @@ public class ActorRepository {
 
     private ResponseActorInfo cachedActorInfo;
 
+    public ActorRepository() {
+        actorService = Rest.getInstance().getActorService();
+    }
+
     private <T> Observable<T> getNetworkObservable(Observable<T> observable) {
         return observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread());
@@ -50,7 +54,7 @@ public class ActorRepository {
 
     public Observable<ActorCredits> getActorCredits(int actorID) {
         return getActorInfo(actorID)
-                .flatMap(responseActorInfo -> Observable.just(responseActorInfo.movie_credits));
+                .flatMap(responseActorInfo -> Observable.just(responseActorInfo.credits));
     }
 
     public Observable<List<ProfileImage>> getActorImages(int actorID) {

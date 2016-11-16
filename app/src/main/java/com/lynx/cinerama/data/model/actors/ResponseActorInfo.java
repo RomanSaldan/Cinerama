@@ -28,7 +28,7 @@ public class ResponseActorInfo implements Parcelable {
     public float popularity;
     public String profile_path;
 
-    public ActorCredits movie_credits;
+    public ActorCredits credits;
     public ActorProfiles images;
     public ActorTaggedImages tagged_images;
 
@@ -51,7 +51,7 @@ public class ResponseActorInfo implements Parcelable {
         place_of_birth = in.readString();
         popularity = in.readFloat();
         profile_path = in.readString();
-        movie_credits = (ActorCredits) in.readValue(ActorCredits.class.getClassLoader());
+        credits = (ActorCredits) in.readValue(ActorCredits.class.getClassLoader());
         images = (ActorProfiles) in.readValue(ActorProfiles.class.getClassLoader());
         tagged_images = (ActorTaggedImages) in.readValue(ActorTaggedImages.class.getClassLoader());
     }
@@ -81,7 +81,7 @@ public class ResponseActorInfo implements Parcelable {
         dest.writeString(place_of_birth);
         dest.writeFloat(popularity);
         dest.writeString(profile_path);
-        dest.writeValue(movie_credits);
+        dest.writeValue(credits);
         dest.writeValue(images);
         dest.writeValue(tagged_images);
     }

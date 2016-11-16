@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.screens.actors.ActorsActivity_"/>
+        <activity android:name=".presentation.screens.actors.ActorsActivity_"
+                  android:configChanges="orientation|screenSize"/>
         <activity android:name=".presentation.screens.movies.info.review_details.ReviewDetailsActivity_"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".presentation.screens.movies.info.similar_details.SimilarDetailsActivity_"

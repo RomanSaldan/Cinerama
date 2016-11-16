@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.presentation.screens.actors.credits.ActorCreditsFragment;
 import com.lynx.cinerama.presentation.screens.actors.credits.ActorCreditsFragment_;
@@ -29,16 +30,32 @@ public class ActorsTabAdapter extends FragmentStatePagerAdapter {
     public ActorsTabAdapter(Context context, FragmentManager fm, ResponseActorInfo responseActorInfo) {
         super(fm);
         mCtx = context;
+        tabFragments = getTabFragments(responseActorInfo);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        return tabFragments.get(position);
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return tabFragments.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        Fragment current = tabFragments.get(position);
+        if (current instanceof ActorInfoFragment)
+            return mCtx.getString(R.string.tab_title_info);
+        else if (current instanceof ActorCreditsFragment)
+            return mCtx.getString(R.string.tab_title_credits);
+        else if(current instanceof ActorImagesFragment)
+            return mCtx.getString(R.string.tab_title_images);
+        else if(current instanceof ActorScenesFragment)
+            return mCtx.getString(R.string.tab_title_scenes);
+        else
+            return "";
     }
 
     private ArrayList<Fragment> getTabFragments(ResponseActorInfo data) {
@@ -47,9 +64,9 @@ public class ActorsTabAdapter extends FragmentStatePagerAdapter {
         ActorInfoFragment actorInfoFragment = ActorInfoFragment_.builder().actorID(data.id).build();
         result.add(actorInfoFragment);
 
-        if(data.movie_credits != null
-                && (data.movie_credits.cast != null && data.movie_credits.cast.size() > 0)
-                || (data.movie_credits.crew != null && data.movie_credits.crew.size() > 0)) {
+        if(data.credits != null
+                && ((data.credits.cast != null && data.credits.cast.size() > 0)
+                || (data.credits.crew != null && data.credits.crew.size() > 0))) {
             ActorCreditsFragment actorCreditsFragment = ActorCreditsFragment_.builder().actorID(data.id).build();
             result.add(actorCreditsFragment);
         }

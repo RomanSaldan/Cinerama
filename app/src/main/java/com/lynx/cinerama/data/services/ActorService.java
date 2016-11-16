@@ -15,7 +15,7 @@ import rx.Observable;
 
 public interface ActorService {
 
-    @GET(Constants.GET_ACTOR_BY_ID + Constants.APPEND_TO_MOVIE_RESPONSE)
+    @GET(Constants.GET_ACTOR_BY_ID + Constants.APPEND_TO_ACTOR_RESPONSE)
     Observable<ResponseActorInfo> getActorInfo(@Path("id") int id);
 
     @GET(Constants.GET_PERSON_TAGGED_IMAGES)
