@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.actors.info;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -26,6 +27,7 @@ public class ActorInfoPresenter implements ActorInfoContract.ActorInfoPresenter 
     private CompositeSubscription compositeSubscription;
 
     private ResponseActorInfo info;
+    private Bitmap bitmap;
 
     public ActorInfoPresenter(ActorInfoContract.ActorInfoView view, ActorRepository actorRepository, int actorID) {
         this.view = view;
@@ -64,6 +66,16 @@ public class ActorInfoPresenter implements ActorInfoContract.ActorInfoPresenter 
     public void startActorImdbPage() {
         if(!TextUtils.isEmpty(info.imdb_id))
             view.displayActorImdbPage(Constants.IMDB_ACTOR_PREFIX + info.imdb_id);
+    }
+
+    @Override
+    public void startFullscreenImage() {
+        view.displayFullscreenImage(bitmap);
+    }
+
+    @Override
+    public void setFullscreenBitmap(Bitmap b) {
+        bitmap = b;
     }
 
     private void setupActorInfo() {

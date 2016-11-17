@@ -3,7 +3,7 @@ package com.lynx.cinerama.presentation.adapters;
 import android.text.TextUtils;
 
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.holders.data.CreditsDH;
+import com.lynx.cinerama.presentation.holders.data.MovieCastDH;
 import com.lynx.cinerama.presentation.holders.view.CreditHeaderVH;
 import com.lynx.cinerama.presentation.holders.view.CreditPersonVH;
 import com.michenko.simpleadapter.TypedRecyclerAdapter;
@@ -15,7 +15,7 @@ import org.androidannotations.annotations.EBean;
  */
 
 @EBean
-public class CreditsAdapter extends TypedRecyclerAdapter<CreditsDH> {
+public class MovieCastAdapter extends TypedRecyclerAdapter<MovieCastDH> {
 
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_PERSON = 1;
@@ -28,7 +28,7 @@ public class CreditsAdapter extends TypedRecyclerAdapter<CreditsDH> {
 
     @Override
     protected int getViewType(int position) {
-        CreditsDH dh = getItem(position);
+        MovieCastDH dh = getItem(position);
         if(!TextUtils.isEmpty(dh.getTitle()))
             return TYPE_HEADER;
         else

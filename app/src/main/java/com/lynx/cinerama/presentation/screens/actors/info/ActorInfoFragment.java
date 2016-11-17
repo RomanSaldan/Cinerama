@@ -1,15 +1,22 @@
 package com.lynx.cinerama.presentation.screens.actors.info;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.domain.ActorRepository;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.screens.actors.ActorsActivity;
+import com.lynx.cinerama.presentation.screens.movies.info.fullscreen_poster.FullscreenPosterActivity_;
 import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.AfterInject;
@@ -18,6 +25,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.StringRes;
 
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +58,9 @@ public class ActorInfoFragment extends BaseFragment<ActorsActivity> implements A
     @ViewById
     protected TextView tvActorBiography_FAI;
 
+    @StringRes(R.string.key_fullscreen_poster)
+    protected String keyFullscreenPoster;
+
     @Bean
     protected ActorRepository actorRepository;
 
@@ -66,6 +77,9 @@ public class ActorInfoFragment extends BaseFragment<ActorsActivity> implements A
         RxView.clicks(btnImdb_FAI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
                 .subscribe(this::clickIMDB);
+        RxView.clicks(ivActorImage_FAI)
+                .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
+                .subscribe(this::clickActorImage);
 
         presenter.subscribe();
     }
@@ -84,7 +98,15 @@ public class ActorInfoFragment extends BaseFragment<ActorsActivity> implements A
     public void displayActorImage(String path) {
         Glide.with(getActivity())
                 .load(Constants.BASE_IMAGE_URL + path)
-                .into(ivActorImage_FAI);
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        presenter.setFullscreenBitmap(resource);
+                        ivActorImage_FAI.setImageBitmap(resource);
+                        ivActorImage_FAI.setDrawingCacheEnabled(true);
+                    }
+                });
     }
 
     @Override
@@ -114,27 +136,40 @@ public class ActorInfoFragment extends BaseFragment<ActorsActivity> implements A
 
     @Override
     public void clickWeb(Void v) {
-
+        presenter.startActorWebpage();
     }
 
     @Override
     public void clickIMDB(Void v) {
-
+        presenter.startActorImdbPage();
     }
 
     @Override
     public void clickActorImage(Void v) {
-
+        presenter.startFullscreenImage();
     }
 
     @Override
     public void displayActorWebpage(String url) {
-
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 
     @Override
     public void displayActorImdbPage(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
+    }
 
+    @Override
+    public void displayFullscreenImage(Bitmap fullscreenImage) {
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), ivActorImage_FAI, keyFullscreenPoster);
+
+        FullscreenPosterActivity_.intent(getActivity())
+                .imageBitmap(fullscreenImage)
+                .withOptions(options.toBundle())
+                .start();
     }
 
     @Override

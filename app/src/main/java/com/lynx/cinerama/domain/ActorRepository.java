@@ -9,6 +9,11 @@ import com.lynx.cinerama.data.services.ActorService;
 
 import org.androidannotations.annotations.EBean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import rx.Observable;
@@ -54,7 +59,31 @@ public class ActorRepository {
 
     public Observable<ActorCredits> getActorCredits(int actorID) {
         return getActorInfo(actorID)
-                .flatMap(responseActorInfo -> Observable.just(responseActorInfo.credits));
+                .flatMap(responseActorInfo -> {
+                    Collections.sort(responseActorInfo.credits.cast, (actorCreditCast, t1) -> {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            Date d1 = sdf.parse(actorCreditCast.release_date);
+                            Date d2 = sdf.parse(t1.release_date);
+                            return d2.after(d1) ? 1 : -1;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        return -1;
+                    });
+                    Collections.sort(responseActorInfo.credits.crew, (actorCreditCrew, t1) -> {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        try {
+                            Date d1 = sdf.parse(actorCreditCrew.release_date);
+                            Date d2 = sdf.parse(t1.release_date);
+                            return d2.after(d1) ? 1 : -1;
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        return -1;
+                    });
+                   return Observable.just(responseActorInfo.credits);
+                });
     }
 
     public Observable<List<ProfileImage>> getActorImages(int actorID) {

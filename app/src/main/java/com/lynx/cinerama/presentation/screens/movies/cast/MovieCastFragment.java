@@ -7,11 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.domain.MovieRepository;
-import com.lynx.cinerama.presentation.adapters.CreditsAdapter;
+import com.lynx.cinerama.presentation.adapters.MovieCastAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
-import com.lynx.cinerama.presentation.holders.data.CreditsDH;
+import com.lynx.cinerama.presentation.holders.data.MovieCastDH;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
 
 import org.androidannotations.annotations.AfterInject;
@@ -37,7 +36,7 @@ public class MovieCastFragment extends BaseFragment<MoviesActivity> implements M
     protected int movieID;
 
     @Bean
-    protected CreditsAdapter creditsAdapter;
+    protected MovieCastAdapter movieCastAdapter;
 
     @Bean
     protected MovieRepository movieRepository;
@@ -59,24 +58,24 @@ public class MovieCastFragment extends BaseFragment<MoviesActivity> implements M
             @Override
             public int getSpanSize(int position) {
                 int headerCount = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE ? 2 : 1;
-                return creditsAdapter.getItemViewType(position) == CreditsAdapter.TYPE_HEADER ? headerCount : 1;
+                return movieCastAdapter.getItemViewType(position) == MovieCastAdapter.TYPE_HEADER ? headerCount : 1;
             }
         });
         rvCredits_FMC.setLayoutManager(glm);
-        rvCredits_FMC.setAdapter(creditsAdapter);
-        creditsAdapter.setOnCardClickListener((view, position, viewType) -> {
-          if(creditsAdapter.getItem(position).getPersonCast() != null)
-              clickCreditPerson(creditsAdapter.getItem(position).getPersonCast().id);
-            else if(creditsAdapter.getItem(position).getPersonCrew() != null)
-              clickCreditPerson(creditsAdapter.getItem(position).getPersonCrew().id);
+        rvCredits_FMC.setAdapter(movieCastAdapter);
+        movieCastAdapter.setOnCardClickListener((view, position, viewType) -> {
+          if(movieCastAdapter.getItem(position).getPersonCast() != null)
+              clickCreditPerson(movieCastAdapter.getItem(position).getPersonCast().id);
+            else if(movieCastAdapter.getItem(position).getPersonCrew() != null)
+              clickCreditPerson(movieCastAdapter.getItem(position).getPersonCrew().id);
         });
 
         presenter.subscribe();
     }
 
     @Override
-    public void displayCredits(ArrayList<CreditsDH> creditsDHs) {
-        creditsAdapter.setListDH(creditsDHs);
+    public void displayCredits(ArrayList<MovieCastDH> movieCastDHs) {
+        movieCastAdapter.setListDH(movieCastDHs);
     }
 
     @Override

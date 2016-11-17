@@ -4,7 +4,7 @@ import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.data.model.movies.credits.PersonCast;
 import com.lynx.cinerama.data.model.movies.credits.PersonCrew;
 import com.lynx.cinerama.domain.MovieRepository;
-import com.lynx.cinerama.presentation.holders.data.CreditsDH;
+import com.lynx.cinerama.presentation.holders.data.MovieCastDH;
 
 import java.util.ArrayList;
 
@@ -32,19 +32,19 @@ public class MovieCastPresenter implements MovieCastContract.MovieCastPresenter 
 
     @Override
     public void setupCredits(MovieCredits movieCredits) {
-        ArrayList<CreditsDH> creditsDHs = new ArrayList<>();
+        ArrayList<MovieCastDH> movieCastDHs = new ArrayList<>();
 
         if(movieCredits.cast != null && movieCredits.cast.size() > 0) {
-            creditsDHs.add(new CreditsDH("CAST"));
+            movieCastDHs.add(new MovieCastDH("CAST"));
             for(PersonCast personCast : movieCredits.cast)
-                creditsDHs.add(new CreditsDH(personCast));
+                movieCastDHs.add(new MovieCastDH(personCast));
         }
         if(movieCredits.crew != null && movieCredits.crew.size() > 0) {
-            creditsDHs.add(new CreditsDH("CREW"));
+            movieCastDHs.add(new MovieCastDH("CREW"));
             for(PersonCrew personCrew : movieCredits.crew)
-                creditsDHs.add(new CreditsDH(personCrew));
+                movieCastDHs.add(new MovieCastDH(personCrew));
         }
-        view.displayCredits(creditsDHs);
+        view.displayCredits(movieCastDHs);
     }
 
     @Override

@@ -16,8 +16,10 @@ import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
@@ -146,8 +148,8 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
 
     @AfterViews
     protected void initUI() {
-        cclCast_MFI     .setItemListener(this::clickCastItem);
-        cclCast_MFI     .setMoreListener(this::clickCastMore);
+        cclCast_MFI.setItemListener(this::clickCastItem);
+        cclCast_MFI.setMoreListener(this::clickCastMore);
 
         RxView.clicks(btnImdb_FMI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)

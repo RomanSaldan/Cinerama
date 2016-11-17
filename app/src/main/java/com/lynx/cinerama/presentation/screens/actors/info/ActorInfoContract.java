@@ -1,5 +1,7 @@
 package com.lynx.cinerama.presentation.screens.actors.info;
 
+import android.graphics.Bitmap;
+
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
 
@@ -24,9 +26,12 @@ public interface ActorInfoContract {
 
         void displayActorWebpage(String url);
         void displayActorImdbPage(String url);
+        void displayFullscreenImage(Bitmap fullscreenImage);
     }
     interface ActorInfoPresenter extends BasePresenter {
         void startActorWebpage();
         void startActorImdbPage();
+        void startFullscreenImage();
+        void setFullscreenBitmap(Bitmap b);
     }
 }

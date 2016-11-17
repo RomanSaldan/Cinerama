@@ -74,7 +74,6 @@ public interface MovieInfoContract {
         void openFullscreenPoster();
         void startReviewsMore();
 
-        Bitmap getPosterBitmap();
         void setPosterBitmap(Bitmap posterBitmap);
     }
 }

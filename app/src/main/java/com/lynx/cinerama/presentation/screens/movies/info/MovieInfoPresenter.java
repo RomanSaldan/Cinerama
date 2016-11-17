@@ -118,11 +118,6 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     }
 
     @Override
-    public Bitmap getPosterBitmap() {
-        return poster;
-    }
-
-    @Override
     public void setPosterBitmap(Bitmap posterBitmap) {
         poster = posterBitmap;
     }

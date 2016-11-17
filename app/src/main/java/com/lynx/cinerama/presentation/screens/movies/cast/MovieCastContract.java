@@ -3,7 +3,7 @@ package com.lynx.cinerama.presentation.screens.movies.cast;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
-import com.lynx.cinerama.presentation.holders.data.CreditsDH;
+import com.lynx.cinerama.presentation.holders.data.MovieCastDH;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public interface MovieCastContract {
     interface MovieCastView extends BaseView<MovieCastPresenter> {
-        void displayCredits(ArrayList<CreditsDH> creditsDHs);
+        void displayCredits(ArrayList<MovieCastDH> movieCastDHs);
         void clickCreditPerson(int personID);
 
         void openPersonInfoScreen(int personID);

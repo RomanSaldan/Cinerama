@@ -8,20 +8,20 @@ import com.michenko.simpleadapter.RecyclerDH;
  * Created by Lynx on 11/1/2016.
  */
 
-public class CreditsDH extends RecyclerDH {
+public class MovieCastDH extends RecyclerDH {
     private String title;
     private PersonCast personCast;
     private PersonCrew personCrew;
 
-    public CreditsDH(String title) {
+    public MovieCastDH(String title) {
         this.title = title;
     }
 
-    public CreditsDH(PersonCast personCast) {
+    public MovieCastDH(PersonCast personCast) {
         this.personCast = personCast;
     }
 
-    public CreditsDH(PersonCrew personCrew) {
+    public MovieCastDH(PersonCrew personCrew) {
         this.personCrew = personCrew;
     }
 

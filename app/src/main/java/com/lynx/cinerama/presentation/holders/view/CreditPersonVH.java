@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.andexert.library.RippleView;
 import com.bumptech.glide.Glide;
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.holders.data.CreditsDH;
+import com.lynx.cinerama.presentation.holders.data.MovieCastDH;
 import com.lynx.cinerama.presentation.utils.Constants;
 import com.michenko.simpleadapter.OnCardClickListener;
 import com.michenko.simpleadapter.RecyclerVH;
@@ -17,7 +17,7 @@ import com.michenko.simpleadapter.RecyclerVH;
  * Created by Lynx on 11/1/2016.
  */
 
-public class CreditPersonVH extends RecyclerVH<CreditsDH> {
+public class CreditPersonVH extends RecyclerVH<MovieCastDH> {
 
     private ImageView ivPortrait_LICH;
     private TextView tvName_LICH;
@@ -36,7 +36,7 @@ public class CreditPersonVH extends RecyclerVH<CreditsDH> {
     }
 
     @Override
-    public void bindData(CreditsDH data) {
+    public void bindData(MovieCastDH data) {
         if (data.getPersonCast() != null) {
             Glide.with(itemView.getContext())
                     .load(Constants.BASE_IMAGE_URL + data.getPersonCast().profile_path)
