@@ -1,12 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="INFO"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvActorName_FAI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Belnisimo Del Toro"/>
+
+                <TextView
+                    android:id="@+id/tvKnownAs_FAI"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:maxLines="3"
+                    android:textColor="@android:color/tertiary_text_light"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    tools:text="benzopila, topor, xz"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btnImdb_FAI"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:src="@drawable/ic_imdb"/>
+
+                    <ImageView
+                        android:id="@+id/btnWeb_FAI"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="5dp"
+                        android:src="@drawable/ic_web"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivActorImage_FAI"
+                android:layout_width="120dp"
+                android:layout_height="180dp"
+                android:layout_marginLeft="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder_portrait"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:src="@drawable/ic_location_on_black_24dp"/>
+
+            <TextView
+                android:id="@+id/tvActorBirthplace_FAI"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/placeholder_no_info"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:src="@drawable/ic_date_range_black_24dp"/>
+
+            <TextView
+                android:id="@+id/tvActorBirthday_FAI"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/placeholder_no_info"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/tvActorBiography_FAI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@android:color/primary_text_light"
+            android:textStyle="italic"
+            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in ultricies felis. Aliquam egestas sem mi, et suscipit tortor tempus at. Vestibulum orci tellus, eleifend id lectus eget, tempor fringilla urna. Suspendisse sed hendrerit nisi. Nam fringilla eros eget ornare cursus. Mauris elementum imperdiet ex a egestas. Integer id justo et eros elementum condimentum. Nulla pretium nunc ac felis auctor tempor. Phasellus volutpat vulputate metus, nec blandit purus pellentesque vel. Sed fermentum sollicitudin sapien, eu tempus tellus.
+
+Nunc ut augue at dui pharetra varius. Proin libero nisl, pretium id vestibulum in, aliquam nec erat. Morbi bibendum arcu eu vulputate porta. Proin dictum est id augue egestas pretium sit amet eget est. Duis fermentum fermentum arcu, et volutpat erat gravida vitae. In fringilla vitae est non tristique. Integer consectetur laoreet ullamcorper. Proin pretium elit magna, pellentesque commodo libero pretium ac. Fusce dictum sit amet purus sit amet placerat. Quisque mauris risus, tincidunt in risus eu, porta congue est. Donec sed mi eu nisl iaculis porta vitae nec metus. Proin mollis, ipsum eget gravida dapibus, augue purus ornare metus, tempus pharetra ante nibh quis massa."/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginLeft="70dp"
+            android:background="@android:color/darker_gray"/>
+
+    </LinearLayout>
+
+</ScrollView>

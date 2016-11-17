@@ -81,6 +81,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:tabGravity="fill"
-        app:tabMode="fixed" />
+        app:tabMode="fixed"/>
 
 </LinearLayout>
