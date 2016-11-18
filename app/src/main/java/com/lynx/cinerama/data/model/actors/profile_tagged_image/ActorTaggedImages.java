@@ -3,6 +3,8 @@ package com.lynx.cinerama.data.model.actors.profile_tagged_image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
+
 import java.util.ArrayList;
 
 /**
@@ -10,16 +12,18 @@ import java.util.ArrayList;
  */
 
 public class ActorTaggedImages implements Parcelable {
+
     public int page;
-    public ArrayList<TaggedImageItem> results;
+    public ArrayList<ImageModel> results;
     public int total_pages;
     public int total_results;
+
 
     protected ActorTaggedImages(Parcel in) {
         page = in.readInt();
         if (in.readByte() == 0x01) {
-            results = new ArrayList<TaggedImageItem>();
-            in.readList(results, TaggedImageItem.class.getClassLoader());
+            results = new ArrayList<ImageModel>();
+            in.readList(results, ImageModel.class.getClassLoader());
         } else {
             results = null;
         }

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.lynx.cinerama.data.model.movies.similar.ShortMovieInfo;
+
 /**
  * Created by Lynx on 10/26/2016.
  */
@@ -17,6 +19,9 @@ public class ImageModel implements Parcelable {
      vote_average: 0,
      vote_count: 0,
      width: 1920
+
+     ++media type
+     ++media (movie info)
      */
     public float aspect_ratio;
     public String file_path;
@@ -25,6 +30,10 @@ public class ImageModel implements Parcelable {
     public String iso_639_1;
     public float vote_average;
     public int vote_count;
+
+
+    public ShortMovieInfo media;
+    public String media_type;
 
     public boolean getIso_639_1Valid() {
         return TextUtils.isEmpty(iso_639_1) || iso_639_1.equalsIgnoreCase("en");
@@ -38,6 +47,8 @@ public class ImageModel implements Parcelable {
         iso_639_1 = in.readString();
         vote_average = in.readFloat();
         vote_count = in.readInt();
+        media = (ShortMovieInfo) in.readValue(ShortMovieInfo.class.getClassLoader());
+        media_type = in.readString();
     }
 
     @Override
@@ -54,6 +65,8 @@ public class ImageModel implements Parcelable {
         dest.writeString(iso_639_1);
         dest.writeFloat(vote_average);
         dest.writeInt(vote_count);
+        dest.writeValue(media);
+        dest.writeString(media_type);
     }
 
     @SuppressWarnings("unused")
