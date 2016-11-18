@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
+import com.lynx.cinerama.domain.ActorRepository;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.GalleryPagerAdapter;
 import com.lynx.cinerama.presentation.custom.FixedZoomViewPager;
@@ -51,38 +52,38 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
 
     @Extra
     protected int currentPosition;
-
     @Extra
     protected int movieID;
-
     @Extra
     protected String galleryType;
+    @Extra
+    protected int actorID;
 
     @Bean
     protected MovieRepository movieRepository;
-
+    @Bean
+    protected ActorRepository actorRepository;
     @Bean
     protected GalleryPagerAdapter galleryPagerAdapter;
 
     @ViewById
     protected TextView tvPageIndicator_AFI;
-
     @ViewById
     protected ImageView ivBack_AFI;
-
     @ViewById
     protected LinearLayout llContainerTitle_AFI;
-
     @ViewById
     protected TextView tvTitle_AFI;
-
     @ViewById
     protected FixedZoomViewPager vpFullscreenImage_AFI;
 
     @AfterInject
     protected void initPresenter() {
         postponeEnterTransition();
-        new FullscreenImagePresenter(this, movieID, galleryType, movieRepository);
+        if(actorID == 0)
+            new FullscreenImagePresenter(this, movieID, galleryType, movieRepository);
+        else
+            new FullscreenImagePresenter(this, actorID, galleryType, actorRepository);
     }
 
     @AfterViews

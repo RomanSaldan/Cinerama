@@ -3,15 +3,14 @@ package com.lynx.cinerama.domain;
 import com.lynx.cinerama.data.api.Rest;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.data.model.actors.credits.ActorCredits;
-import com.lynx.cinerama.data.model.actors.profile_image.ProfileImage;
 import com.lynx.cinerama.data.model.actors.profile_tagged_image.ActorTaggedImages;
+import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.data.services.ActorService;
 
 import org.androidannotations.annotations.EBean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -86,11 +85,11 @@ public class ActorRepository {
                 });
     }
 
-    public Observable<List<ProfileImage>> getActorImages(int actorID) {
+    public Observable<List<ImageModel>> getActorImages(int actorID) {
         return getActorInfo(actorID)
                 .flatMap(responseActorInfo -> Observable.just(responseActorInfo.images.profiles))
                 .flatMap(Observable::from)
-                .filter(ProfileImage::getIso_639_1Valid)
+                .filter(ImageModel::getIso_639_1Valid)
                 .toList();
     }
 

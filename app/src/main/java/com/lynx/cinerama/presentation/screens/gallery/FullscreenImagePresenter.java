@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
+import com.lynx.cinerama.domain.ActorRepository;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.utils.Constants;
 
@@ -17,6 +18,9 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
     private MovieRepository movieRepository;
     private CompositeSubscription compositeSubscription;
 
+    private int actorID;
+    private ActorRepository actorRepository;
+
     private boolean isSupportViewsVisible = true;
 
     public FullscreenImagePresenter(FullscreenImageContract.FullscreenImageView view, int movieID, String galleryType, MovieRepository movieRepository) {
@@ -24,6 +28,16 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
         this.movieID = movieID;
         this.galleryType = galleryType;
         this.movieRepository = movieRepository;
+        compositeSubscription = new CompositeSubscription();
+
+        view.setPresenter(this);
+    }
+
+    public FullscreenImagePresenter(FullscreenImageContract.FullscreenImageView view, int actorID, String galleryType, ActorRepository actorRepository) {
+        this.view = view;
+        this.galleryType = galleryType;
+        this.actorID = actorID;
+        this.actorRepository = actorRepository;
         compositeSubscription = new CompositeSubscription();
 
         view.setPresenter(this);
@@ -44,6 +58,11 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
                             .subscribe(view::displayGallery)
                 );
                 break;
+            case Constants.GALLERY_TYPE_IMAGES:
+                compositeSubscription.add(
+                        actorRepository.getActorImages(actorID)
+                        .subscribe(view::displayGallery)
+                );
         }
     }
 

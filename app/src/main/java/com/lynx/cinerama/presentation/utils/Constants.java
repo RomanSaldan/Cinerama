@@ -29,6 +29,7 @@ public class Constants {
     public static final String LANGUAGE_FILTER              = "en";
     public static final String GALLERY_TYPE_SCREENS         = "Screens";
     public static final String GALLERY_TYPE_POSTERS         = "Posters";
+    public static final String GALLERY_TYPE_IMAGES          = "Images";
 
     public static final String KEY_DIRECTOR                 = "Director";
 

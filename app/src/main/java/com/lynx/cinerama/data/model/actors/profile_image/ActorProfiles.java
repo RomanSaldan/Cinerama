@@ -3,6 +3,8 @@ package com.lynx.cinerama.data.model.actors.profile_image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
+
 import java.util.ArrayList;
 
 /**
@@ -10,12 +12,12 @@ import java.util.ArrayList;
  */
 
 public class ActorProfiles implements Parcelable {
-    public ArrayList<ProfileImage> profiles;
+    public ArrayList<ImageModel> profiles;
 
     protected ActorProfiles(Parcel in) {
         if (in.readByte() == 0x01) {
-            profiles = new ArrayList<ProfileImage>();
-            in.readList(profiles, ProfileImage.class.getClassLoader());
+            profiles = new ArrayList<ImageModel>();
+            in.readList(profiles, ImageModel.class.getClassLoader());
         } else {
             profiles = null;
         }
