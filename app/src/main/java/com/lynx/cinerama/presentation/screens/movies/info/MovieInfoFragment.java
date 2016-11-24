@@ -32,6 +32,7 @@ import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.custom.cast_view.CastLayout;
 import com.lynx.cinerama.presentation.holders.data.ReviewDH;
 import com.lynx.cinerama.presentation.holders.data.SimilarDH;
+import com.lynx.cinerama.presentation.screens.actors.ActorsActivity_;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
 import com.lynx.cinerama.presentation.screens.movies.info.fullscreen_poster.FullscreenPosterActivity_;
 import com.lynx.cinerama.presentation.screens.movies.info.review_details.ReviewDetailsActivity_;
@@ -303,8 +304,8 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     }
 
     @Override
-    public void clickCastItem(int personId) {
-        presenter.startCastItem(personId);
+    public void clickCastItem(View v,int personId) {
+        presenter.startCastItem(v, personId);
     }
 
     @Override
@@ -380,7 +381,20 @@ public class MovieInfoFragment extends BaseFragment<MoviesActivity> implements M
     }
 
     @Override
+    public void startActorInfoScreen(View v, int actorID) {
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(getActivity(), v, "circleCast");
+
+        ActorsActivity_.intent(getActivity())
+                .actorID(actorID)
+                .withOptions(options.toBundle())
+                .start();
+        getActivity().finish();
+    }
+
+    @Override
     public void refreshMovieInfo(int movieID) {
+        Glide.get(getActivity()).clearMemory();
         mActivity.refreshMovieInfo(movieID);
     }
 

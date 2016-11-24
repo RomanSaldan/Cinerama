@@ -19,7 +19,7 @@ public interface ActorScenesContract {
         void displayActorScenes(ArrayList<SceneDH> sceneDHs);
         void clickActorScene(View v, int pos);
 
-        void displaySceneGallery(View v, int pos, int actorID);
+        void displaySceneGallery(View v, int pos, int actorID, ArrayList<ImageModel> cachedImages, int page, int totalImages);
     }
     interface ActorScenesPresenter extends BasePresenter {
         void loadMoreActorScenes(int page);

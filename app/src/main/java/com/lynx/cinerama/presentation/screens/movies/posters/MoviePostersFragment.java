@@ -1,6 +1,7 @@
 package com.lynx.cinerama.presentation.screens.movies.posters;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,7 +80,9 @@ public class MoviePostersFragment extends BaseFragment<MoviesActivity> implement
     public void startPosterGalleryScreen(View v, int pos, int movieID) {
         View vv = glm.findContainingItemView(v).findViewById(R.id.ivPoster_LIP);
 
-        vv.setTransitionName("gallery" + pos);
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            vv.setTransitionName("gallery" + pos);
+
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), vv, "gallery" + pos);
 

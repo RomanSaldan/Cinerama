@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.adapters;
 
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -45,9 +46,13 @@ public class GalleryPagerAdapter extends PagerAdapter {
         notifyDataSetChanged();
     }
 
-    public void setTransitionrequisites(AppCompatActivity activity, int startPosition) {
+    public void setTransitionRequisites(AppCompatActivity activity, int startPosition) {
         compatActivity = activity;
         pos = startPosition;
+    }
+
+    public ImageModel getItem(int position) {
+        return data.get(position);
     }
 
     @Override
@@ -57,9 +62,9 @@ public class GalleryPagerAdapter extends PagerAdapter {
         ProgressBar pbImageDownload_LGI = (ProgressBar) view.findViewById(R.id.pbImageDownload_LGI);
         ImageView ivFullscreenImage_LGI = (ImageView) view.findViewById(R.id.ivFullscreenImage_LGI);
 
-        if(pos == position) ivFullscreenImage_LGI.setTransitionName("gallery" + pos);
+        if(pos == position && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            ivFullscreenImage_LGI.setTransitionName("gallery" + pos);
         pbImageDownload_LGI.setVisibility(View.VISIBLE);
-
 
         DrawableRequestBuilder<String> thumbnailRequest = Glide
                 .with(container.getContext())
@@ -87,7 +92,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
-                        if(position == pos) compatActivity.startPostponedEnterTransition();
+                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                            compatActivity.startPostponedEnterTransition();
                         return false;
                     }
 
@@ -96,7 +102,8 @@ public class GalleryPagerAdapter extends PagerAdapter {
                         pbImageDownload_LGI.setVisibility(View.GONE);
                         photoViewAttacher = new PhotoViewAttacher(ivFullscreenImage_LGI, true);
                         photoViewAttacher.setOnViewTapListener(onViewTapListener);
-                        if(position == pos) compatActivity.startPostponedEnterTransition();
+                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                            compatActivity.startPostponedEnterTransition();
                         return false;
                     }
                 })
@@ -125,4 +132,5 @@ public class GalleryPagerAdapter extends PagerAdapter {
     public void setOnViewTapListener(PhotoViewAttacher.OnViewTapListener onViewTapListener) {
         this.onViewTapListener = onViewTapListener;
     }
+
 }

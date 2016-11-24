@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.actors;
 
+import android.graphics.Bitmap;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -9,6 +10,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.domain.ActorRepository;
@@ -79,6 +83,7 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
 
     @AfterInject
     protected void initPresenter() {
+        postponeEnterTransition();
         new ActorsPresenter(this, actorRepository, actorID == 0 ? Constants.TEST_ACTOR_ID : actorID);
     }
 
@@ -109,6 +114,19 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
         Glide.with(this)
                 .load(Constants.BASE_LARGE_IMAGE_URL + path)
                 .centerCrop()
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        startPostponedEnterTransition();
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        startPostponedEnterTransition();
+                        return false;
+                    }
+                })
                 .into(ivCirclePerson_AA);
     }
 

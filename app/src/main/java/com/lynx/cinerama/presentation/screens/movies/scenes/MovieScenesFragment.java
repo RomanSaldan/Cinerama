@@ -1,6 +1,7 @@
 package com.lynx.cinerama.presentation.screens.movies.scenes;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,7 +80,10 @@ public class MovieScenesFragment extends BaseFragment<MoviesActivity> implements
     public void displaySceneGallery(View v, int pos, int movieID) {
         View vv = glm.findContainingItemView(v).findViewById(R.id.ivMovieScene_LIS);
 
-        vv.setTransitionName("gallery" + pos);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            vv.setTransitionName("gallery" + pos);
+        }
+
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(getActivity(), vv, "gallery" + pos);
 

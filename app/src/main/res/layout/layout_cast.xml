@@ -64,7 +64,8 @@
                 android:visibility="gone"
                 app:civ_border_color="@color/colorAccent"
                 app:civ_border_width="3dp"
-                tools:visibility="visible" />
+                tools:visibility="visible"
+                android:transitionName="circleCast"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civDirectorTwo_LCC"
@@ -76,7 +77,8 @@
                 app:civ_border_color="@color/colorAccent"
                 app:civ_border_width="3dp"
                 tools:visibility="visible"
-                android:layout_marginLeft="-15dp" />
+                android:layout_marginLeft="-15dp"
+                android:transitionName="circleCast"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civActorOne_LCC"
@@ -88,7 +90,8 @@
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="3dp"
                 tools:visibility="visible"
-                android:layout_marginLeft="35dp" />
+                android:layout_marginLeft="35dp"
+                android:transitionName="circleCast"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civActorTwo_LCC"
@@ -100,7 +103,8 @@
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="3dp"
                 tools:visibility="visible"
-                android:layout_marginLeft="-15dp" />
+                android:layout_marginLeft="-15dp"
+                android:transitionName="circleCast"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civActorThree_LCC"
@@ -112,7 +116,8 @@
                 app:civ_border_color="@color/colorPrimary"
                 app:civ_border_width="3dp"
                 tools:visibility="visible"
-                android:layout_marginLeft="-15dp" />
+                android:layout_marginLeft="-15dp"
+                android:transitionName="circleCast"/>
 
         </LinearLayout>
 

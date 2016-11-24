@@ -3,17 +3,11 @@ package com.lynx.cinerama.presentation.screens.gallery;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.transition.Transition;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,8 +26,10 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +37,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Lynx on 11/2/2016.
  */
 
+@Fullscreen
 @EActivity(R.layout.activity_fullscreen_image)
 public class FullscreenImageActivity extends AppCompatActivity implements FullscreenImageContract.FullscreenImageView {
 
@@ -58,6 +55,13 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     protected String galleryType;
     @Extra
     protected int actorID;
+
+    @Extra
+    protected ArrayList<ImageModel> cachedGallery;
+    @Extra
+    protected int page;
+    @Extra
+    protected int totalItems;
 
     @Bean
     protected MovieRepository movieRepository;
@@ -79,9 +83,14 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
 
     @AfterInject
     protected void initPresenter() {
-        postponeEnterTransition();
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+        }
+
         if(actorID == 0)
             new FullscreenImagePresenter(this, movieID, galleryType, movieRepository);
+        else if(galleryType.equalsIgnoreCase(Constants.GALLERY_TYPE_ACTOR_SCENES))
+            new FullscreenImagePresenter(this, actorID, galleryType, actorRepository, cachedGallery, page);
         else
             new FullscreenImagePresenter(this, actorID, galleryType, actorRepository);
     }
@@ -90,7 +99,7 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     protected void initUI() {
         vpFullscreenImage_AFI.setAdapter(galleryPagerAdapter);
         vpFullscreenImage_AFI.addOnPageChangeListener(pageChangeListener);
-        galleryPagerAdapter.setTransitionrequisites(this, currentPosition);
+        galleryPagerAdapter.setTransitionRequisites(this, currentPosition);
 
         RxView.clicks(ivBack_AFI)
                 .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
@@ -110,7 +119,8 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
     public void displayGallery(List<ImageModel> imageModels) {
         galleryPagerAdapter.updateData(imageModels);
         vpFullscreenImage_AFI.setCurrentItem(currentPosition);
-        displayIndicator(currentPosition + 1, vpFullscreenImage_AFI.getAdapter().getCount());
+        int total = galleryType.equals(Constants.GALLERY_TYPE_ACTOR_SCENES) ? totalItems : vpFullscreenImage_AFI.getAdapter().getCount();
+        displayIndicator(currentPosition + 1, total);
     }
 
     @Override
@@ -190,7 +200,14 @@ public class FullscreenImageActivity extends AppCompatActivity implements Fullsc
 
         @Override
         public void onPageSelected(int position) {
-            displayIndicator(position + 1, vpFullscreenImage_AFI.getAdapter().getCount());
+            currentPosition = position;
+            int total = galleryType.equals(Constants.GALLERY_TYPE_ACTOR_SCENES) ? totalItems : vpFullscreenImage_AFI.getAdapter().getCount();
+            displayIndicator(position + 1, total);
+            if(position >= galleryPagerAdapter.getCount() - 2) {
+                presenter.loadMoreImages(page++);
+            }
+            if(galleryType.equalsIgnoreCase(Constants.GALLERY_TYPE_ACTOR_SCENES))
+                displayTitle(galleryPagerAdapter.getItem(position).media.title);
         }
 
         @Override

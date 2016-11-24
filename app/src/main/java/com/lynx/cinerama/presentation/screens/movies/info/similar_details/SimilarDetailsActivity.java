@@ -92,10 +92,10 @@ public class SimilarDetailsActivity extends AppCompatActivity implements Similar
 
     @Override
     public void displayMovieInfoScreen(int movieID) {
-        finish();
         MoviesActivity_.intent(this)
                 .movieID(movieID)
                 .start();
+        finish();
     }
 
     @Override

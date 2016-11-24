@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.movies.cast;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.adapters.MovieCastAdapter;
 import com.lynx.cinerama.presentation.base.BaseFragment;
 import com.lynx.cinerama.presentation.holders.data.MovieCastDH;
+import com.lynx.cinerama.presentation.screens.actors.ActorsActivity_;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity;
 
 import org.androidannotations.annotations.AfterInject;
@@ -85,7 +87,10 @@ public class MovieCastFragment extends BaseFragment<MoviesActivity> implements M
 
     @Override
     public void openPersonInfoScreen(int personID) {
-        Log.d("myLogs", "openPersonInfoScreen ID = " + personID);
+        ActorsActivity_.intent(getActivity())
+                .actorID(personID)
+                .start();
+        getActivity().finish();
     }
 
     @Override

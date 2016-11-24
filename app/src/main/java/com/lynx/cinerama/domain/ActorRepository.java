@@ -1,5 +1,7 @@
 package com.lynx.cinerama.domain;
 
+import android.text.TextUtils;
+
 import com.lynx.cinerama.data.api.Rest;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.data.model.actors.credits.ActorCredits;
@@ -61,27 +63,33 @@ public class ActorRepository {
                 .flatMap(responseActorInfo -> {
                     Collections.sort(responseActorInfo.credits.cast, (actorCreditCast, t1) -> {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        try {
-                            Date d1 = sdf.parse(actorCreditCast.release_date);
-                            Date d2 = sdf.parse(t1.release_date);
-                            return d2.after(d1) ? 1 : -1;
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        if(TextUtils.isEmpty(actorCreditCast.release_date)) return 1;
+                        else if(TextUtils.isEmpty(t1.release_date)) return -1;
+                        else
+                            try {
+                                Date d1 = sdf.parse(actorCreditCast.release_date);
+                                Date d2 = sdf.parse(t1.release_date);
+                                return d2.after(d1) ? 1 : -1;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         return -1;
                     });
                     Collections.sort(responseActorInfo.credits.crew, (actorCreditCrew, t1) -> {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        try {
-                            Date d1 = sdf.parse(actorCreditCrew.release_date);
-                            Date d2 = sdf.parse(t1.release_date);
-                            return d2.after(d1) ? 1 : -1;
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        if(TextUtils.isEmpty(actorCreditCrew.release_date)) return 1;
+                        else if(TextUtils.isEmpty(t1.release_date)) return -1;
+                        else
+                            try {
+                                Date d1 = sdf.parse(actorCreditCrew.release_date);
+                                Date d2 = sdf.parse(t1.release_date);
+                                return d2.after(d1) ? 1 : -1;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         return -1;
                     });
-                   return Observable.just(responseActorInfo.credits);
+                    return Observable.just(responseActorInfo.credits);
                 });
     }
 

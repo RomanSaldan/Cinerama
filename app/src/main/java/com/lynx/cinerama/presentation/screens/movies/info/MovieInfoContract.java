@@ -2,6 +2,7 @@ package com.lynx.cinerama.presentation.screens.movies.info;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
@@ -46,7 +47,7 @@ public interface MovieInfoContract {
         void setPosterClickable(boolean isClickable);
 
         void clickPoster();
-        void clickCastItem(int personId);
+        void clickCastItem(View v, int personId);
         void clickCastMore();
         void clickImdbButton();
         void clickWebButton();
@@ -60,6 +61,7 @@ public interface MovieInfoContract {
         void startMoreCast();
         void startMoreSimilars(int movieID);
         void startFullscreenPoster(Bitmap posterBitmap);
+        void startActorInfoScreen(View v, int actorID);
 
         void refreshMovieInfo(int movieID);
     }
@@ -70,7 +72,7 @@ public interface MovieInfoContract {
         void startSimilarMovieScreen(int movieId);
         void startMoreSimilarMovies();
         void startMoreCast();
-        void startCastItem(int personId);
+        void startCastItem(View v, int personId);
         void openFullscreenPoster();
         void startReviewsMore();
 

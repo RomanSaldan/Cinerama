@@ -5,12 +5,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.domain.ActorRepository;

@@ -32,7 +32,7 @@
                     android:textColor="@android:color/primary_text_light"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    tools:text="Belnisimo Del Toro"/>
+                    android:text="@string/placeholder_no_info"/>
 
                 <TextView
                     android:id="@+id/tvKnownAs_FAI"
@@ -45,7 +45,7 @@
                     android:textColor="@android:color/tertiary_text_light"
                     android:textSize="14sp"
                     android:textStyle="italic"
-                    tools:text="benzopila, topor, xz"/>
+                    android:text="@string/placeholder_no_info"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,9 +156,7 @@
             android:paddingRight="20dp"
             android:textColor="@android:color/primary_text_light"
             android:textStyle="italic"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in ultricies felis. Aliquam egestas sem mi, et suscipit tortor tempus at. Vestibulum orci tellus, eleifend id lectus eget, tempor fringilla urna. Suspendisse sed hendrerit nisi. Nam fringilla eros eget ornare cursus. Mauris elementum imperdiet ex a egestas. Integer id justo et eros elementum condimentum. Nulla pretium nunc ac felis auctor tempor. Phasellus volutpat vulputate metus, nec blandit purus pellentesque vel. Sed fermentum sollicitudin sapien, eu tempus tellus.
-
-Nunc ut augue at dui pharetra varius. Proin libero nisl, pretium id vestibulum in, aliquam nec erat. Morbi bibendum arcu eu vulputate porta. Proin dictum est id augue egestas pretium sit amet eget est. Duis fermentum fermentum arcu, et volutpat erat gravida vitae. In fringilla vitae est non tristique. Integer consectetur laoreet ullamcorper. Proin pretium elit magna, pellentesque commodo libero pretium ac. Fusce dictum sit amet purus sit amet placerat. Quisque mauris risus, tincidunt in risus eu, porta congue est. Donec sed mi eu nisl iaculis porta vitae nec metus. Proin mollis, ipsum eget gravida dapibus, augue purus ornare metus, tempus pharetra ante nibh quis massa."/>
+            android:text="@string/placeholder_no_info"/>
 
         <View
             android:layout_width="match_parent"

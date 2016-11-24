@@ -68,7 +68,7 @@ public class CastLayout extends LinearLayout {
                 final int p = i;
                 RxView.clicks(directorViews.get(p))
                         .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
-                        .subscribe((aVoid) -> itemListener.clickItem(directors.get(p).id));
+                        .subscribe((aVoid) -> itemListener.clickItem(actorViews.get(p), directors.get(p).id));
             }
         }
         if(actors.size() > 0) {
@@ -76,7 +76,7 @@ public class CastLayout extends LinearLayout {
                 final int p = i;
                 RxView.clicks(actorViews.get(p))
                         .throttleFirst(Constants.DELAY_CLICK, TimeUnit.MILLISECONDS)
-                        .subscribe((aVoid) -> itemListener.clickItem(actors.get(p).id));
+                        .subscribe((aVoid) -> itemListener.clickItem(actorViews.get(p), actors.get(p).id));
             }
         }
     }

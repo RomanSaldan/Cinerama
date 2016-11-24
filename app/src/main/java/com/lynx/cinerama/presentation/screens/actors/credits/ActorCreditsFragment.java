@@ -96,6 +96,7 @@ public class ActorCreditsFragment extends BaseFragment<ActorsActivity> implement
         MoviesActivity_.intent(getActivity())
                 .movieID(movieID)
                 .start();
+        getActivity().finish();
     }
 
     @Override

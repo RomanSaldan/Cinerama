@@ -14,6 +14,7 @@ import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.Fullscreen;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
@@ -23,6 +24,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  * Created by Lynx on 10/31/2016.
  */
 
+@Fullscreen
 @EActivity(R.layout.activity_fullscreen_poster)
 public class FullscreenPosterActivity extends AppCompatActivity implements FullscreenPosterContract.FullscreenPosterView {
 

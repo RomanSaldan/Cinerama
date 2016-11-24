@@ -1,6 +1,7 @@
 package com.lynx.cinerama.presentation.holders.view;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,9 +53,12 @@ public class ActorCastVH extends RecyclerVH<ActorCreditsDH> {
                     .error(R.drawable.placeholder_movie)
                     .placeholder(R.drawable.placeholder_movie)
                     .into(ivPoster_LIAC);
-            tvMovieTitle_LIAC.setText(data.getActorCreditCast().title);
-            tvActorRole_LIAC.setText(data.getActorCreditCast().character);
-            tvMovieDate_LIAC.setText(data.getActorCreditCast().release_date);
+            if(!TextUtils.isEmpty(data.getActorCreditCast().title))
+                tvMovieTitle_LIAC.setText(data.getActorCreditCast().title);
+            if(!TextUtils.isEmpty(data.getActorCreditCast().character))
+                tvActorRole_LIAC.setText(data.getActorCreditCast().character);
+            if(!TextUtils.isEmpty(data.getActorCreditCast().release_date))
+                tvMovieDate_LIAC.setText(data.getActorCreditCast().release_date);
         }
     }
 }

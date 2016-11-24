@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.bumptech.glide.Glide;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.presentation.screens.actors.ActorsActivity_;
 import com.lynx.cinerama.presentation.screens.movies.MoviesActivity_;
@@ -69,5 +70,10 @@ public class NavigationActivity extends AppCompatActivity {
 
     public void displayError(String msg) {
         Snackbar.make(fullView, msg, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

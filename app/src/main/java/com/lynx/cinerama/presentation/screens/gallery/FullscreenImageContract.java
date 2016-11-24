@@ -23,6 +23,7 @@ public interface FullscreenImageContract {
     }
     interface FullscreenImagePresenter extends BasePresenter {
         void setupGalleryItems();
+        void loadMoreImages(int page);
         void back();
         void screenClicked();
     }

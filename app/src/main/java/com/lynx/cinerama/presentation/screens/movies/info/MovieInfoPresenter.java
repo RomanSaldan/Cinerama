@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.data.model.movies.credits.MovieCredits;
@@ -97,8 +98,8 @@ public class MovieInfoPresenter implements MovieInfoContract.MovieInfoPresenter 
     }
 
     @Override
-    public void startCastItem(int personId) {
-        Log.d("myLogs", "Clicked cast item || id = " + personId);
+    public void startCastItem(View v, int personId) {
+        view.startActorInfoScreen(v, personId);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.lynx.cinerama.presentation.screens.actors.credits;
 
+import android.util.Log;
 import android.view.View;
 
 import com.lynx.cinerama.data.model.actors.credits.ActorCreditCast;

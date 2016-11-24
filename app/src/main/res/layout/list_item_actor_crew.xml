@@ -42,7 +42,7 @@
                         android:textColor="@android:color/primary_text_light"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        tools:text="Leonardo Di Caprio"
+                        android:text="@string/placeholder_no_info"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"/>
 
@@ -55,7 +55,7 @@
                         android:textColor="@android:color/secondary_text_light"
                         android:textSize="14sp"
                         android:textStyle="italic"
-                        tools:text="Admiral #1"
+                        android:text="@string/placeholder_no_info"
                         android:layout_marginRight="10dp"
                         android:layout_marginLeft="10dp"/>
 
@@ -68,7 +68,7 @@
                         android:textColor="@android:color/darker_gray"
                         android:textSize="12sp"
                         android:textStyle="italic"
-                        tools:text="10-10-1190"
+                        android:text="@string/placeholder_no_info"
                         android:layout_margin="5dp"/>
 
                 </LinearLayout>

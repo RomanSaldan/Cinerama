@@ -26,7 +26,8 @@
                 android:src="@drawable/placeholder_portrait"
                 android:padding="3dp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="left"/>
+                android:layout_gravity="left"
+                android:transitionName="circleCast"/>
 
             <TextView
                 android:layout_marginLeft="10dp"

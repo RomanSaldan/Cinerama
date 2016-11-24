@@ -1,6 +1,7 @@
 package com.lynx.cinerama.presentation.holders.view;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,15 +47,18 @@ public class ActorCrewVH extends RecyclerVH<ActorCreditsDH> {
     @Override
     public void bindData(ActorCreditsDH data) {
         if(data.getActorCreditCrew() != null) {
-            tvMovieTitle_LIACW.setText(data.getActorCreditCrew().title);
-            tvActorJob_LIACW.setText(data.getActorCreditCrew().job);
-            tvMovieDate_LIACW.setText(data.getActorCreditCrew().release_date);
             Glide.with(itemView.getContext())
                     .load(Constants.BASE_IMAGE_URL + data.getActorCreditCrew().poster_path)
                     .centerCrop()
                     .error(R.drawable.placeholder_movie)
                     .error(R.drawable.placeholder_movie)
                     .into(ivPoster_LIACW);
+            if(!TextUtils.isEmpty(data.getActorCreditCrew().title))
+                tvMovieTitle_LIACW.setText(data.getActorCreditCrew().title);
+            if(!TextUtils.isEmpty(data.getActorCreditCrew().job))
+                tvActorJob_LIACW.setText(data.getActorCreditCrew().job);
+            if(!TextUtils.isEmpty(data.getActorCreditCrew().release_date))
+                tvMovieDate_LIACW.setText(data.getActorCreditCrew().release_date);
         }
     }
 }

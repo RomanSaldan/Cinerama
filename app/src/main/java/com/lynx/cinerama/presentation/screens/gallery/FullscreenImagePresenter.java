@@ -1,8 +1,13 @@
 package com.lynx.cinerama.presentation.screens.gallery;
 
+import android.util.Log;
+
+import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
 import com.lynx.cinerama.domain.ActorRepository;
 import com.lynx.cinerama.domain.MovieRepository;
 import com.lynx.cinerama.presentation.utils.Constants;
+
+import java.util.ArrayList;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -21,7 +26,11 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
     private int actorID;
     private ActorRepository actorRepository;
 
+    private ArrayList<ImageModel> cachedImages;
+    private int currentPage;
+
     private boolean isSupportViewsVisible = true;
+    private boolean isDataLoading = false;
 
     public FullscreenImagePresenter(FullscreenImageContract.FullscreenImageView view, int movieID, String galleryType, MovieRepository movieRepository) {
         this.view = view;
@@ -38,6 +47,18 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
         this.galleryType = galleryType;
         this.actorID = actorID;
         this.actorRepository = actorRepository;
+        compositeSubscription = new CompositeSubscription();
+
+        view.setPresenter(this);
+    }
+
+    public FullscreenImagePresenter(FullscreenImageContract.FullscreenImageView view, int actorID, String galleryType, ActorRepository actorRepository, ArrayList<ImageModel> cachedImages, int currentPage) {
+        this.view = view;
+        this.galleryType = galleryType;
+        this.actorID = actorID;
+        this.actorRepository = actorRepository;
+        this.cachedImages = cachedImages;
+        this.currentPage = currentPage;
         compositeSubscription = new CompositeSubscription();
 
         view.setPresenter(this);
@@ -63,6 +84,27 @@ public class FullscreenImagePresenter implements FullscreenImageContract.Fullscr
                         actorRepository.getActorImages(actorID)
                         .subscribe(view::displayGallery)
                 );
+                break;
+            case Constants.GALLERY_TYPE_ACTOR_SCENES:
+                view.displayGallery(cachedImages);
+                break;
+        }
+    }
+
+    @Override
+    public void loadMoreImages(int page) {
+        if(galleryType.equalsIgnoreCase(Constants.GALLERY_TYPE_ACTOR_SCENES) && !isDataLoading) {
+            isDataLoading = true;
+            compositeSubscription.add(
+                    actorRepository.getActorScenes(actorID, page)
+                    .subscribe(actorTaggedImages -> {
+                        isDataLoading = false;
+                        view.displayGallery(actorTaggedImages.results);
+                    }, t -> {
+                        Log.d("err", t.getMessage());
+                        isDataLoading = false;
+                    })
+            );
         }
     }
 

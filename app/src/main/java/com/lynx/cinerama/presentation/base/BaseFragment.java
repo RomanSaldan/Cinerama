@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.inputmethod.InputMethodManager;
 
+import com.bumptech.glide.Glide;
+
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.SystemService;
 
