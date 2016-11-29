@@ -1,18 +1,25 @@
 package com.lynx.cinerama.presentation.screens.movies;
 
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.domain.MovieRepository;
+import com.lynx.cinerama.domain.SearchRepository;
 import com.lynx.cinerama.presentation.adapters.MoviesTabAdapter;
 import com.lynx.cinerama.presentation.screens.NavigationActivity;
 import com.lynx.cinerama.presentation.utils.Constants;
@@ -45,37 +52,34 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @Bean
     protected MovieRepository movieRepository;
+    @Bean
+    protected SearchRepository searchRepository;
 
     @ViewById
     protected ImageView ivCollapsed_AM;
-
     @ViewById
     protected MaterialSearchView svMovies_AM;
-
     @ViewById
     protected Toolbar toolbar_AM;
-
     @ViewById
     protected TabLayout tabLayout_AM;
-
     @ViewById
     protected ViewPager viewpager_AM;
-
     @ViewById
     protected CollapsingToolbarLayout collapsingToolbar_AM;
+    @ViewById
+    protected CoordinatorLayout main_content;
+    @ViewById
+    protected RecyclerView rvSearchResults_AM;
 
     @StringRes(R.string.tab_title_info)
     protected String tabTitleInfo;
-
     @StringRes(R.string.tab_title_cast)
     protected String tabTitleCast;
-
     @StringRes(R.string.tab_title_posters)
     protected String tabTitlePosters;
-
     @StringRes(R.string.tab_title_scenes)
     protected String tabTitleScenes;
-
     @StringRes(R.string.tab_title_videos)
     protected String tabTitleVideos;
 
@@ -92,6 +96,8 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
         navigationView.setCheckedItem(R.id.menuItemMovies);
         setupToolbar();
         presenter.subscribe();
+
+        setupSearch();
     }
 
     @Override
@@ -168,5 +174,43 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     public boolean onCreateOptionsMenu(Menu menu) {
         svMovies_AM.setMenuItem(menuItemSearch);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setupSearch() {
+        svMovies_AM.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                tabLayout_AM.setVisibility(View.GONE);
+                main_content.setVisibility(View.GONE);
+                rvSearchResults_AM.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                tabLayout_AM.setVisibility(View.VISIBLE);
+                main_content.setVisibility(View.VISIBLE);
+                rvSearchResults_AM.setVisibility(View.GONE);
+            }
+        });
+        svMovies_AM.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.length() >= 3) {
+                    searchRepository.multiSearch(newText)
+                            .subscribe(responseMultiSearch -> {
+                                Log.d("myLogs", "Success!");
+                            });
+                }
+                return false;
+            }
+        });
+        svMovies_AM.setOnItemClickListener((adapterView, view, i, l) -> {
+
+        });
     }
 }

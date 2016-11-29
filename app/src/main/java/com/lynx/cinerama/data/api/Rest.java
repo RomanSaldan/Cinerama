@@ -1,11 +1,13 @@
 package com.lynx.cinerama.data.api;
 
-import android.util.Log;
-
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.GsonBuilder;
+import com.lynx.cinerama.data.model.search.ResponseMultiSearch;
 import com.lynx.cinerama.data.services.ActorService;
 import com.lynx.cinerama.data.services.MovieService;
+import com.lynx.cinerama.data.services.SearchService;
 import com.lynx.cinerama.presentation.utils.Constants;
+import com.lynx.cinerama.presentation.utils.SearchJsonDeserializer;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -24,12 +26,15 @@ public class Rest {
 
     private static Rest ourInstance;
     private Retrofit retrofit;
+    private Retrofit searchRetrofit;
+    private OkHttpClient client;
 
     private MovieService movieService;
     private ActorService actorService;
+    private SearchService searchService;
 
     private Rest() {
-        OkHttpClient client = new OkHttpClient.Builder()
+        client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(chain -> {
                     HttpUrl original = chain.request().url();
@@ -58,5 +63,18 @@ public class Rest {
 
     public ActorService getActorService() {
         return actorService == null ? retrofit.create(ActorService.class) : actorService;
+    }
+
+    public SearchService getSearchService() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(ResponseMultiSearch.class, new SearchJsonDeserializer());
+
+        searchRetrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gsonBuilder.create()))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .client(client)
+                .baseUrl(BASE_URL)
+                .build();
+        return searchService == null ? searchRetrofit.create(SearchService.class) : searchService;
     }
 }
