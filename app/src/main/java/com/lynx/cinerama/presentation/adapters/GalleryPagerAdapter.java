@@ -66,20 +66,24 @@ public class GalleryPagerAdapter extends PagerAdapter {
             ivFullscreenImage_LGI.setTransitionName("gallery" + pos);
         pbImageDownload_LGI.setVisibility(View.VISIBLE);
 
-        DrawableRequestBuilder<String> thumbnailRequest = Glide
-                .with(container.getContext())
+        DrawableRequestBuilder<String> thumbnailRequest = Glide.with(container.getContext())
                 .load(Constants.BASE_IMAGE_URL + data.get(position).file_path)
                 .dontAnimate()
+                .dontTransform()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
+                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                            compatActivity.startPostponedEnterTransition();
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
+                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                            compatActivity.startPostponedEnterTransition();
                         return false;
                     }
                 });
@@ -88,19 +92,16 @@ public class GalleryPagerAdapter extends PagerAdapter {
                 .load(Constants.BASE_LARGE_IMAGE_URL + data.get(position).file_path)
                 .thumbnail(thumbnailRequest)
                 .dontAnimate()
+                .dontTransform()
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         pbImageDownload_LGI.setVisibility(View.GONE);
-                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                            compatActivity.startPostponedEnterTransition();
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                            compatActivity.startPostponedEnterTransition();
                         pbImageDownload_LGI.setVisibility(View.GONE);
                         photoViewAttacher = new PhotoViewAttacher(ivFullscreenImage_LGI, true);
                         photoViewAttacher.setOnViewTapListener(onViewTapListener);
