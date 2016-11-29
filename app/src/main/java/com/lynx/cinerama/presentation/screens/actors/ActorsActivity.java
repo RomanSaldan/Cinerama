@@ -1,6 +1,7 @@
 package com.lynx.cinerama.presentation.screens.actors;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -83,7 +84,8 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
 
     @AfterInject
     protected void initPresenter() {
-        postponeEnterTransition();
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            postponeEnterTransition();
         new ActorsPresenter(this, actorRepository, actorID == 0 ? Constants.TEST_ACTOR_ID : actorID);
     }
 
@@ -117,12 +119,14 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                         startPostponedEnterTransition();
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                         startPostponedEnterTransition();
                         return false;
                     }

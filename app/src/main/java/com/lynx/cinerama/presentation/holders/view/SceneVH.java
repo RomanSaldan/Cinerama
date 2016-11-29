@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.jakewharton.rxbinding.view.RxView;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.presentation.holders.data.SceneDH;
@@ -38,6 +39,7 @@ public class SceneVH extends RecyclerVH<SceneDH> {
     public void bindData(SceneDH data) {
         Glide.with(itemView.getContext())
                 .load(Constants.BASE_IMAGE_URL + data.getImageModel().file_path)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.placeholder_image)
                 .centerCrop()

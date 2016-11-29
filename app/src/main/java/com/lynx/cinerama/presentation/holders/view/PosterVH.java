@@ -40,7 +40,7 @@ public class PosterVH extends RecyclerVH<PosterDH> {
                 .load(Constants.BASE_IMAGE_URL + data.getData().file_path)
                 .placeholder(R.drawable.placeholder_poster)
                 .error(R.drawable.placeholder_poster)
-                .centerCrop()
+//                .centerCrop()
                 .into(ivPoster_LIP);
     }
 }

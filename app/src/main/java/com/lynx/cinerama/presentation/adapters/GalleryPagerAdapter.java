@@ -3,6 +3,7 @@ package com.lynx.cinerama.presentation.adapters;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.gallery.ImageModel;
-import com.lynx.cinerama.presentation.screens.gallery.FullscreenImageActivity;
 import com.lynx.cinerama.presentation.utils.Constants;
 
 import org.androidannotations.annotations.EBean;
@@ -99,11 +99,11 @@ public class GalleryPagerAdapter extends PagerAdapter {
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                            compatActivity.startPostponedEnterTransition();
                         pbImageDownload_LGI.setVisibility(View.GONE);
                         photoViewAttacher = new PhotoViewAttacher(ivFullscreenImage_LGI, true);
                         photoViewAttacher.setOnViewTapListener(onViewTapListener);
-                        if(position == pos && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                            compatActivity.startPostponedEnterTransition();
                         return false;
                     }
                 })
