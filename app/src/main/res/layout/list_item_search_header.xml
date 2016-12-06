@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tvSearchHeader_LISH"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Actors"
+        android:textSize="16sp"
+        android:padding="10dp"
+        android:textColor="@android:color/secondary_text_light"/>
+
+</FrameLayout>

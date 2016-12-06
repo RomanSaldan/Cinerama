@@ -6,6 +6,7 @@
               android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/flPersonContent_AA"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 
@@ -64,5 +65,28 @@
         android:background="@color/colorPrimary"
         app:tabGravity="fill"
         app:tabMode="fixed" />
+
+    <FrameLayout
+        android:id="@+id/flSearchContainer_AA"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvNoResults_AA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_no_info"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:drawableTop="@drawable/ic_not_found"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvSearchResult_AA"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
 
 </LinearLayout>

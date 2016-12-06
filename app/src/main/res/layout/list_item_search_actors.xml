@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvNameSearch_LISA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Lord of the Rings: Return of the King"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/secondary_text_light"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_toLeftOf="@+id/ivPortraitSearch_LISA"/>
+
+    <TextView
+        android:id="@+id/tvKnownForSearch_LISA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Lord of the Rings: Return of the KingLord of the Rings: Return of the KingLord of the Rings: Return of the King"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="13sp"
+        android:layout_below="@id/tvNameSearch_LISA"
+        android:layout_toLeftOf="@id/ivPortraitSearch_LISA"
+        android:layout_margin="10dp"/>
+
+    <ImageView
+        android:id="@+id/ivPortraitSearch_LISA"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        tools:src="@drawable/placeholder_poster"
+        android:transitionName="circleCast"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLightGrey"
+        android:layout_below="@id/ivPortraitSearch_LISA"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+</RelativeLayout>

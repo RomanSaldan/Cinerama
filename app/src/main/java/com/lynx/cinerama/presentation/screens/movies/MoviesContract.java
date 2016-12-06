@@ -3,6 +3,9 @@ package com.lynx.cinerama.presentation.screens.movies;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
 import com.lynx.cinerama.presentation.base.BasePresenter;
 import com.lynx.cinerama.presentation.base.BaseView;
+import com.lynx.cinerama.presentation.holders.data.SearchResultDH;
+
+import java.util.ArrayList;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -21,8 +24,12 @@ public interface MoviesContract {
 
         void refreshMovieInfo(int movieID);
         void openCast();
+
+        void displaySearchResults(ArrayList<SearchResultDH> resultDHs);
+        void startPersonScreen(int personID);
     }
     interface MoviesPresenter extends BasePresenter {
-
+        void search(String query);
+        void selectSearchResult(SearchResultDH searchResultDH);
     }
 }

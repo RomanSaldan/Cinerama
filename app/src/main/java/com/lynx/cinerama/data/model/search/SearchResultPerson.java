@@ -86,7 +86,7 @@ public class SearchResultPerson extends SearchResultCommon {
 
     public String profile_path;
     public boolean adult;
-    public String id;
+    public int id;
     public String name;
     public float popularity;
     public ArrayList<ShortMovieInfo> known_for;

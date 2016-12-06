@@ -17,6 +17,7 @@
     <string name="placeholder_no_info">No information</string>
     <string name="more_reviews">MORE REVIEWS</string>
     <string name="similar">Similar</string>
+    <string name="hint_search">Movie or person</string>
 
     <!--Transition keys-->
     <string name="key_fullscreen_poster">FullscreenPoster</string>

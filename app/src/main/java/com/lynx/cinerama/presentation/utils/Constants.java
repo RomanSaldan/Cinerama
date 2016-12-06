@@ -23,6 +23,7 @@ public class Constants {
     public static final String GET_PERSON_TAGGED_IMAGES     = "person/{id}/tagged_images";
     public static final String IMDB_ACTOR_PREFIX            = "http://www.imdb.com/name/";
 
+//    public static final String GET_MULTI_SEARCH             = "search/multi?append_to_response=person,movie";
     public static final String GET_MULTI_SEARCH             = "search/multi";
 
     public static final int TEST_MOVIE_ID                   = 18;

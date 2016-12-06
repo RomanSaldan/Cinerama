@@ -1,13 +1,16 @@
 package com.lynx.cinerama.presentation.screens.actors;
 
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,8 +20,12 @@ import com.bumptech.glide.request.target.Target;
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
 import com.lynx.cinerama.domain.ActorRepository;
+import com.lynx.cinerama.domain.SearchRepository;
 import com.lynx.cinerama.presentation.adapters.ActorsTabAdapter;
+import com.lynx.cinerama.presentation.adapters.MultiSearchAdapter;
+import com.lynx.cinerama.presentation.holders.data.SearchResultDH;
 import com.lynx.cinerama.presentation.screens.NavigationActivity;
+import com.lynx.cinerama.presentation.screens.movies.MoviesActivity_;
 import com.lynx.cinerama.presentation.utils.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -32,13 +39,10 @@ import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringRes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.lynx.cinerama.R.id.svMovies_AM;
-import static com.lynx.cinerama.R.id.tabLayout_AM;
-import static com.lynx.cinerama.R.id.viewpager_AM;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -65,6 +69,14 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
     protected MaterialSearchView svActors_AA;
     @ViewById
     protected TabLayout tabLayout_AA;
+    @ViewById
+    protected FrameLayout flPersonContent_AA;
+    @ViewById
+    protected FrameLayout flSearchContainer_AA;
+    @ViewById
+    protected TextView tvNoResults_AA;
+    @ViewById
+    protected RecyclerView rvSearchResult_AA;
 
     @StringRes(R.string.tab_title_info)
     protected String tabTitleInfo;
@@ -81,12 +93,16 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
 
     @Bean
     protected ActorRepository actorRepository;
+    @Bean
+    protected MultiSearchAdapter multiSearchAdapter;
+    @Bean
+    protected SearchRepository searchRepository;
 
     @AfterInject
     protected void initPresenter() {
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             postponeEnterTransition();
-        new ActorsPresenter(this, actorRepository, actorID == 0 ? Constants.TEST_ACTOR_ID : actorID);
+        new ActorsPresenter(this, actorRepository, searchRepository, actorID == 0 ? Constants.TEST_ACTOR_ID : actorID);
     }
 
     @AfterViews
@@ -94,6 +110,8 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
         navigationView.setCheckedItem(R.id.menuItemActors);
         setupToolbar();
         presenter.subscribe();
+
+        setupSearch();
     }
 
     @Override
@@ -166,6 +184,20 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
     }
 
     @Override
+    public void displaySearchResults(ArrayList<SearchResultDH> resultDHs) {
+        tvNoResults_AA.setVisibility(resultDHs.size() > 0 ? View.GONE : View.VISIBLE);
+        multiSearchAdapter.setListDH(resultDHs);
+    }
+
+    @Override
+    public void startMovieScreen(int movieID) {
+        MoviesActivity_.intent(this)
+                .movieID(movieID)
+                .start();
+        finish();
+    }
+
+    @Override
     public void setPresenter(ActorsContract.ActorsPresenter presenter) {
         this.presenter = presenter;
     }
@@ -180,5 +212,52 @@ public class ActorsActivity extends NavigationActivity implements ActorsContract
     protected void onDestroy() {
         super.onDestroy();
         if(presenter != null) presenter.unsubscribe();
+    }
+
+    private void setupSearch() {
+        LinearLayoutManager llm = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvSearchResult_AA.setLayoutManager(llm);
+        rvSearchResult_AA.setAdapter(multiSearchAdapter);
+
+        svActors_AA.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                tabLayout_AA.setVisibility(View.GONE);
+                vpActor_AA.setVisibility(View.GONE);
+                flSearchContainer_AA.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                tabLayout_AA.setVisibility(View.VISIBLE);
+                vpActor_AA.setVisibility(View.VISIBLE);
+                flSearchContainer_AA.setVisibility(View.GONE);
+            }
+        });
+        svActors_AA.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                svActors_AA.hideKeyboard(flSearchContainer_AA);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.length() >= 3) {
+                    searchRepository.multiSearch(newText)
+                            .subscribe(responseMultiSearch -> {
+                                presenter.search(newText);
+                            });
+                } else {
+                    multiSearchAdapter.clear();
+                    tvNoResults_AA.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
+        multiSearchAdapter.setOnCardClickListener((view, position, viewType) -> {
+            presenter.selectSearchResult(multiSearchAdapter.getItem(position));
+            svActors_AA.closeSearch();
+        });
     }
 }
