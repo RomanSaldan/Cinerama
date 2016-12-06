@@ -1,5 +1,8 @@
 package com.lynx.cinerama.data.model.search;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.lynx.cinerama.data.model.movies.similar.ShortMovieInfo;
 
 import java.util.ArrayList;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * Created by Lynx on 11/29/2016.
  */
 
-public class SearchResultPerson extends SearchResultCommon {
+public class SearchResultPerson extends SearchResultCommon implements Parcelable {
     /**
      *  {
      "profile_path": "/2daC5DeXqwkFND0xxutbnSVKN6c.jpg",
@@ -90,4 +93,45 @@ public class SearchResultPerson extends SearchResultCommon {
     public String name;
     public float popularity;
     public ArrayList<ShortMovieInfo> known_for;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.media_type);
+        dest.writeString(this.profile_path);
+        dest.writeByte(this.adult ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeFloat(this.popularity);
+        dest.writeTypedList(this.known_for);
+    }
+
+    public SearchResultPerson() {
+    }
+
+    protected SearchResultPerson(Parcel in) {
+        this.media_type = in.readString();
+        this.profile_path = in.readString();
+        this.adult = in.readByte() != 0;
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.popularity = in.readFloat();
+        this.known_for = in.createTypedArrayList(ShortMovieInfo.CREATOR);
+    }
+
+    public static final Parcelable.Creator<SearchResultPerson> CREATOR = new Parcelable.Creator<SearchResultPerson>() {
+        @Override
+        public SearchResultPerson createFromParcel(Parcel source) {
+            return new SearchResultPerson(source);
+        }
+
+        @Override
+        public SearchResultPerson[] newArray(int size) {
+            return new SearchResultPerson[size];
+        }
+    };
 }

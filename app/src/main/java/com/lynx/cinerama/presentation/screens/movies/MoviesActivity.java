@@ -155,7 +155,7 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
 
     @Override
     public void setBackdropImage(String backdropPath) {
-        Glide.with(this).load(Constants.BASE_IMAGE_URL + backdropPath)
+        Glide.with(this).load(Constants.BASE_LARGE_IMAGE_URL + backdropPath)
                 .centerCrop()
                 .into(ivCollapsed_AM);
     }
