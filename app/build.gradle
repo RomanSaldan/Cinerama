@@ -98,4 +98,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
 
     compile 'com.github.alex-michenko:recycleradapters:0.2.4'
+
+    compile 'com.github.clans:fab:1.6.4'
 }
