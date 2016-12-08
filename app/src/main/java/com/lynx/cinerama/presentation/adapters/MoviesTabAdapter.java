@@ -1,23 +1,22 @@
 package com.lynx.cinerama.presentation.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.movies.ResponseMovieInfo;
-import com.lynx.cinerama.presentation.screens.movies.cast.MovieCastFragment;
-import com.lynx.cinerama.presentation.screens.movies.cast.MovieCastFragment_;
-import com.lynx.cinerama.presentation.screens.movies.info.MovieInfoFragment;
-import com.lynx.cinerama.presentation.screens.movies.info.MovieInfoFragment_;
-import com.lynx.cinerama.presentation.screens.movies.posters.MoviePostersFragment;
-import com.lynx.cinerama.presentation.screens.movies.posters.MoviePostersFragment_;
-import com.lynx.cinerama.presentation.screens.movies.scenes.MovieScenesFragment;
-import com.lynx.cinerama.presentation.screens.movies.scenes.MovieScenesFragment_;
-import com.lynx.cinerama.presentation.screens.movies.videos.MovieVideosFragment;
-import com.lynx.cinerama.presentation.screens.movies.videos.MovieVideosFragment_;
+import com.lynx.cinerama.presentation.screens.movie_item.cast.MovieCastFragment;
+import com.lynx.cinerama.presentation.screens.movie_item.cast.MovieCastFragment_;
+import com.lynx.cinerama.presentation.screens.movie_item.info.MovieInfoFragment;
+import com.lynx.cinerama.presentation.screens.movie_item.info.MovieInfoFragment_;
+import com.lynx.cinerama.presentation.screens.movie_item.posters.MoviePostersFragment;
+import com.lynx.cinerama.presentation.screens.movie_item.posters.MoviePostersFragment_;
+import com.lynx.cinerama.presentation.screens.movie_item.scenes.MovieScenesFragment;
+import com.lynx.cinerama.presentation.screens.movie_item.scenes.MovieScenesFragment_;
+import com.lynx.cinerama.presentation.screens.movie_item.videos.MovieVideosFragment;
+import com.lynx.cinerama.presentation.screens.movie_item.videos.MovieVideosFragment_;
 
 import java.util.ArrayList;
 

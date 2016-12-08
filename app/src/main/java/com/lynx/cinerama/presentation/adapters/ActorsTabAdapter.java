@@ -7,14 +7,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.data.model.actors.ResponseActorInfo;
-import com.lynx.cinerama.presentation.screens.actors.credits.ActorCreditsFragment;
-import com.lynx.cinerama.presentation.screens.actors.credits.ActorCreditsFragment_;
-import com.lynx.cinerama.presentation.screens.actors.images.ActorImagesFragment;
-import com.lynx.cinerama.presentation.screens.actors.images.ActorImagesFragment_;
-import com.lynx.cinerama.presentation.screens.actors.info.ActorInfoFragment;
-import com.lynx.cinerama.presentation.screens.actors.info.ActorInfoFragment_;
-import com.lynx.cinerama.presentation.screens.actors.scenes.ActorScenesFragment;
-import com.lynx.cinerama.presentation.screens.actors.scenes.ActorScenesFragment_;
+import com.lynx.cinerama.presentation.screens.actor_item.credits.ActorCreditsFragment;
+import com.lynx.cinerama.presentation.screens.actor_item.credits.ActorCreditsFragment_;
+import com.lynx.cinerama.presentation.screens.actor_item.images.ActorImagesFragment;
+import com.lynx.cinerama.presentation.screens.actor_item.images.ActorImagesFragment_;
+import com.lynx.cinerama.presentation.screens.actor_item.info.ActorInfoFragment;
+import com.lynx.cinerama.presentation.screens.actor_item.info.ActorInfoFragment_;
+import com.lynx.cinerama.presentation.screens.actor_item.scenes.ActorScenesFragment;
+import com.lynx.cinerama.presentation.screens.actor_item.scenes.ActorScenesFragment_;
 
 import java.util.ArrayList;
 

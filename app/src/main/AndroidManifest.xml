@@ -13,20 +13,20 @@
         android:theme="@style/AppTheme"
         android:largeHeap="true">
 
-        <activity android:name=".presentation.screens.movies.MoviesActivity_"
+        <activity android:name=".presentation.screens.movie_item.MovieItemActivity_"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.screens.actors.ActorsActivity_"
+        <activity android:name=".presentation.screens.actor_item.ActorItemActivity_"
                   android:configChanges="orientation|screenSize"/>
-        <activity android:name=".presentation.screens.movies.info.review_details.ReviewDetailsActivity_"
+        <activity android:name=".presentation.screens.movie_item.info.review_details.ReviewDetailsActivity_"
             android:configChanges="orientation|screenSize"/>
-        <activity android:name=".presentation.screens.movies.info.similar_details.SimilarDetailsActivity_"
+        <activity android:name=".presentation.screens.movie_item.info.similar_details.SimilarDetailsActivity_"
             android:configChanges="orientation|screenSize"/>
-        <activity android:name=".presentation.screens.movies.info.fullscreen_poster.FullscreenPosterActivity_"
+        <activity android:name=".presentation.screens.movie_item.info.fullscreen_poster.FullscreenPosterActivity_"
             android:theme="@style/MyFullscreenAppCompatActivity"
             android:configChanges="orientation|screenSize"/>
         <activity android:name=".presentation.screens.gallery.FullscreenImageActivity_"

@@ -8,10 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.bumptech.glide.Glide;
 import com.lynx.cinerama.R;
-import com.lynx.cinerama.presentation.screens.actors.ActorsActivity_;
-import com.lynx.cinerama.presentation.screens.movies.MoviesActivity_;
+import com.lynx.cinerama.presentation.screens.actor_item.ActorItemActivity_;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -55,12 +53,12 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     public void displayMenuMovies() {
-        MoviesActivity_.intent(this).start();
-        finish();
+//        MovieItemActivity_.intent(this).start();
+//        finish();
     }
 
     public void displayMenuActors() {
-        ActorsActivity_.intent(this).start();
+        ActorItemActivity_.intent(this).start();
         finish();
     }
 
