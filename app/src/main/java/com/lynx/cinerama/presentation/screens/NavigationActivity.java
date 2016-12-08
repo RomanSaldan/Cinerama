@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.lynx.cinerama.R;
 import com.lynx.cinerama.presentation.screens.actor_item.ActorItemActivity_;
+import com.lynx.cinerama.presentation.screens.movies.MoviesActivity_;
 
 /**
  * Created by Lynx on 10/26/2016.
@@ -53,6 +54,9 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     public void displayMenuMovies() {
+        MoviesActivity_.intent(this).start();
+        finish();
+
 //        MovieItemActivity_.intent(this).start();
 //        finish();
     }

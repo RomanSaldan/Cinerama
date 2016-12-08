@@ -32,6 +32,9 @@
         <activity android:name=".presentation.screens.gallery.FullscreenImageActivity_"
             android:theme="@style/MyFullscreenAppCompatActivity"
             android:configChanges="orientation|screenSize"/>
+        <activity android:name=".presentation.screens.movies.MoviesActivity_"
+            android:configChanges="orientation|screenSize"/>
+
     </application>
 
 </manifest>
