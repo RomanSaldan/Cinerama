@@ -41,4 +41,12 @@ public class Constants {
     public static final int DELAY_CLICK_ANIMATION           = 1500;
 
     public static final boolean ENABLE_LEAK_CANARY          = true;
+
+    public enum LayoutType {
+        LAYOUT_LINEAR, LAYOUT_GRID;
+    }
+
+    public enum MovieFilter {
+        GENRE, RATE, VOTE_COUNT, REVENUE, POPULAR;
+    }
 }

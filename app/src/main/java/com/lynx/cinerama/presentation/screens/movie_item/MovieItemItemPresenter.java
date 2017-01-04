@@ -16,16 +16,16 @@ import rx.subscriptions.CompositeSubscription;
  * Created by Lynx on 10/26/2016.
  */
 
-public class MovieItemPresenter implements MovieItemContract.MoviesPresenter {
+public class MovieItemItemPresenter implements MovieItemContract.MoviesItemPresenter {
 
-    private MovieItemContract.MoviesView view;
+    private MovieItemContract.MoviesItemView view;
     private MovieRepository movieRepository;
     private SearchRepository searchRepository;
     private int movieID;
     private CompositeSubscription compositeSubscription;
 
 
-    public MovieItemPresenter(MovieItemContract.MoviesView view, MovieRepository movieRepository, SearchRepository searchRepository, int movieID) {
+    public MovieItemItemPresenter(MovieItemContract.MoviesItemView view, MovieRepository movieRepository, SearchRepository searchRepository, int movieID) {
         this.view = view;
         this.movieRepository = movieRepository;
         this.searchRepository = searchRepository;

@@ -47,9 +47,9 @@ import java.util.HashMap;
 
 @EActivity(R.layout.activity_movie_item)
 @OptionsMenu(R.menu.menu_search)
-public class MovieItemActivity extends NavigationActivity implements MovieItemContract.MoviesView {
+public class MovieItemActivity extends NavigationActivity implements MovieItemContract.MoviesItemView {
 
-    private MovieItemContract.MoviesPresenter presenter;
+    private MovieItemContract.MoviesItemPresenter presenter;
 
     @Extra
     public int movieID;
@@ -98,7 +98,7 @@ public class MovieItemActivity extends NavigationActivity implements MovieItemCo
 
     @AfterInject
     protected void initPresenter() {
-        new MovieItemPresenter(this, movieRepository, searchRepository, movieID == 0 ? Constants.TEST_MOVIE_ID : movieID);
+        new MovieItemItemPresenter(this, movieRepository, searchRepository, movieID == 0 ? Constants.TEST_MOVIE_ID : movieID);
     }
 
     @AfterViews
@@ -111,7 +111,7 @@ public class MovieItemActivity extends NavigationActivity implements MovieItemCo
     }
 
     @Override
-    public void setPresenter(MovieItemContract.MoviesPresenter presenter) {
+    public void setPresenter(MovieItemContract.MoviesItemPresenter presenter) {
         this.presenter = presenter;
     }
 
