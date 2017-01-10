@@ -1,105 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        android:layout_gravity="top">
+        android:stateListAnimator="@animator/appbar_always_elevated"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/tbMovies_AM"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:layout_gravity="top"/>
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:layout_marginTop="?attr/actionBarSize">
-
-        <android.support.design.widget.AppBarLayout
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            android:orientation="vertical">
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorAccent"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:layout_marginTop="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"/>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/tbMoviess_AM"
+                android:id="@+id/tbMovies_AM"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimaryDark"
-                app:layout_scrollFlags="scroll|enterAlways"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-        </android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:text="SADASDASDASD"
+                android:textSize="25sp"/>
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:gravity="center"
-                    android:text="SADASDASDASD"
-                    android:textSize="25sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:text="SADASDASDASD"
+                android:textSize="25sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:gravity="center"
-                    android:text="SADASDASDASD"
-                    android:textSize="25sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:text="SADASDASDASD"
+                android:textSize="25sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:gravity="center"
-                    android:text="SADASDASDASD"
-                    android:textSize="25sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:text="SADASDASDASD"
+                android:textSize="25sp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:gravity="center"
-                    android:text="SADASDASDASD"
-                    android:textSize="25sp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:gravity="center"
-                    android:text="SADASDASDASD"
-                    android:textSize="25sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:gravity="center"
+                android:text="SADASDASDASD"
+                android:textSize="25sp"/>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
-
-</FrameLayout>
+</android.support.design.widget.CoordinatorLayout>

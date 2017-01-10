@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by Lynx on 12/8/2016.
  */
 
-@EActivity(R.layout.activity_movies2)
+@EActivity(R.layout.activity_movies)
 public class MoviesActivity extends NavigationActivity implements MoviesContract.MoviesView {
 
     private MoviesContract.MoviesPresenter presenter;
