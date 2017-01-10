@@ -16,23 +16,24 @@ public interface MoviesContract {
         void displayProgress(boolean isShown);
         void displayError(String msg);
 
-        void setupToolbar();
         void setTitle(String title);
         void setLayout(Constants.LayoutType layoutType);
 
-        void setupMoves(ArrayList<String> movieDHs);
+        void setupMovies(ArrayList<String> movieDHs);
         void addGenre(String genre);
         void removeGenre(String genre);
         void startGenrePicker();
 
         void displaySearchResults(ArrayList<SearchResultDH> resultDHs);
         void startPersonScreen(int personID);
+        void startMovieScreen(int movieID);
     }
     interface MoviesPresenter extends BasePresenter {
         void search(String query);
         void selectSearchResult(SearchResultDH searchResultDH);
+        void changeDisplayLayout();
 
-        void chageGenre();
+        void changeGenre();
         void getMovies(Constants.MovieFilter filter);
     }
 }
