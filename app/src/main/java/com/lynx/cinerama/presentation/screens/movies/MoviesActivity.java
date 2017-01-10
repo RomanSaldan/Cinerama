@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Created by Lynx on 12/8/2016.
  */
 
-@EActivity(R.layout.activity_movies)
+@EActivity(R.layout.activity_movies2)
 public class MoviesActivity extends NavigationActivity implements MoviesContract.MoviesView {
 
     private MoviesContract.MoviesPresenter presenter;
@@ -50,6 +50,7 @@ public class MoviesActivity extends NavigationActivity implements MoviesContract
     @Override
     public void setupToolbar() {
         setSupportActionBar(tbMovies_AM);
+        getSupportActionBar().setTitle("TITLE");
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
                 this, fullView, tbMovies_AM,
                 R.string.drawer_open, R.string.drawer_close);
